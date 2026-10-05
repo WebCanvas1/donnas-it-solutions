@@ -14,12 +14,8 @@ function Toast() {
     window.addEventListener('admin-toast', handler);
     return () => window.removeEventListener('admin-toast', handler);
   }, []);
-  useEffect(() => {
-    if (!toast || toast.kind === 'error') return;
-    const timer = window.setTimeout(() => setToast(null), 6000);
-    return () => window.clearTimeout(timer);
-  }, [toast]);
-  return <div className="admin-toast-region" aria-live="polite" aria-atomic="true">{toast && <div className={'admin-toast admin-toast-' + toast.kind} role={toast.kind === 'error' ? 'alert' : 'status'}><span className="admin-toast-icon" aria-hidden="true">{toast.kind === 'success' ? '✓' : '!'}</span><div><strong>{toast.title}</strong><p>{toast.detail}</p></div><button type="button" onClick={() => setToast(null)} aria-label="Dismiss notification">×</button></div>}</div>;
+
+  return <div className="admin-toast-region" aria-live="polite" aria-atomic="true">{toast && <div className={'admin-toast admin-toast-' + toast.kind} role={toast.kind === 'error' ? 'alert' : 'status'}><span className="admin-toast-icon" aria-hidden="true">{toast.kind === 'success' ? '✓' : '!'}</span><div><strong>{toast.title}</strong><p>{toast.detail}</p></div><button type="button" onClick={() => setToast(null)} aria-label="Dismiss notification">Got it</button></div>}</div>;
 }
 async function api(path: string, options?: RequestInit) { const r = await fetch(path, options); const body = await r.json(); if (!r.ok) throw new Error(body.error || 'Request failed'); return body; }
 const names: Record<string,string> = { title: 'Title', shortText: 'Short description', 'hero Image': 'Service card image', 'about Title': 'About heading', 'about Text': 'About paragraphs', 'gallery Images': 'Gallery photos', src: 'Photo', alt: 'Photo description', name: 'Name', phone: 'Phone number', email: 'Email address', whatsapp: 'WhatsApp number (include country code)', text: 'Description', image: 'Image', eyebrow: 'Small heading', 'seo Title': 'Google search title', 'meta Description': 'Google search description', slug: 'Page address', number: 'Display number' };
