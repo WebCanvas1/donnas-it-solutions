@@ -18,21 +18,32 @@ export function ServicePage({ service }: { service: ServiceDetail; onNavigate: (
   function handleSubmit(e: React.FormEvent) { e.preventDefault(); setSubmitted(true); }
 
   return <main className="service-page">
-    <section className="service-overview">
-      <div className="container service-overview-grid">
-        <div className="service-overview-copy">
-          <div className="service-overview-label"><Icon size={22} /><span className="eyebrow">{service.eyebrow}</span></div>
+    {/* About */}
+    <section className="section">
+      <div className="container service-about">
+        <div className="service-about-side">
+          <div className="service-icon-large"><Icon size={32} /></div>
+          <div className="eyebrow">{service.eyebrow}</div>
+        </div>
+        <div className="service-about-body">
           <h1>{service.title}</h1>
           <h2>{service.aboutTitle}</h2>
           {service.aboutText.map((para, i) => <p key={i}>{para}</p>)}
         </div>
-        <div className="service-overview-gallery" aria-label="Service gallery">
-          <div className="eyebrow">COLLECTION IN ACTION</div>
-          <div className="service-overview-images">
-            {service.galleryImages.map((img, i) => (
-              <figure key={img.src} className={i === 0 ? 'overview-image overview-image-main' : 'overview-image'}>
-                <img src={img.src} alt={img.alt} loading={i === 0 ? 'eager' : 'lazy'} />
-              </figure>
+      </div>
+    </section>
+
+    {/* Gallery */}
+    <section className="section">
+      <div className="container">
+        <div className="section-heading"><div><div className="eyebrow">GALLERY</div><h2>Collection in action</h2></div></div>
+        <div className="service-gallery">
+          <div className="gallery-feature">
+            <img src={service.galleryImages[0].src} alt={service.galleryImages[0].alt} loading="lazy" />
+          </div>
+          <div className="gallery-thumbs">
+            {service.galleryImages.slice(1).map((img) => (
+              <div className="gallery-thumb" key={img.src}><img src={img.src} alt={img.alt} loading="lazy" /></div>
             ))}
           </div>
         </div>
