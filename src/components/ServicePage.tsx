@@ -1,6 +1,8 @@
+import { text } from '@/cms/content';
 import { useEffect, useState } from 'react';
 import { Mail, MapPin, Phone } from 'lucide-react';
-import { PHONE, PHONE_TEL, EMAIL, whatsappLink, WhatsAppIcon } from './shared';
+import { PHONE, PHONE_TEL, EMAIL, whatsappLink } from '@/cms/contact';
+import { WhatsAppIcon } from './shared';
 import { PickupForm } from './PickupForm';
 import { type ServiceDetail } from '@/data/services';
 
@@ -27,7 +29,7 @@ export function ServicePage({ service }: { service: ServiceDetail; onNavigate: (
           {service.aboutText.map((para, i) => <p key={i}>{para}</p>)}
         </div>
         <div className="service-split-gallery">
-          <div className="section-heading"><div><div className="eyebrow">GALLERY</div><h2>Collection in action</h2></div></div>
+          <div className="section-heading"><div><div className="eyebrow">{text("ServicePage.text.1", "GALLERY")}</div><h2>{text("ServicePage.text.2", "Collection in action")}</h2></div></div>
           <div className="service-gallery">
             <div className={`gallery-feature${service.galleryImages[0].fit === 'contain' ? ' gallery-artwork' : ''}`}><img src={service.galleryImages[0].src} alt={service.galleryImages[0].alt} /></div>
             <div className="gallery-thumbs">
@@ -44,16 +46,16 @@ export function ServicePage({ service }: { service: ServiceDetail; onNavigate: (
     <section className="section section-cta" id="contact">
       <div className="container enquiry-grid">
         <div className="enquiry-copy">
-          <div className="eyebrow">GET STARTED</div>
-          <h2>Have items ready for collection?</h2>
-          <p>Get in touch with Donna’s IT Solution and arrange your collection today.</p>
+          <div className="eyebrow">{text("ServicePage.text.3", "GET STARTED")}</div>
+          <h2>{text("ServicePage.text.4", "Have items ready for collection?")}</h2>
+          <p>{text("ServicePage.text.5", "Get in touch with Donna’s IT Solution and arrange your collection today.")}</p>
           <div className="contact-details">
-            <a href={`tel:${PHONE_TEL}`}><Phone size={19} /><span><small>Call us</small>{PHONE}</span></a>
-            <a href={`mailto:${EMAIL}`}><Mail size={19} /><span><small>Email us</small>{EMAIL}</span></a>
-            <div><MapPin size={19} /><span><small>Service area</small>Auburn Area / Sydney, NSW</span></div>
+            <a href={`tel:${PHONE_TEL}`}><Phone size={19} /><span><small>{text("ServicePage.text.6", "Call us")}</small>{PHONE}</span></a>
+            <a href={`mailto:${EMAIL}`}><Mail size={19} /><span><small>{text("ServicePage.text.7", "Email us")}</small>{EMAIL}</span></a>
+            <div><MapPin size={19} /><span><small>{text("ServicePage.text.8", "Service area")}</small>{text("ServicePage.text.9", "Auburn Area / Sydney, NSW")}</span></div>
           </div>
           <div className="hero-actions cta-actions">
-            <a className="button button-gold" href={whatsappLink} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} /> WhatsApp us</a>
+            <a className="button button-gold" href={whatsappLink} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} />{text("ServicePage.text.10", " WhatsApp us")}</a>
           </div>
         </div>
         <PickupForm submitted={submitted} onSubmit={handleSubmit} onReset={() => setSubmitted(false)} />
@@ -61,3 +63,4 @@ export function ServicePage({ service }: { service: ServiceDetail; onNavigate: (
     </section>
   </main>;
 }
+

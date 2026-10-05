@@ -25,7 +25,7 @@ export interface ServiceDetail {
   whoFor: string[];
 }
 
-export const services: ServiceDetail[] = [
+export let services: ServiceDetail[] = [
   {
     slug: 'office-business-e-waste',
     number: '01',
@@ -192,4 +192,11 @@ export const serviceProcessSteps = [
 
 export function getServiceBySlug(slug: string): ServiceDetail | undefined {
   return services.find((s) => s.slug === slug);
+}
+
+
+export const defaultServices = services.map(service => ({ ...service, icon: undefined, collectItems: service.collectItems.map(item => ({ name: item.name })) }));
+export function replaceServices(items: typeof defaultServices) {
+  const original = services;
+  services = items.map((item, index) => ({ ...item, icon: original.find(s => s.slug === item.slug)?.icon || original[index]?.icon || Building2, collectItems: item.collectItems.map(entry => ({ ...entry, icon: Computer })) }));
 }

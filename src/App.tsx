@@ -11,7 +11,9 @@ function parsePath(): string {
 
 function navigate(path: string) {
   window.location.hash = path;
-  window.scrollTo(0, 0);
+  const anchor = path.split('#')[1];
+  if (anchor) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth' }));
+  else window.scrollTo(0, 0);
 }
 
 export default function App() {
@@ -24,7 +26,9 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const anchor = path.split('#')[1];
+    if (anchor) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView());
+    else window.scrollTo(0, 0);
   }, [path]);
 
   const serviceMatch = path.match(/^\/services\/(.+)$/);
@@ -43,3 +47,4 @@ export default function App() {
     <Footer onNavigate={navigate} />
   </div>;
 }
+
