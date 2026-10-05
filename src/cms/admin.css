@@ -31,3 +31,7 @@
 .admin-toast strong { font-size: 16px; }.admin-toast p { font-size: 14px; line-height: 1.5; margin: 5px 0 0; overflow-wrap: anywhere; }
 .admin-shell .admin-toast button { flex-shrink: 0; background: transparent; color: #52665a; font-size: 24px; padding: 0; width: 28px; height: 28px; line-height: 1; }
 @media(max-width:600px) { .admin-toast-region { top: auto; bottom: max(16px, env(safe-area-inset-bottom)); right: 16px; }.admin-toast { padding: 16px; } }
+
+/* Keep save feedback visible at every scroll position. */
+.admin-toast-region { top: auto; bottom: max(24px, env(safe-area-inset-bottom)); right: 24px; z-index: 10000; }
+@media(max-width:600px) { .admin-toast-region { right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); } }
