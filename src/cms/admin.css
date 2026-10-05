@@ -8,3 +8,17 @@
 .admin-editor { background:white; padding:24px; border-radius:12px; min-width:0; }.admin-field { display:block; margin-bottom:18px; }.admin-field>span { font-weight:600; }.admin-entry { border:1px solid #d5dfd8; border-radius:10px; padding:18px; margin-bottom:16px; }.admin-entry .admin-row button { background:#e6eee9; color:#173726; }.admin-array { margin-bottom:24px; }.admin-image-preview { display:block; max-width:240px; max-height:180px; object-fit:contain; margin:10px 0; }.admin-status { padding:12px; white-space:pre-wrap; }
 .admin-media { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; }.admin-media img { height:150px; width:100%; object-fit:contain; }
 @media(max-width:800px) { .admin-shell { padding:12px; }.admin-toolbar { position:static; flex-direction:column; align-items:start; }.admin-workspace { grid-template-columns:1fr; }.admin-workspace nav { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }.admin-editor { padding:16px; } }
+
+.admin-entry summary { cursor:pointer; font-weight:700; font-size:17px; padding:4px 0; }
+.admin-entry summary small { float:right; color:#68796e; font-size:12px; font-weight:400; }
+.admin-entry[open] > summary { margin-bottom:20px; border-bottom:1px solid #dce5df; padding-bottom:14px; }
+.admin-advanced { margin:18px 0; padding:12px; background:#f4f7f5; border-radius:6px; }
+.admin-advanced summary { cursor:pointer; margin-bottom:12px; }
+.admin-help { color:#65796c; margin-bottom:24px; }
+.admin-photo-field { border:1px solid #d5dfd8; background:#f8faf9; padding:16px; border-radius:10px; margin-top:8px; }
+.admin-photo-field .admin-image-preview { max-width:100%; width:auto; max-height:220px; }
+.admin-upload-button { display:inline-block; cursor:pointer; color:white; background:#173f29; border-radius:6px; padding:11px 16px; margin:8px 0; }
+.admin-upload-button input[type=file] { position:absolute; width:1px; height:1px; opacity:0; padding:0; }
+.admin-upload-button:focus-within { outline:3px solid #8fc9a3; }
+.admin-photo-field small { display:block; color:#65796c; }
+@media(max-width:480px) { .admin-entry summary small { float:none; display:block; margin-top:4px; } }
