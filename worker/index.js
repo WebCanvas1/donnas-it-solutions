@@ -16,7 +16,7 @@ function validContent(c) {
   if (Object.values(c.texts).some(v => typeof v !== 'string') || !['phone', 'email', 'whatsapp'].every(k => typeof c.settings[k] === 'string')) return false;
   const slugs = new Set();
   for (const s of c.services) {
-    if (!s || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(s.slug) || slugs.has(s.slug) || !s.title || !Array.isArray(s.aboutText) || !Array.isArray(s.galleryImages) || !s.galleryImages.length || !Array.isArray(s.collectItems) || !Array.isArray(s.whoFor)) return false;
+    if (!s || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(s.slug) || slugs.has(s.slug) || !s.title || !Array.isArray(s.aboutText) || !Array.isArray(s.galleryImages) || !Array.isArray(s.collectItems) || !Array.isArray(s.whoFor)) return false;
     if (!['number','eyebrow','title','shortText','heroImage','seoTitle','metaDescription','aboutTitle'].every(k => typeof s[k] === 'string') || s.aboutText.some(v => typeof v !== 'string') || s.galleryImages.some(v => !v || typeof v.src !== 'string' || typeof v.alt !== 'string')) return false;
     slugs.add(s.slug);
   }
@@ -73,6 +73,16 @@ export default { async fetch(request, env) {
       const valid = file.type === 'image/jpeg' ? bytes[0] === 255 && bytes[1] === 216 : file.type === 'image/png' ? bytes[0] === 137 && bytes[1] === 80 : file.type === 'image/gif' ? String.fromCharCode(...bytes.slice(0,3)) === 'GIF' : String.fromCharCode(...bytes.slice(0,4)) === 'RIFF' && String.fromCharCode(...bytes.slice(8,12)) === 'WEBP';
       if (!valid) return json({ error: 'Invalid image file' }, 400);
       const id = crypto.randomUUID(); await env.SITE_CONTENT.put('media:' + id, bytes.buffer, { metadata: { type: file.type, name: file.name } }); return json({ url: '/media/' + id, name: file.name });
+    }
+    if (path.startsWith('/api/media/') && request.method === 'DELETE') {
+      const id = path.slice('/api/media/'.length);
+      if (!/^[a-f0-9-]{36}$/.test(id)) return json({ error: 'Invalid photo' }, 400);
+      const photoUrl = '/media/' + id;
+      const content = await env.SITE_CONTENT.get('site_content', 'json');
+      const used = value => typeof value === 'string' ? value.includes(photoUrl) : value && typeof value === 'object' ? Object.values(value).some(used) : false;
+      if (used(content)) return json({ error: 'This photo is still used on your website. Remove or replace it in its section, save your changes, then delete it here.' }, 409);
+      await env.SITE_CONTENT.delete('media:' + id);
+      return json({ ok: true });
     }
     if (path === '/api/media' && request.method === 'GET') {
       const list = await env.SITE_CONTENT.list({ prefix: 'media:', cursor: url.searchParams.get('cursor') || undefined });
