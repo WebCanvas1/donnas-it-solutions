@@ -338,3 +338,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .collect-recycling-badge { left: -12px; width: 165px; padding: 16px; }
   .collect-recycling-badge span { font-size: 12px; }
 }
+
+/* Show supplied promotional artwork in full */
+.collect-reference-poster { aspect-ratio: 926 / 779; background: #fff; }
+.collect-reference-poster img { position: static; width: 100%; height: auto; max-width: 100%; display: block; }
+.service-page .gallery-artwork { background: #fff; border: 1px solid var(--line); }
+.service-page .gallery-artwork img { object-fit: contain; }
+.service-page .service-split .gallery-thumbs { grid-auto-rows: auto; }

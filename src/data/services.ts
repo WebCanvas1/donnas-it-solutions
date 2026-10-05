@@ -21,7 +21,7 @@ export interface ServiceDetail {
   aboutTitle: string;
   aboutText: string[];
   collectItems: CollectibleItem[];
-  galleryImages: { src: string; alt: string }[];
+  galleryImages: { src: string; alt: string; fit?: 'cover' | 'contain' }[];
   whoFor: string[];
 }
 
@@ -51,9 +51,9 @@ export const services: ServiceDetail[] = [
       { name: 'Office electronics', icon: Building2 },
     ],
     galleryImages: [
-      { src: 'https://images.pexels.com/photos/20988575/pexels-photo-20988575.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Spacious office floor with rows of workstations and monitors' },
-      { src: 'https://images.pexels.com/photos/9301887/pexels-photo-9301887.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Office photocopier and printer equipment' },
-      { src: 'https://images.pexels.com/photos/6045232/pexels-photo-6045232.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Desktop computer with keyboard and accessories on office desk' },
+      { src: '/assets/images/client-ewaste-4.jpg', alt: 'Donna’s IT Solutions free e-waste collection artwork with collection truck, computer equipment and electronics', fit: 'contain' },
+      { src: '/assets/images/client-ewaste-6.jpg', alt: 'Client-supplied collage of electronic devices, recycling equipment and collection services', fit: 'contain' },
+      { src: '/assets/images/client-ewaste-5.jpg', alt: 'Donna’s IT Solutions recycling and disposal services brochure with secure data handling information', fit: 'contain' },
     ],
     whoFor: ['Small to medium businesses', 'Corporate offices', 'Co-working spaces', 'Organisations upgrading their IT'],
   },
@@ -82,9 +82,8 @@ export const services: ServiceDetail[] = [
       { name: 'Other electronics', icon: HardDrive },
     ],
     galleryImages: [
-      { src: 'https://images.pexels.com/photos/39178037/pexels-photo-39178037.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Empty school computer lab with multiple workstations' },
-      { src: 'https://images.pexels.com/photos/10638070/pexels-photo-10638070.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Students working at computers in a classroom' },
-      { src: 'https://images.pexels.com/photos/35571660/pexels-photo-35571660.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'School computer lab with multiple monitors' },
+      { src: '/assets/images/client-ewaste-4.jpg', alt: 'Donna’s IT Solutions free e-waste collection artwork with collection truck, computer equipment and electronics', fit: 'contain' },
+      { src: '/assets/images/client-ewaste-6.jpg', alt: 'Client-supplied collage of electronic devices, recycling equipment and collection services', fit: 'contain' },
     ],
     whoFor: ['Primary and secondary schools', 'TAFEs and training colleges', 'Universities', 'After-school and tutoring programmes'],
   },
@@ -113,9 +112,9 @@ export const services: ServiceDetail[] = [
       { name: 'Other electronic waste', icon: HardDrive },
     ],
     galleryImages: [
-      { src: 'https://images.pexels.com/photos/18103937/pexels-photo-18103937.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Stacked boxes and bins in a storage area during a clear-out' },
-      { src: 'https://images.pexels.com/photos/7464232/pexels-photo-7464232.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Movers carrying boxes during a commercial relocation' },
-      { src: 'https://images.pexels.com/photos/20635796/pexels-photo-20635796.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Pallets and crates ready for bulk collection' },
+      { src: '/assets/images/client-ewaste-6.jpg', alt: 'Client-supplied collage of electronic devices, recycling equipment and collection services', fit: 'contain' },
+      { src: '/assets/images/client-ewaste-5.jpg', alt: 'Donna’s IT Solutions recycling and disposal services brochure with secure data handling information', fit: 'contain' },
+      { src: '/assets/images/client-ewaste-4.jpg', alt: 'Donna’s IT Solutions free e-waste collection artwork with collection truck, computer equipment and electronics', fit: 'contain' },
     ],
     whoFor: ['Businesses relocating or closing', 'IT refresh projects', 'Commercial clear-outs', 'Organisations with storage rooms of old equipment'],
   },
@@ -144,9 +143,9 @@ export const services: ServiceDetail[] = [
       { name: 'Other IT hardware', icon: Computer },
     ],
     galleryImages: [
-      { src: 'https://images.pexels.com/photos/37730212/pexels-photo-37730212.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Server racks in a data center' },
-      { src: 'https://images.pexels.com/photos/5480781/pexels-photo-5480781.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Network cabling and infrastructure in a server room' },
-      { src: 'https://images.pexels.com/photos/17489152/pexels-photo-17489152.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Tower servers ready for collection' },
+      { src: '/assets/images/client-ewaste-6.jpg', alt: 'Client-supplied collage of electronic devices, recycling equipment and collection services', fit: 'contain' },
+      { src: '/assets/images/client-ewaste-4.jpg', alt: 'Donna’s IT Solutions free e-waste collection artwork with collection truck, computer equipment and electronics', fit: 'contain' },
+      { src: '/assets/images/client-ewaste-5.jpg', alt: 'Donna’s IT Solutions recycling and disposal services brochure with secure data handling information', fit: 'contain' },
     ],
     whoFor: ['Businesses decommissioning servers', 'Data centre operators', 'Companies with networking infrastructure', 'Organisations upgrading IT systems'],
   },
@@ -178,6 +177,7 @@ export const services: ServiceDetail[] = [
       { src: 'https://images.pexels.com/photos/32923533/pexels-photo-32923533.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Hard disk drive components showing circuitry' },
       { src: 'https://images.pexels.com/photos/2644598/pexels-photo-2644598.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Broken hard disk drive with internal components exposed' },
       { src: 'https://images.pexels.com/photos/32920312/pexels-photo-32920312.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', alt: 'Stack of internal hard disk drives' },
+      { src: '/assets/images/client-ewaste-5.jpg', alt: 'Donna’s IT Solutions recycling and disposal services brochure with secure data handling information', fit: 'contain' },
     ],
     whoFor: ['Businesses with confidential data', 'Schools with student devices', 'Healthcare and legal practices', 'Any organisation handling sensitive information'],
   },

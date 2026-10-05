@@ -29,10 +29,10 @@ export function ServicePage({ service }: { service: ServiceDetail; onNavigate: (
         <div className="service-split-gallery">
           <div className="section-heading"><div><div className="eyebrow">GALLERY</div><h2>Collection in action</h2></div></div>
           <div className="service-gallery">
-            <div className="gallery-feature"><img src={service.galleryImages[0].src} alt={service.galleryImages[0].alt} /></div>
+            <div className={`gallery-feature${service.galleryImages[0].fit === 'contain' ? ' gallery-artwork' : ''}`}><img src={service.galleryImages[0].src} alt={service.galleryImages[0].alt} /></div>
             <div className="gallery-thumbs">
               {service.galleryImages.slice(1).map((img) => (
-                <div className="gallery-thumb" key={img.src}><img src={img.src} alt={img.alt} loading="lazy" /></div>
+                <div className={`gallery-thumb${img.fit === 'contain' ? ' gallery-artwork' : ''}`} key={img.src}><img src={img.src} alt={img.alt} loading="lazy" /></div>
               ))}
             </div>
           </div>

@@ -124,7 +124,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
           <div className="collect-reference-note">Don't see your item? We accept almost all electronic equipment. Contact us to confirm — we're happy to help!</div>
         </div>
         <div className="collect-reference-visual">
-          <div className="collect-reference-poster"><img src="/assets/images/collection-reference.png" alt="Donna’s IT Solutions e-waste recycling poster showing computers, monitors, printers and accessories" /></div>
+          <div className="collect-reference-poster"><img src="/assets/images/client-ewaste-4.jpg" alt="Donna’s IT Solutions e-waste recycling poster showing computers, monitors, printers and accessories" /></div>
           <div className="collect-free-badge"><strong>FREE</strong><span>Pickup Service</span></div>
           <div className="collect-recycling-badge"><strong>100%</strong><span>of collected e-waste is properly recycled — nothing goes to landfill</span></div>
         </div>
