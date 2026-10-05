@@ -46,6 +46,18 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
       <div className="hero-note"><span>01</span><span>Electronic waste<br />handled with care</span></div>
     </section>
 
+    <section className="free-pickup-section section">
+      <div className="container free-pickup-layout">
+        <div className="free-pickup-copy">
+          <div className="eyebrow">FREE E-WASTE PICKUP</div>
+          <h2>We collect.<br /><span>You clear the space.</span></h2>
+          <p>Free e-waste pickup for businesses, schools and organisations across Sydney. Tell us what you have and we’ll help arrange your collection.</p>
+          <a className="button button-gold" href="#contact" onClick={(event) => { event.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Book a free pickup <ArrowRight size={18} /></a>
+        </div>
+        <img className="free-pickup-truck" src="/assets/images/free-pickup-truck.jpg" alt="Donna’s IT Solutions collection truck advertising free e-waste pickups, phone 0470 624 714" loading="lazy" width={1439} height={662} />
+      </div>
+    </section>
+
     <section className="enquiry section" id="contact">
       <div className="container enquiry-grid">
         <div className="enquiry-copy">

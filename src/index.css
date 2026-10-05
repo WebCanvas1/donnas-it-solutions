@@ -345,3 +345,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .service-page .gallery-artwork { background: #fff; border: 1px solid var(--line); }
 .service-page .gallery-artwork img { object-fit: contain; }
 .service-page .service-split .gallery-thumbs { grid-auto-rows: auto; }
+
+/* Homepage free pickup feature */
+.free-pickup-section { background: #fff; }
+.free-pickup-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px; align-items: center; }
+.free-pickup-copy h2 { color: var(--deep); font: 800 clamp(30px, 3.5vw, 46px)/1.1 'Manrope', sans-serif; letter-spacing: -.04em; margin: 16px 0; }
+.free-pickup-copy h2 span { color: var(--green); }
+.free-pickup-copy p { color: var(--muted); font-size: 16px; line-height: 1.7; margin: 0 0 24px; }
+.free-pickup-truck { display: block; width: 100%; height: auto; object-fit: contain; }
+@media (max-width: 800px) {
+  .free-pickup-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .free-pickup-copy h2 { font-size: 32px; }
+}
+@media (max-width: 480px) {
+  .free-pickup-copy .button { width: 100%; min-height: 48px; }
+}
