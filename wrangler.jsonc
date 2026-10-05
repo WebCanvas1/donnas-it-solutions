@@ -11,5 +11,11 @@
     ]
   },
   "main": "worker/index.js",
-  "keep_vars": true
+  "keep_vars": true,
+  "kv_namespaces": [
+    {
+      "binding": "SITE_CONTENT",
+      "id": "26b7e92511ff475cba938db85b81a91b"
+    }
+  ]
 }
