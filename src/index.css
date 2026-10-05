@@ -253,3 +253,35 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .gallery-feature { min-height: 190px; }
   .gallery-thumb { min-height: 120px; }
 }
+
+/* Service description, gallery and enquiry layout */
+.service-page .service-about-body h1 { color: var(--deep); font: 800 clamp(30px, 4vw, 48px)/1.12 'Manrope', sans-serif; letter-spacing: -.045em; margin: 0 0 20px; overflow-wrap: anywhere; }
+.service-page .service-about-body h2 { font-size: clamp(24px, 3vw, 36px); }
+.service-page .service-about-body, .service-page .enquiry-copy, .service-page .pickup-form { min-width: 0; }
+.service-page .service-gallery { align-items: stretch; }
+.service-page .gallery-feature, .service-page .gallery-thumb { min-height: 0; position: relative; }
+.service-page .gallery-feature { aspect-ratio: 4 / 3; }
+.service-page .gallery-thumbs { min-height: 0; grid-template-rows: repeat(2, minmax(0, 1fr)); }
+.service-page .gallery-feature img, .service-page .gallery-thumb img { position: absolute; inset: 0; }
+.service-page .contact-details span { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 800px) {
+  .service-page .section { padding: 48px 0; }
+  .service-page .service-about { gap: 24px; }
+  .service-page .service-about-side { align-items: center; }
+  .service-page .service-icon-large { flex-shrink: 0; }
+  .service-page .enquiry-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .service-page .gallery-feature { aspect-ratio: 4 / 3; }
+  .service-page .gallery-thumbs { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; }
+  .service-page .gallery-thumb { aspect-ratio: 4 / 3; }
+  .service-page .pickup-form input, .service-page .pickup-form select, .service-page .pickup-form textarea { font-size: 16px; min-width: 0; max-width: 100%; }
+  .service-page .form-row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .service-page .cta-actions .button { min-height: 48px; }
+}
+@media (max-width: 480px) {
+  .service-page .section { padding: 36px 0; }
+  .service-page .service-about-body h1 { font-size: clamp(28px, 8vw, 34px); margin-bottom: 16px; }
+  .service-page .service-about-body h2 { font-size: 25px; }
+  .service-page .gallery-thumbs { grid-template-columns: minmax(0, 1fr); }
+  .service-page .gallery-thumb { aspect-ratio: 16 / 10; }
+  .service-page .cta-actions, .service-page .cta-actions .button { width: 100%; }
+}
