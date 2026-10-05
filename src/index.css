@@ -285,35 +285,3 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .service-page .gallery-thumb { aspect-ratio: 16 / 10; }
   .service-page .cta-actions, .service-page .cta-actions .button { width: 100%; }
 }
-
-/* About and gallery share the opening screen */
-.service-page .service-overview { min-height: calc(100svh - 126px); display: flex; align-items: center; padding: 28px 0; box-sizing: border-box; }
-.service-overview-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
-.service-overview-copy, .service-overview-gallery { min-width: 0; }
-.service-overview-label { display: flex; align-items: center; gap: 10px; color: var(--green); margin-bottom: 16px; }
-.service-overview-label .eyebrow { margin: 0; }
-.service-overview-copy h1 { font: 800 clamp(28px, 3.2vw, 44px)/1.08 'Manrope', sans-serif; color: var(--deep); letter-spacing: -.04em; margin: 0 0 16px; }
-.service-overview-copy h2 { font: 700 clamp(19px, 2vw, 26px)/1.2 'Manrope', sans-serif; color: var(--deep); margin: 0 0 14px; }
-.service-overview-copy p { font-size: 15px; line-height: 1.65; color: var(--muted); margin: 0 0 12px; }
-.service-overview-copy p:last-child { margin-bottom: 0; }
-.service-overview-gallery > .eyebrow { margin-bottom: 12px; }
-.service-overview-images { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.overview-image { position: relative; aspect-ratio: 16 / 9; margin: 0; overflow: hidden; border-radius: 8px; }
-.overview-image-main { grid-column: 1 / -1; aspect-ratio: 16 / 10; max-height: 38svh; }
-.overview-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
-@media (max-width: 800px) {
-  .service-page .service-overview { min-height: calc(100svh - 98px); padding: 20px 0; }
-  .service-overview-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
-  .service-overview-label { margin-bottom: 10px; }
-  .service-overview-copy h1 { font-size: clamp(26px, 6vw, 34px); margin-bottom: 10px; }
-  .service-overview-copy h2 { font-size: 19px; margin-bottom: 10px; }
-  .service-overview-copy p { font-size: 14px; line-height: 1.5; margin-bottom: 8px; }
-  .service-overview-images { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .overview-image, .overview-image-main { grid-column: auto; aspect-ratio: 4 / 3; max-height: none; }
-  .service-overview-gallery > .eyebrow { margin-bottom: 8px; }
-}
-@media (max-width: 380px) {
-  .service-page .service-overview { padding: 16px 0; }
-  .service-overview-copy h1 { font-size: 25px; }
-  .service-overview-copy h2 { font-size: 18px; }
-}
