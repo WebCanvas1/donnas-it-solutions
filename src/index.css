@@ -360,3 +360,61 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 480px) {
   .free-pickup-copy .button { width: 100%; min-height: 48px; }
 }
+
+/* Responsive layout and readable uploaded content */
+.container > *, .enquiry-grid > *, .footer-grid > *, .service-panel-content { min-width: 0; }
+h1, h2, h3, p, .contact-details a, .footer-grid a { overflow-wrap: anywhere; }
+img { max-width: 100%; }
+[id] { scroll-margin-top: 140px; }
+:focus-visible { outline: 3px solid #26984a; outline-offset: 4px; }
+.service-panel p { font-size: 14px; line-height: 1.6; }
+.service-panel .service-cta { min-height: 44px; font-size: 11px; }
+.free-pickup-truck { height: auto; }
+.collect-reference-poster { aspect-ratio: auto; }
+.collect-reference-poster img { height: auto; }
+.service-page .service-split .gallery-responsive { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.gallery-photo { position: relative; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; aspect-ratio: 4 / 3; cursor: zoom-in; width: 100%; }
+.gallery-photo-feature { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+.gallery-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gallery-photo-poster img { object-fit: contain; }
+.gallery-zoom { position: absolute; right: 8px; bottom: 8px; display: flex; align-items: center; gap: 5px; padding: 7px 10px; border-radius: 5px; background: rgba(9,35,20,.9); color: #fff; font-size: 11px; }
+.gallery-dialog { border: 0; border-radius: 12px; padding: 0; max-width: min(1100px, 94vw); width: 94vw; max-height: 94svh; background: #fff; }
+.gallery-dialog::backdrop { background: rgba(0,0,0,.8); }
+.gallery-dialog-body { padding: 44px 16px 12px; }
+.gallery-dialog-body > img { width: 100%; height: 72svh; object-fit: contain; display: block; }
+.gallery-close { position: absolute; right: 8px; top: 6px; display: grid; place-items: center; width: 36px; height: 36px; border: 0; background: #eef5ef; border-radius: 50%; cursor: pointer; }
+.gallery-dialog-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.gallery-dialog-controls p { margin: 10px 0; font-size: 13px; }
+.gallery-dialog-controls button { flex-shrink: 0; border: 0; background: #eef5ef; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 6px; cursor: pointer; }
+@media(max-width:1080px) and (min-width:801px) { .main-nav { gap: 10px; }.brand-logo { width: 150px; }.nav-inner { gap: 16px; }.service-split { gap: 28px; } }
+@media(max-width:800px) {
+  [id] { scroll-margin-top: 16px; }
+  .topline a { overflow-wrap: anywhere; }.topline-inner { height: auto; min-height: 28px; padding: 5px 0; }
+  .main-nav { max-height: calc(100svh - 96px); overflow-y: auto; }.main-nav a { white-space: normal; }
+  .pickup-form input, .pickup-form select, .pickup-form textarea { font-size: 16px; max-width: 100%; }
+  .form-row { grid-template-columns: minmax(0, 1fr); }
+  .service-grid { grid-template-columns: minmax(0, 1fr); }
+  .service-grid .service-panel:nth-child(4) { grid-column: auto; }
+  .service-panel { min-height: 300px; }
+  .service-panel-content { padding: 24px; }
+  .service-panel h3 { font-size: 26px; }
+  .service-page .service-split .gallery-responsive { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .collect-reference-visual { margin-bottom: 0; }
+  .collect-free-badge, .collect-recycling-badge { position: static; display: inline-flex; vertical-align: top; margin-top: 12px; box-shadow: 0 4px 14px #0001; }
+  .collect-free-badge { margin-right: 10px; }.collect-recycling-badge { width: min(220px,100%); }
+  .hero h1, .free-pickup-copy h2 { text-wrap: balance; }
+}
+@media(max-width:480px) {
+  .service-page .service-split .gallery-responsive { gap: 10px; }
+  .gallery-zoom { font-size: 10px; padding: 5px 7px; }
+  .gallery-photo-feature { aspect-ratio: 1 / 1; }
+  .gallery-photo { aspect-ratio: 1 / 1; }
+  .gallery-dialog-body { padding-left: 8px; padding-right: 8px; }
+  .gallery-dialog-body > img { height: 65svh; }
+  .collect-reference-layout { gap: 24px; }
+}
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+
+
+.service-grid { grid-template-rows: repeat(3, minmax(300px, auto)); }
+@media(max-width:800px) { .service-grid { grid-template-rows: none; grid-auto-rows: auto; }.service-grid .service-panel:first-child { grid-row: auto; } }

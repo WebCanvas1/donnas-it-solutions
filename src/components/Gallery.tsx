@@ -1,0 +1,10 @@
+import { useEffect, useRef, useState } from 'react';
+import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+export default function Gallery({ images }: { images: { src: string; alt: string; fit?: 'cover' | 'contain' }[] }) {
+  const [active, setActive] = useState<number | null>(null);
+  const dialog = useRef<HTMLDialogElement>(null), trigger = useRef<HTMLElement | null>(null);
+  useEffect(() => { if(active !== null && !dialog.current?.open) { trigger.current=document.activeElement as HTMLElement; dialog.current?.showModal(); } }, [active]);
+  const close = () => { dialog.current?.close(); setActive(null); trigger.current?.focus(); };
+  if(!images.length) return <p>Gallery photos will be added soon.</p>;
+  return <><div className="service-gallery gallery-responsive">{images.map((image,i)=><button type="button" className={`gallery-photo ${i===0?'gallery-photo-feature':''} ${image.fit==='contain'?'gallery-photo-poster':''}`} key={i} onClick={()=>setActive(i)} aria-label={`View image ${i+1}: ${image.alt}`}><img src={image.src} alt={image.alt} loading={i===0?'eager':'lazy'} decoding="async" /><span className="gallery-zoom"><ZoomIn size={17} /> View image</span></button>)}</div><dialog ref={dialog} className="gallery-dialog" onCancel={close} onClick={e=>{if(e.target===e.currentTarget)close();}} onKeyDown={e=>{if(active===null)return;if(e.key==='ArrowRight')setActive((active+1)%images.length);if(e.key==='ArrowLeft')setActive((active+images.length-1)%images.length);}}><div className="gallery-dialog-body"><button className="gallery-close" type="button" onClick={close} aria-label="Close image"><X /></button>{active!==null&&<><img src={images[active].src} alt={images[active].alt} /><div className="gallery-dialog-controls"><button type="button" onClick={()=>setActive((active+images.length-1)%images.length)} aria-label="Previous image"><ChevronLeft /></button><p>{active+1} / {images.length} · {images[active].alt}</p><button type="button" onClick={()=>setActive((active+1)%images.length)} aria-label="Next image"><ChevronRight /></button></div></>}</div></dialog></>;
+}

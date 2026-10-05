@@ -1,3 +1,4 @@
+import Gallery from './Gallery';
 import { text } from '@/cms/content';
 import { useEffect, useState } from 'react';
 import { Mail, MapPin, Phone } from 'lucide-react';
@@ -30,14 +31,7 @@ export function ServicePage({ service }: { service: ServiceDetail; onNavigate: (
         </div>
         <div className="service-split-gallery">
           <div className="section-heading"><div><div className="eyebrow">{text("ServicePage.text.1", "GALLERY")}</div><h2>{text("ServicePage.text.2", "Collection in action")}</h2></div></div>
-          <div className="service-gallery">
-            <div className={`gallery-feature${service.galleryImages[0].fit === 'contain' ? ' gallery-artwork' : ''}`}><img src={service.galleryImages[0].src} alt={service.galleryImages[0].alt} /></div>
-            <div className="gallery-thumbs">
-              {service.galleryImages.slice(1).map((img) => (
-                <div className={`gallery-thumb${img.fit === 'contain' ? ' gallery-artwork' : ''}`} key={img.src}><img src={img.src} alt={img.alt} loading="lazy" /></div>
-              ))}
-            </div>
-          </div>
+          <Gallery images={service.galleryImages} />
         </div>
       </div>
     </section>
@@ -63,4 +57,5 @@ export function ServicePage({ service }: { service: ServiceDetail; onNavigate: (
     </section>
   </main>;
 }
+
 

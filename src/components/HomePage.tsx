@@ -49,7 +49,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
       <div className="hero-note"><span>{text("HomePage.text.10", "01")}</span><span>{text("HomePage.text.11", "Electronic waste")}<br />{text("HomePage.text.12", "handled with care")}</span></div>
     </section>
 
-    <section className="free-pickup-section section">
+    <section className="free-pickup-section section" id="about">
       <div className="container free-pickup-layout">
         <div className="free-pickup-copy">
           <div className="eyebrow">{text("HomePage.text.13", "FREE E-WASTE PICKUP")}</div>
@@ -57,7 +57,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
           <p>{text("HomePage.text.16", "Free e-waste pickup for businesses, schools and organisations across Sydney. Tell us what you have and we’ll help arrange your collection.")}</p>
           <a className="button button-gold" href="#contact" onClick={(event) => { event.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{text("HomePage.text.17", "Book a free pickup ")}<ArrowRight size={18} /></a>
         </div>
-        <img className="free-pickup-truck" src={text("HomePage.image.50", "/assets/images/free-pickup-truck.jpg")} alt={text("HomePage.alt.48", "Donna\u2019s IT Solutions collection truck advertising free e-waste pickups, phone 0470 624 714")} loading="lazy" width={1439} height={662} />
+        <img className="free-pickup-truck" src={text("HomePage.image.50", "/assets/images/free-pickup-truck.jpg")} alt={text("HomePage.alt.48", "Donna\u2019s IT Solutions collection truck advertising free e-waste pickups, phone 0470 624 714")} loading="lazy"  />
       </div>
     </section>
 
@@ -139,7 +139,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
           <div className="collect-reference-note">{text("HomePage.text.43", "Don't see your item? We accept almost all electronic equipment. Contact us to confirm — we're happy to help!")}</div>
         </div>
         <div className="collect-reference-visual">
-          <div className="collect-reference-poster"><img src={text("HomePage.image.51", "/assets/images/client-ewaste-4.jpg")} alt={text("HomePage.alt.49", "Donna\u2019s IT Solutions e-waste recycling poster showing computers, monitors, printers and accessories")} /></div>
+          <div className="collect-reference-poster"><img loading="lazy" decoding="async" src={text("HomePage.image.51", "/assets/images/client-ewaste-4.jpg")} alt={text("HomePage.alt.49", "Donna\u2019s IT Solutions e-waste recycling poster showing computers, monitors, printers and accessories")} /></div>
           <div className="collect-free-badge"><strong>{text("HomePage.text.44", "FREE")}</strong><span>{text("HomePage.text.45", "Pickup Service")}</span></div>
           <div className="collect-recycling-badge"><strong>{text("HomePage.text.46", "100%")}</strong><span>{text("HomePage.text.47", "of collected e-waste is properly recycled — nothing goes to landfill")}</span></div>
         </div>
@@ -148,4 +148,5 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
     {getExtraSections().map((section, i) => <section className="section" key={i}><div className="container free-pickup-layout"><div className="free-pickup-copy"><h2>{section.title}</h2><p style={{ whiteSpace: 'pre-line' }}>{section.text}</p></div>{section.image && <img className="free-pickup-truck" src={section.image} alt={section.title} loading="lazy" />}</div></section>)}
   </main>;
 }
+
 
