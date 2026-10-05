@@ -54,21 +54,6 @@ export function ServicePage({ service, onNavigate }: { service: ServiceDetail; o
       </div>
     </section>
 
-    {/* What We Can Collect */}
-    <section className="section section-muted">
-      <div className="container">
-        <div className="section-heading"><div><div className="eyebrow">WHAT WE CAN COLLECT</div><h2>Items we accept</h2></div></div>
-        <div className="collect-grid">
-          {service.collectItems.map(({ name, icon: ItemIcon }) => (
-            <div className="collect-card" key={name}>
-              <div className="collect-card-icon"><ItemIcon size={24} /></div>
-              <span>{name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
     {/* Gallery */}
     <section className="section">
       <div className="container">
