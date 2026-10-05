@@ -304,3 +304,37 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 380px) {
   .service-page .service-split .gallery-thumbs { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* What we collect: supplied reference layout */
+.collect-reference { background: linear-gradient(180deg, #f1fcf5 0%, #fff 100%); }
+.collect-reference-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.collect-reference-copy h2 { color: #06351c; font: 800 clamp(30px, 3.3vw, 48px)/1.03 'Manrope', sans-serif; letter-spacing: -.035em; margin: 0 0 24px; }
+.collect-reference-intro { color: #536171; font-size: 18px; line-height: 1.6; margin: 0 0 32px; }
+.collect-reference-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.collect-reference-card { min-height: 114px; padding: 16px 10px; border: 1px solid #edf0f2; border-radius: 13px; box-shadow: 0 1px 2px rgba(0,0,0,.05); background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; color: #344055; font-size: 14px; }
+.collect-reference-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: #effcf3; color: #00b341; }
+.collect-reference-note { margin-top: 32px; padding: 20px; border: 1px solid #f3df63; border-radius: 12px; color: #995500; background: #fffdeb; font-size: 14px; line-height: 1.5; }
+.collect-reference-visual { position: relative; margin: 30px 0; }
+.collect-reference-poster { position: relative; aspect-ratio: 584 / 495; overflow: hidden; border-radius: 22px; box-shadow: 0 20px 36px rgba(0,0,0,.14); }
+.collect-reference-poster img { position: absolute; width: 328.6%; max-width: none; height: auto; left: -167.12%; top: -32.93%; }
+.collect-free-badge { position: absolute; right: -16px; top: -20px; background: #ffd00b; border-radius: 16px; padding: 20px; box-shadow: 0 12px 20px rgba(0,0,0,.13); display: flex; flex-direction: column; gap: 6px; color: #092b1b; }
+.collect-free-badge strong { font-size: 24px; }
+.collect-free-badge span { font-size: 13px; }
+.collect-recycling-badge { position: absolute; left: -24px; bottom: -24px; width: 200px; padding: 22px; border-radius: 16px; box-shadow: 0 12px 24px rgba(0,0,0,.16); background: #fff; display: flex; flex-direction: column; gap: 5px; }
+.collect-recycling-badge strong { color: #10ab44; font-size: 32px; line-height: 1.1; }
+.collect-recycling-badge span { color: #536171; font-size: 14px; line-height: 1.45; }
+@media (max-width: 800px) {
+  .collect-reference-layout { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .collect-reference-intro { font-size: 16px; }
+  .collect-reference-visual { margin: 20px 16px 26px; }
+}
+@media (max-width: 480px) {
+  .collect-reference-copy h2 { font-size: 30px; }
+  .collect-reference-cards { gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .collect-reference-card { font-size: 13px; min-height: 110px; }
+  .collect-reference-note { margin-top: 20px; padding: 16px; }
+  .collect-free-badge { right: -10px; padding: 14px; }
+  .collect-free-badge strong { font-size: 20px; }
+  .collect-recycling-badge { left: -12px; width: 165px; padding: 16px; }
+  .collect-recycling-badge span { font-size: 12px; }
+}

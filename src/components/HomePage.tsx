@@ -1,21 +1,20 @@
 import { FormEvent, useState, type CSSProperties } from 'react';
 import {
-  ArrowRight, Building2, Cable, Computer, Earth,
+  ArrowRight, Battery, Cable, Camera, CircuitBoard, Earth, Headphones,
   HardDrive, Laptop, Mail, MapPin, Monitor, Phone, Printer, Recycle,
-  Router, ShieldCheck, Smartphone,
+  Server, ShieldCheck, Smartphone, Tablet,
 } from 'lucide-react';
 import { PickupForm } from './PickupForm';
 import { PHONE, PHONE_TEL, EMAIL, whatsappLink, WhatsAppIcon } from './shared';
 import { services } from '@/data/services';
 
 const heroImage = 'https://images.pexels.com/photos/8353774/pexels-photo-8353774.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
-const circuitImage = 'https://images.pexels.com/photos/38411741/pexels-photo-38411741.jpeg?auto=compress&cs=tinysrgb&h=900&w=1200';
 
 const collectItems = [
-  { name: 'Computers & PCs', icon: Computer }, { name: 'Laptops', icon: Laptop }, { name: 'Monitors', icon: Monitor },
-  { name: 'Mobile devices', icon: Smartphone }, { name: 'Printers', icon: Printer }, { name: 'Cables', icon: Cable },
-  { name: 'Computer accessories', icon: HardDrive }, { name: 'Office electronics', icon: Building2 },
-  { name: 'Networking equipment', icon: Router }, { name: 'Other electronic waste', icon: Recycle },
+  { name: 'Laptops', icon: Laptop }, { name: 'Desktops & Monitors', icon: Monitor }, { name: 'Mobile Phones', icon: Smartphone },
+  { name: 'Cables & Wires', icon: Cable }, { name: 'Hard Drives', icon: HardDrive }, { name: 'Servers & Racks', icon: Server },
+  { name: 'Printers & Scanners', icon: Printer }, { name: 'Tablets', icon: Tablet }, { name: 'Cameras', icon: Camera },
+  { name: 'Headsets & Audio', icon: Headphones }, { name: 'Batteries & UPS', icon: Battery }, { name: 'Circuit Boards', icon: CircuitBoard },
 ];
 
 const processSteps = [
@@ -112,22 +111,22 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
       </div>
     </section>
 
-    <section className="collect section section-muted" id="what-we-collect">
-      <div className="container">
-        <div className="section-heading">
-          <div><div className="eyebrow">WHAT WE COLLECT</div><h2>One less thing<br /><span>to worry about.</span></h2></div>
-          <p>Not sure if we can take it? Get in touch and tell us what you have.</p>
-        </div>
-        <div className="collect-layout">
-          <div className="collect-list">
+    <section className="collect-reference section" id="what-we-collect">
+      <div className="container collect-reference-layout">
+        <div className="collect-reference-copy">
+          <h2>We Recycle All IT &amp;<br />Electronic Equipment</h2>
+          <p className="collect-reference-intro">From a single old laptop to an entire office of outdated equipment, we accept all types of IT technology for recycling. Don't see your item listed? Just ask — chances are we can take it.</p>
+          <div className="collect-reference-cards">
             {collectItems.map(({ name, icon: Icon }) => (
-              <div className="collect-item" key={name}><Icon size={20} /><span>{name}</span><ArrowRight size={15} /></div>
+              <div className="collect-reference-card" key={name}><div className="collect-reference-icon"><Icon size={24} strokeWidth={1.8} /></div><span>{name}</span></div>
             ))}
           </div>
-          <div className="collect-feature">
-            <img src={circuitImage} alt="Close-up of stacked circuit boards ready for responsible e-waste recycling" />
-            <div className="feature-caption"><span>Electronic waste</span><strong>Sorted for a better future.</strong></div>
-          </div>
+          <div className="collect-reference-note">Don't see your item? We accept almost all electronic equipment. Contact us to confirm — we're happy to help!</div>
+        </div>
+        <div className="collect-reference-visual">
+          <div className="collect-reference-poster"><img src="/assets/images/collection-reference.png" alt="Donna’s IT Solutions e-waste recycling poster showing computers, monitors, printers and accessories" /></div>
+          <div className="collect-free-badge"><strong>FREE</strong><span>Pickup Service</span></div>
+          <div className="collect-recycling-badge"><strong>100%</strong><span>of collected e-waste is properly recycled — nothing goes to landfill</span></div>
         </div>
       </div>
     </section>
