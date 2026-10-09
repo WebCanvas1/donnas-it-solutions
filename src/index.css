@@ -452,3 +452,7 @@ img { max-width: 100%; }
   .hero .hero-content > h1,.hero .hero-content > p,.hero .hero-content > .eyebrow,.hero .hero-content > .hero-actions,.hero .hero-content > .hero-trust { max-width:100%; }
   .hero .hero-content { width:calc(100% - 36px); }
 }
+
+/* Keep the WhatsApp CTA green even before hover. */
+.button-whatsapp, .button-whatsapp:visited { background:#25d366; border-color:#25d366; color:#fff; }
+.button-whatsapp:hover, .button-whatsapp:focus-visible { background:#1da851; border-color:#1da851; color:#fff; }
