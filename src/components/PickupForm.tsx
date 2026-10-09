@@ -9,7 +9,7 @@ export function PickupForm({ submitted, onSubmit, onReset }: { submitted: boolea
     event.preventDefault(); const form = event.currentTarget;
     setPending(true); setError('');
     try {
-      const response = await fetch('/api/enquiries', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
+      const response = await fetch('/api/enquiries', { method: 'POST', body: new FormData(form) });
       const result = await response.json(); if (!response.ok) throw new Error(result.error || 'Unable to submit enquiry');
       onSubmit(event);
     } catch (e) { setError((e as Error).message); } finally { setPending(false); }
@@ -25,10 +25,11 @@ export function PickupForm({ submitted, onSubmit, onReset }: { submitted: boolea
         <div className="form-row"><label>{text("PickupForm.text.11", "Customer type")}<select required name="type" defaultValue=""><option value="" disabled>{text("PickupForm.text.12", "Select one")}</option><option>{text("PickupForm.text.13", "Business / Office")}</option><option>{text("PickupForm.text.14", "School / Education")}</option><option>{text("PickupForm.text.15", "Commercial")}</option><option>{text("PickupForm.text.16", "Bulk Collection")}</option><option>{text("PickupForm.text.17", "Other Organisation")}</option></select></label><label>{text("PickupForm.text.18", "Approximate quantity")}<select name="quantity" defaultValue=""><option value="" disabled>{text("PickupForm.text.19", "Select one")}</option><option>{text("PickupForm.text.20", "A few items")}</option><option>{text("PickupForm.text.21", "Small collection")}</option><option>{text("PickupForm.text.22", "Large collection")}</option><option>{text("PickupForm.text.23", "Not sure yet")}</option></select></label></div>
         <div className="form-row"><label>{text("PickupForm.text.24", "Preferred pickup date")}<input type="date" name="date" /></label><label>{text("PickupForm.text.25", "What would you like collected? ")}<input required name="items" placeholder={text("PickupForm.placeholder.33", "e.g. computers, monitors")} /></label></div>
         <label>{text("PickupForm.text.26", "Message / additional information")}<textarea name="message" rows={4} placeholder={text("PickupForm.placeholder.34", "Anything else we should know?")}></textarea></label>
+        <label className="enquiry-attachment">Attach a document (optional, PDF, Word or image, max 3 MB)<input type="file" name="attachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png,image/webp" /></label>
         <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: 'none' }} />
         {error && <p role="alert">{error}</p>}
         {pending && <p role="status">Sending enquiry…</p>}
-        <button disabled={pending} className="button button-gold form-submit" type="submit">{text("PickupForm.text.27", "Book pickup ")}<ArrowRight size={17} /></button>
+        <button disabled={pending} className="button button-gold form-submit" type="submit">{"Book Free Pickup"}<ArrowRight size={17} /></button>
       </>
   }</form>;
 }
