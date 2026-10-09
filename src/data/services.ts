@@ -1,6 +1,5 @@
 import {
-  Building2, Cable, Computer, Database, HardDrive, Laptop, Monitor,
-  Printer, Router, School, Server, ShieldCheck, Smartphone, type LucideIcon,
+  Building2, Cable, Computer, Database, HardDrive, Laptop, Monitor, Router, School, Server, ShieldCheck, Smartphone, type LucideIcon,
 } from 'lucide-react';
 
 export interface CollectibleItem {
@@ -31,11 +30,11 @@ export let services: ServiceDetail[] = [
     number: '01',
     eyebrow: 'BUSINESS & OFFICE',
     title: 'Office & business e-waste',
-    shortText: 'Computers, monitors, printers and workplace IT equipment.',
+    shortText: 'Computers, monitors, workplace IT equipment.',
     icon: Building2,
     heroImage: 'https://images.pexels.com/photos/8353774/pexels-photo-8353774.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800',
     seoTitle: 'Office & Business E-Waste Collection Sydney | Donna\u2019s IT Solution',
-    metaDescription: 'Responsible office and business e-waste collection across Sydney. Computers, monitors, printers and workplace IT equipment collected and recycled.',
+    metaDescription: 'Responsible office and business e-waste collection across Sydney. Computers, monitors, workplace IT equipment collected and recycled.',
     aboutTitle: 'About our office & business e-waste collection',
     aboutText: [
       'Donna\u2019s IT Solution helps Sydney businesses clear out unwanted office and IT equipment through a convenient collection service. Whether you\u2019re upgrading workstations, closing an office, or simply decluttering storage rooms, we collect the electronic waste your business no longer needs.',
@@ -46,7 +45,7 @@ export let services: ServiceDetail[] = [
       { name: 'Desktop computers', icon: Computer },
       { name: 'Laptops', icon: Laptop },
       { name: 'Monitors', icon: Monitor },
-      { name: 'Printers', icon: Printer },
+      { name: 'Other IT equipment', icon: Printer },
       { name: 'Cables & accessories', icon: Cable },
       { name: 'Office electronics', icon: Building2 },
     ],
@@ -78,7 +77,7 @@ export let services: ServiceDetail[] = [
       { name: 'Laptops & tablets', icon: Laptop },
       { name: 'Monitors', icon: Monitor },
       { name: 'Cables & chargers', icon: Cable },
-      { name: 'Printers', icon: Printer },
+      { name: 'Other IT equipment', icon: Printer },
       { name: 'Other electronics', icon: HardDrive },
     ],
     galleryImages: [
