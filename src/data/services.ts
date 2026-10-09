@@ -196,6 +196,7 @@ export function getServiceBySlug(slug: string): ServiceDetail | undefined {
 
 export const defaultServices = services.map(service => ({ ...service, icon: undefined, collectItems: service.collectItems.map(item => ({ name: item.name })) }));
 export function replaceServices(items: typeof defaultServices) {
+  const withoutPrinters = (value: string) => value.replace(/,?\s*printers?(?:\s*(?:and|&)\s*scanners?)?/gi, '').replace(/\s+,/g, ',').replace(/,\s*and\s+/g, ' and ').replace(/\s{2,}/g, ' ').trim();
   const original = services;
-  services = items.map((item, index) => ({ ...item, icon: original.find(s => s.slug === item.slug)?.icon || original[index]?.icon || Building2, collectItems: item.collectItems.map(entry => ({ ...entry, icon: Computer })) }));
+  services = items.map((item, index) => ({ ...item, shortText: withoutPrinters(item.shortText), metaDescription: withoutPrinters(item.metaDescription), aboutText: item.aboutText.map(withoutPrinters), icon: original.find(s => s.slug === item.slug)?.icon || original[index]?.icon || Building2, collectItems: item.collectItems.filter(entry => !/\b(printers?|scanners?)\b/i.test(entry.name)).map(entry => ({ ...entry, icon: Computer })) }));
 }
