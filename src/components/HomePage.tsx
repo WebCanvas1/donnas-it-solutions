@@ -35,13 +35,13 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
   return <main>
     <section className="hero" id="home">
       <div className="hero-image" style={{ backgroundImage: `url(${text("HomePage.heroImage", defaultHeroImage)})` }} />
-      <div className="hero-overlay" />
+
       <div className="container hero-content">
         <div className="eyebrow eyebrow-light"><span className="eyebrow-dot" />{text("HomePage.text.1", " E-WASTE RECYCLING SYDNEY")}</div>
         <h1>{text("HomePage.text.2", "E-waste collection")}<br /><em>{text("HomePage.text.3", "for businesses & schools.")}</em></h1>
         <p>{text("HomePage.text.4", "Responsible electronic waste collection and recycling for businesses, schools and organisations across Sydney.")}</p>
         <div className="hero-actions">
-          <a className="button button-gold" href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{text("HomePage.text.5", "Book pickup ")}<ArrowRight size={18} /></a>
+          <a className="button button-gold" href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{"Book Free Pickup"}<ArrowRight size={18} /></a>
           <a className="button button-whatsapp" href={whatsappLink} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} />{text("HomePage.text.6", " WhatsApp us")}</a>
         </div>
         <div className="hero-trust"><span>{text("HomePage.text.7", "Convenient collection")}</span><span>{text("HomePage.text.8", "Responsible recycling")}</span><span>{text("HomePage.text.9", "Secure data handling")}</span></div>
@@ -55,7 +55,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
           <div className="eyebrow">{text("HomePage.text.13", "FREE E-WASTE PICKUP")}</div>
           <h2>{text("HomePage.text.14", "We collect.")}<br /><span>{text("HomePage.text.15", "You clear the space.")}</span></h2>
           <p>{text("HomePage.text.16", "Free e-waste pickup for businesses, schools and organisations across Sydney. Tell us what you have and we’ll help arrange your collection.")}</p>
-          <a className="button button-gold" href="#contact" onClick={(event) => { event.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{text("HomePage.text.17", "Book a free pickup ")}<ArrowRight size={18} /></a>
+          <a className="button button-gold" href="#contact" onClick={(event) => { event.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{"Book Free Pickup"}<ArrowRight size={18} /></a>
         </div>
         <img className="free-pickup-truck" src={text("HomePage.image.50", "/assets/images/free-pickup-truck.jpg")} alt={text("HomePage.alt.48", "Donna\u2019s IT Solutions collection truck advertising free e-waste pickups, phone 0470 624 714")} loading="lazy"  />
       </div>
@@ -112,7 +112,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
             </article>
           ))}
         </div>
-        <a className="button button-gold process-cta" href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{text("HomePage.text.34", "Book pickup ")}<ArrowRight size={17} /></a>
+        <a className="button button-gold process-cta" href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{"Book Free Pickup"}<ArrowRight size={17} /></a>
       </div>
     </section>
 
