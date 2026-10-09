@@ -420,3 +420,6 @@ img { max-width: 100%; }
 @media(max-width:800px) { .service-grid { grid-template-rows: none; grid-auto-rows: auto; }.service-grid .service-panel:first-child { grid-row: auto; } }
 
 @media (max-width: 800px) { .hero-image { background-position: center center; } }
+
+/* Editable video and Google review sections */
+.donna-video-grid,.donna-review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;margin:28px 0}.donna-video,.donna-review{background:#fff;border:1px solid #dce5de;border-radius:12px;overflow:hidden;box-shadow:0 6px 24px #133d250d}.donna-video-frame{aspect-ratio:16/9;background:#142e20}.donna-video-frame iframe{display:block;width:100%;height:100%;border:0}.donna-video h3{padding:12px 20px 18px;margin:0;font-size:18px}.donna-reviews{background:#f4f7f5}.donna-review{margin:0;padding:25px}.donna-review-stars{color:#cf9f06;letter-spacing:3px;font-size:22px}.donna-review p{line-height:1.7;white-space:pre-line}.donna-review footer{font-weight:700;color:#173f29}
