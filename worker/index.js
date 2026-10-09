@@ -70,14 +70,20 @@ export default { async fetch(request, env) {
         let binary = ''; for (let i = 0; i < bytes.length; i += 8192) binary += String.fromCharCode(...bytes.subarray(i, i + 8192)); const b64 = btoa(binary);
         emailAttachment = { filename: attachment.name.replace(/[^a-zA-Z0-9._ -]/g,'_').slice(0,120), content: b64 };
       }
-      if (!env.RESEND_API_KEY || !env.ENQUIRY_FROM_EMAIL) return json({ error: 'Email delivery is not configured yet. Please call us to arrange your pickup.' }, 503);
       const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
       if (await env.SITE_CONTENT.get('enquiry-rate:' + ip)) return json({ error: 'Please wait a minute before submitting another enquiry.' }, 429);
       const id = new Date().toISOString() + ':' + crypto.randomUUID();
-      const lines = Object.entries(data).map(([k,v]) => k + ': ' + v).join('\n');
-      const payload = { from: env.ENQUIRY_FROM_EMAIL, to: ['info@donnasitsolutions.com.au'], reply_to: data.email, subject: 'New free pickup enquiry - ' + data.name.slice(0,80), text: 'New website pickup enquiry\n\n' + lines, ...(emailAttachment ? { attachments: [emailAttachment] } : {}) };
-      const sent = await fetch('https://api.resend.com/emails', { method:'POST', headers:{Authorization:'Bearer ' + env.RESEND_API_KEY,'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      const outbound = new FormData();
+      outbound.set('_subject', 'New free pickup enquiry - ' + data.name.slice(0,80));
+      outbound.set('_template', 'table');
+      outbound.set('_captcha', 'false');
+      outbound.set('_replyto', data.email);
+      for (const [field, value] of Object.entries(data)) outbound.set(field, value);
+      if (attachment instanceof File && attachment.size) outbound.set('attachment', attachment, emailAttachment.filename);
+      const sent = await fetch('https://formsubmit.co/ajax/info@donnasitsolutions.com.au', { method: 'POST', headers: { Accept: 'application/json' }, body: outbound });
       if (!sent.ok) return json({ error: 'We could not send your enquiry by email. Please try again or call us.' }, 502);
+      const delivery = await sent.json().catch(() => null);
+      if (!delivery || delivery.success === false || delivery.success === 'false') return json({ error: 'Email service did not confirm delivery. Please try again or call us.' }, 502);
       await env.SITE_CONTENT.put('enquiry:' + id, JSON.stringify({ ...data, attachmentName: emailAttachment?.filename || '', id, createdAt: new Date().toISOString(), status: 'Emailed' }));
       await env.SITE_CONTENT.put('enquiry-rate:' + ip, '1', { expirationTtl: 60 });
       return json({ ok: true });
