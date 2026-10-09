@@ -46,7 +46,7 @@ export function Header({ onNavigate }: { onNavigate: (path: string) => void }) {
         <a href="/#about" onClick={(e) => handleNavClick(e, '/#about')}>{text("Layout.text.5", "About")}</a>
         <a href="/#contact" onClick={(e) => handleNavClick(e, '/#contact')}>{text("Layout.text.6", "Contact")}</a>
         <a className="nav-phone" href={`tel:${PHONE_TEL}`}><Phone size={16} /> {PHONE}</a>
-        <a className="button button-gold button-small" href="/#contact" onClick={(e) => handleNavClick(e, '/#contact')}>{text("Layout.text.7", "Book pickup ")}<ArrowRight size={15} /></a>
+        <a className="button button-gold button-small" href="/#contact" onClick={(e) => handleNavClick(e, '/#contact')}>{"Book Free Pickup"}<ArrowRight size={15} /></a>
       </nav>
     </div>
   </header>;
@@ -83,7 +83,7 @@ export function Footer({ onNavigate }: { onNavigate: (path: string) => void }) {
       <div>
         <h4>{text("Layout.text.17", "Start a conversation")}</h4>
         <p>{text("Layout.text.18", "Have IT equipment ready to go? We’re here to help.")}</p>
-        <a className="button button-gold button-small" href="/#contact" onClick={(e) => handleNavClick(e, '/#contact')}>{text("Layout.text.19", "Book pickup ")}<ArrowRight size={15} /></a>
+        <a className="button button-gold button-small" href="/#contact" onClick={(e) => handleNavClick(e, '/#contact')}>{"Book Free Pickup"}<ArrowRight size={15} /></a>
       </div>
     </div>
     <div className="container footer-bottom">

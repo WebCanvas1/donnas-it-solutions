@@ -423,3 +423,13 @@ img { max-width: 100%; }
 
 /* Editable video and Google review sections */
 .donna-video-grid,.donna-review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;margin:28px 0}.donna-video,.donna-review{background:#fff;border:1px solid #dce5de;border-radius:12px;overflow:hidden;box-shadow:0 6px 24px #133d250d}.donna-video-frame{aspect-ratio:16/9;background:#142e20}.donna-video-frame iframe{display:block;width:100%;height:100%;border:0}.donna-video h3{padding:12px 20px 18px;margin:0;font-size:18px}.donna-reviews{background:#f4f7f5}.donna-review{margin:0;padding:25px}.donna-review-stars{color:#cf9f06;letter-spacing:3px;font-size:22px}.donna-review p{line-height:1.7;white-space:pre-line}.donna-review footer{font-weight:700;color:#173f29}
+
+/* Cleaner white hero with the original photo unobscured */
+.hero{background:#fff;color:#173726}.hero-image{left:48%;right:0;background-position:center;background-size:cover}.hero-content{margin-left:max(24px,calc((100vw - 1180px)/2));margin-right:auto;width:min(43%,520px);padding:86px 0 105px}.hero h1{color:#173726}.hero h1 em{color:#2f8b45}.hero p{color:#475e4e}.hero .eyebrow-light{color:#2f8b45}.hero-trust{color:#506c57;margin-top:48px}.hero-trust span{border-color:#cbd8cf}.hero-note{color:#173726;background:#fff;padding:12px 16px;border-left:3px solid #f4cc2d}.hero-note span:first-child{color:#2f8b45}.hero .button-whatsapp{color:#173726;border-color:#2f8b45;background:#eff9f0}.hero .button-whatsapp:hover{background:#2f8b45;color:#fff}
+/* Crop only the narrow dark edge of the original truck asset */
+.free-pickup-truck{clip-path:inset(2px 2px 2px 2px);background:#fff}
+/* Crisp presentation of the original logo, no artwork alteration */
+.brand-logo{width:205px;max-height:80px;image-rendering:auto;object-fit:contain}.brand-card{background:#fff;box-shadow:none;border:0;padding:6px 8px}
+.enquiry-attachment{display:block;margin:12px 0 18px}.enquiry-attachment input{display:block;margin-top:8px;width:100%;font-size:13px}
+@media(max-width:800px){.hero{display:block;padding-top:0}.hero-image{position:relative;left:auto;right:auto;inset:auto;display:block;height:250px;background-position:center}.hero-content{width:calc(100% - 40px);margin:0 auto;padding:32px 0 42px}.hero-note{display:none}.hero-trust{margin-top:28px}.brand-logo{width:155px;max-height:60px}}
+@media(max-width:480px){.hero-image{height:200px}.hero-content{padding:26px 0 35px}.brand-logo{width:145px;max-height:54px}}

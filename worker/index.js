@@ -50,13 +50,41 @@ export default { async fetch(request, env) {
     }
     if (path === '/api/logout' && request.method === 'POST') return json({ ok: true }, 200, { 'Set-Cookie': cookie('', 0) });
     if (path === '/api/enquiries' && request.method === 'POST') {
-      const data = await request.json();
-      if (data.website) return json({ ok: true });
-      if (!['name','email','phone','address','items'].every(k => typeof data[k] === 'string' && data[k].trim()) || JSON.stringify(data).length > 16000) return json({ error: 'Please complete the required fields.' }, 400);
+      const form = await request.formData();
+      if (form.get('website')) return json({ ok: true });
+      const data = {};
+      for (const field of ['name','email','phone','address','items','organisation','type','quantity','date','message']) {
+        const value = form.get(field);
+        if (typeof value !== 'string' || value.length > 3000) return json({ error: 'Invalid enquiry details.' }, 400);
+        data[field] = value.trim();
+      }
+      if (!['name','email','phone','address','items'].every(k => data[k]) || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) return json({ error: 'Please complete the required fields.' }, 400);
+      const attachment = form.get('attachment');
+      let emailAttachment;
+      if (attachment instanceof File && attachment.size) {
+        const allowed = ['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','image/jpeg','image/png','image/webp'];
+        const ext = attachment.name.split('.').pop()?.toLowerCase();
+        const validExt = ['pdf','doc','docx','jpg','jpeg','png','webp'].includes(ext);
+        if (!allowed.includes(attachment.type) || !validExt || attachment.size > 3 * 1024 * 1024) return json({ error: 'Attach a PDF, Word document or image up to 3 MB.' }, 400);
+        const bytes = new Uint8Array(await attachment.arrayBuffer());
+        let binary = ''; for (let i = 0; i < bytes.length; i += 8192) binary += String.fromCharCode(...bytes.subarray(i, i + 8192)); const b64 = btoa(binary);
+        emailAttachment = { filename: attachment.name.replace(/[^a-zA-Z0-9._ -]/g,'_').slice(0,120), content: b64 };
+      }
       const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
       if (await env.SITE_CONTENT.get('enquiry-rate:' + ip)) return json({ error: 'Please wait a minute before submitting another enquiry.' }, 429);
       const id = new Date().toISOString() + ':' + crypto.randomUUID();
-      await env.SITE_CONTENT.put('enquiry:' + id, JSON.stringify({ ...data, id, createdAt: new Date().toISOString(), status: 'New' }));
+      const outbound = new FormData();
+      outbound.set('_subject', 'New free pickup enquiry - ' + data.name.slice(0,80));
+      outbound.set('_template', 'table');
+      outbound.set('_captcha', 'false');
+      outbound.set('_replyto', data.email);
+      for (const [field, value] of Object.entries(data)) outbound.set(field, value);
+      if (attachment instanceof File && attachment.size) outbound.set('attachment', attachment, emailAttachment.filename);
+      const sent = await fetch('https://formsubmit.co/ajax/info@donnasitsolutions.com.au', { method: 'POST', headers: { Accept: 'application/json' }, body: outbound });
+      if (!sent.ok) return json({ error: 'We could not send your enquiry by email. Please try again or call us.' }, 502);
+      const delivery = await sent.json().catch(() => null);
+      if (!delivery || delivery.success === false || delivery.success === 'false') return json({ error: 'Email service did not confirm delivery. Please try again or call us.' }, 502);
+      await env.SITE_CONTENT.put('enquiry:' + id, JSON.stringify({ ...data, attachmentName: emailAttachment?.filename || '', id, createdAt: new Date().toISOString(), status: 'Emailed' }));
       await env.SITE_CONTENT.put('enquiry-rate:' + ip, '1', { expirationTtl: 60 });
       return json({ ok: true });
     }
