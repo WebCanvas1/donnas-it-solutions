@@ -50,18 +50,6 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
       <div className="hero-note"><span>{text("HomePage.text.10", "01")}</span><span>{text("HomePage.text.11", "Electronic waste")}<br />{text("HomePage.text.12", "handled with care")}</span></div>
     </section>
 
-    <section className="free-pickup-section section" id="about">
-      <div className="container free-pickup-layout">
-        <div className="free-pickup-copy">
-          <div className="eyebrow">{text("HomePage.text.13", "FREE E-WASTE PICKUP")}</div>
-          <h2>{text("HomePage.text.14", "We collect.")}<br /><span>{text("HomePage.text.15", "You clear the space.")}</span></h2>
-          <p>{text("HomePage.text.16", "Free e-waste pickup for businesses, schools and organisations across Sydney. Tell us what you have and we’ll help arrange your collection.")}</p>
-          <a className="button button-gold" href="#contact" onClick={(event) => { event.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{"Book Free Pickup"}<ArrowRight size={18} /></a>
-        </div>
-        <img className="free-pickup-truck" src={text("HomePage.image.50", "/assets/images/free-pickup-truck.jpg")} alt={text("HomePage.alt.48", "Donna\u2019s IT Solutions collection truck advertising free e-waste pickups, phone 0470 624 714")} loading="lazy"  />
-      </div>
-    </section>
-
     <section className="enquiry section" id="contact">
       <div className="container enquiry-grid">
         <div className="enquiry-copy">
