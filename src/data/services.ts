@@ -45,7 +45,7 @@ export let services: ServiceDetail[] = [
       { name: 'Desktop computers', icon: Computer },
       { name: 'Laptops', icon: Laptop },
       { name: 'Monitors', icon: Monitor },
-      { name: 'Other IT equipment', icon: Printer },
+      { name: 'Other IT equipment', icon: Computer },
       { name: 'Cables & accessories', icon: Cable },
       { name: 'Office electronics', icon: Building2 },
     ],
@@ -77,7 +77,7 @@ export let services: ServiceDetail[] = [
       { name: 'Laptops & tablets', icon: Laptop },
       { name: 'Monitors', icon: Monitor },
       { name: 'Cables & chargers', icon: Cable },
-      { name: 'Other IT equipment', icon: Printer },
+      { name: 'Other IT equipment', icon: Computer },
       { name: 'Other electronics', icon: HardDrive },
     ],
     galleryImages: [
