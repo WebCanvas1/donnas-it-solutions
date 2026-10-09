@@ -36,6 +36,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
     <section className="hero" id="home">
       <div className="hero-image" style={{ backgroundImage: `url(${text("HomePage.heroImage", defaultHeroImage)})` }} />
 
+      <div className="hero-overlay" />
       <div className="container hero-content">
         <div className="eyebrow eyebrow-light"><span className="eyebrow-dot" />{text("HomePage.text.1", " E-WASTE RECYCLING SYDNEY")}</div>
         <h1>{text("HomePage.text.2", "E-waste collection")}<br /><em>{text("HomePage.text.3", "for businesses & schools.")}</em></h1>
