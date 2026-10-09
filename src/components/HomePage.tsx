@@ -2,13 +2,13 @@ import { text } from '@/cms/content';
 import { FormEvent, useState, type CSSProperties } from 'react';
 import {
   ArrowRight, Battery, Cable, Camera, CircuitBoard, Earth, Headphones,
-  HardDrive, Laptop, Mail, MapPin, Monitor, Phone, Printer, Recycle,
+  HardDrive, Laptop, Mail, MapPin, Monitor, Phone, Recycle,
   Server, ShieldCheck, Smartphone, Tablet,
 } from 'lucide-react';
 import { PickupForm } from './PickupForm';
 import { PHONE, PHONE_TEL, EMAIL, whatsappLink } from '@/cms/contact';
 import { WhatsAppIcon } from './shared';
-import { getCollectionItems, getProcessSteps, getExtraSections } from '@/cms/content';
+import { getCollectionItems, getProcessSteps, getExtraSections, getVideos, getReviews, getGoogleReviewsUrl, youtubeId } from '@/cms/content';
 import { services } from '@/data/services';
 
 const defaultHeroImage = 'https://images.pexels.com/photos/8353774/pexels-photo-8353774.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
@@ -16,7 +16,7 @@ const defaultHeroImage = 'https://images.pexels.com/photos/8353774/pexels-photo-
 const collectItems = [
   { name: 'Laptops', icon: Laptop }, { name: 'Desktops & Monitors', icon: Monitor }, { name: 'Mobile Phones', icon: Smartphone },
   { name: 'Cables & Wires', icon: Cable }, { name: 'Hard Drives', icon: HardDrive }, { name: 'Servers & Racks', icon: Server },
-  { name: 'Printers & Scanners', icon: Printer }, { name: 'Tablets', icon: Tablet }, { name: 'Cameras', icon: Camera },
+ { name: 'Tablets', icon: Tablet }, { name: 'Cameras', icon: Camera },
   { name: 'Headsets & Audio', icon: Headphones }, { name: 'Batteries & UPS', icon: Battery }, { name: 'Circuit Boards', icon: CircuitBoard },
 ];
 
@@ -132,7 +132,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
           <h2>{text("HomePage.text.40", "We Recycle All IT &")}<br />{text("HomePage.text.41", "Electronic Equipment")}</h2>
           <p className="collect-reference-intro">{text("HomePage.text.42", "From a single old laptop to an entire office of outdated equipment, we accept all types of IT technology for recycling. Don't see your item listed? Just ask — chances are we can take it.")}</p>
           <div className="collect-reference-cards">
-            {getCollectionItems(collectItems).map(({ name, icon: Icon }) => (
+            {getCollectionItems(collectItems).filter(item => !/\b(printers?|scanners?)\b/i.test(item.name)).map(({ name, icon: Icon }) => (
               <div className="collect-reference-card" key={name}><div className="collect-reference-icon"><Icon size={24} strokeWidth={1.8} /></div><span>{name}</span></div>
             ))}
           </div>
@@ -145,6 +145,8 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
         </div>
       </div>
     </section>
+    {getVideos().some(v => youtubeId(v.url)) && <section className="section" id="videos"><div className="container"><div className="eyebrow">WATCH OUR WORK</div><h2>See Donna’s IT Solutions in action</h2><div className="donna-video-grid">{getVideos().map((video, i) => { const id = youtubeId(video.url); return id ? <article className="donna-video" key={i}><div className="donna-video-frame"><iframe src={`https://www.youtube-nocookie.com/embed/${id}`} title={video.title || `Video ${i+1}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /></div><h3>{video.title || 'Watch our video'}</h3></article> : null; })}</div></div></section>}
+    <section className="section donna-reviews" id="reviews"><div className="container"><div className="eyebrow">CUSTOMER FEEDBACK</div><h2>What our customers say</h2><div className="donna-review-grid">{getReviews().map((review,i)=><blockquote className="donna-review" key={i}><div aria-label="5 out of 5 stars" className="donna-review-stars">★★★★★</div><p>“{review.quote}”</p><footer>— {review.name}</footer></blockquote>)}</div><a className="button button-gold" href={getGoogleReviewsUrl()} target="_blank" rel="noopener noreferrer">Read our Google reviews <ArrowRight size={17}/></a></div></section>
     {getExtraSections().map((section, i) => <section className="section" key={i}><div className="container free-pickup-layout"><div className="free-pickup-copy"><h2>{section.title}</h2><p style={{ whiteSpace: 'pre-line' }}>{section.text}</p></div>{section.image && <img className="free-pickup-truck" src={section.image} alt={section.title} loading="lazy" />}</div></section>)}
   </main>;
 }
