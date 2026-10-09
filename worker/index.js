@@ -67,7 +67,7 @@ export default { async fetch(request, env) {
         const validExt = ['pdf','doc','docx','jpg','jpeg','png','webp'].includes(ext);
         if (!allowed.includes(attachment.type) || !validExt || attachment.size > 3 * 1024 * 1024) return json({ error: 'Attach a PDF, Word document or image up to 3 MB.' }, 400);
         const bytes = new Uint8Array(await attachment.arrayBuffer());
-        const b64 = Array.from({length:Math.ceil(bytes.length/8192)},(_,i)=>String.fromCharCode(...bytes.subarray(i*8192,(i+1)*8192))).map(chunk=>btoa(chunk)).join('');
+        let binary = ''; for (let i = 0; i < bytes.length; i += 8192) binary += String.fromCharCode(...bytes.subarray(i, i + 8192)); const b64 = btoa(binary);
         emailAttachment = { filename: attachment.name.replace(/[^a-zA-Z0-9._ -]/g,'_').slice(0,120), content: b64 };
       }
       if (!env.RESEND_API_KEY || !env.ENQUIRY_FROM_EMAIL) return json({ error: 'Email delivery is not configured yet. Please call us to arrange your pickup.' }, 503);
