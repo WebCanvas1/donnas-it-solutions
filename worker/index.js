@@ -58,7 +58,7 @@ export default { async fetch(request, env) {
         if (typeof value !== 'string' || value.length > 3000) return json({ error: 'Invalid enquiry details.' }, 400);
         data[field] = value.trim();
       }
-      if (!['name','email','phone','address','items'].every(k => data[k]) || !/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(data.email)) return json({ error: 'Please complete the required fields.' }, 400);
+      if (!['name','email','phone','address','items'].every(k => data[k]) || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) return json({ error: 'Please complete the required fields.' }, 400);
       const attachment = form.get('attachment');
       let emailAttachment;
       if (attachment instanceof File && attachment.size) {
@@ -74,8 +74,8 @@ export default { async fetch(request, env) {
       const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
       if (await env.SITE_CONTENT.get('enquiry-rate:' + ip)) return json({ error: 'Please wait a minute before submitting another enquiry.' }, 429);
       const id = new Date().toISOString() + ':' + crypto.randomUUID();
-      const lines = Object.entries(data).map(([k,v]) => k + ': ' + v).join('\\n');
-      const payload = { from: env.ENQUIRY_FROM_EMAIL, to: ['info@donnasitsolutions.com.au'], reply_to: data.email, subject: 'New free pickup enquiry - ' + data.name.slice(0,80), text: 'New website pickup enquiry\\n\\n' + lines, ...(emailAttachment ? { attachments: [emailAttachment] } : {}) };
+      const lines = Object.entries(data).map(([k,v]) => k + ': ' + v).join('\n');
+      const payload = { from: env.ENQUIRY_FROM_EMAIL, to: ['info@donnasitsolutions.com.au'], reply_to: data.email, subject: 'New free pickup enquiry - ' + data.name.slice(0,80), text: 'New website pickup enquiry\n\n' + lines, ...(emailAttachment ? { attachments: [emailAttachment] } : {}) };
       const sent = await fetch('https://api.resend.com/emails', { method:'POST', headers:{Authorization:'Bearer ' + env.RESEND_API_KEY,'Content-Type':'application/json'}, body:JSON.stringify(payload) });
       if (!sent.ok) return json({ error: 'We could not send your enquiry by email. Please try again or call us.' }, 502);
       await env.SITE_CONTENT.put('enquiry:' + id, JSON.stringify({ ...data, attachmentName: emailAttachment?.filename || '', id, createdAt: new Date().toISOString(), status: 'Emailed' }));
