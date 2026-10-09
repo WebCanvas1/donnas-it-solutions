@@ -14,6 +14,9 @@ async function authorized(request, env) {
 function validContent(c) {
   if (!c || typeof c !== 'object' || !c.texts || !c.settings || !Array.isArray(c.services) || !Array.isArray(c.collectionItems) || !Array.isArray(c.processSteps)) return false;
   if (Object.values(c.texts).some(v => typeof v !== 'string') || !['phone', 'email', 'whatsapp'].every(k => typeof c.settings[k] === 'string')) return false;
+  if (c.videos !== undefined && (!Array.isArray(c.videos) || c.videos.length > 40 || c.videos.some(v => !v || typeof v.url !== 'string' || typeof v.title !== 'string' || v.title.length > 180 || !/^https:\/\/(?:www\.|m\.)?(?:youtube\.com|youtu\.be|youtube-nocookie\.com)\//.test(v.url) || v.url.length > 500))) return false;
+  if (c.reviews !== undefined && (!Array.isArray(c.reviews) || c.reviews.length > 40 || c.reviews.some(r => !r || typeof r.name !== 'string' || typeof r.quote !== 'string' || r.name.length > 160 || r.quote.length > 2000 || r.rating !== 5))) return false;
+  if (c.googleReviewsUrl !== undefined && (typeof c.googleReviewsUrl !== 'string' || !/^https:\/\/(?:share\.google|www\.google\.[a-z.]+|maps\.app\.goo\.gl)\//.test(c.googleReviewsUrl))) return false;
   const slugs = new Set();
   for (const s of c.services) {
     if (!s || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(s.slug) || slugs.has(s.slug) || !s.title || !Array.isArray(s.aboutText) || !Array.isArray(s.galleryImages) || !Array.isArray(s.collectItems) || !Array.isArray(s.whoFor)) return false;
