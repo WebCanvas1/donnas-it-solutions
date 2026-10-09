@@ -456,3 +456,19 @@ img { max-width: 100%; }
 /* Keep the WhatsApp CTA green even before hover. */
 .button-whatsapp, .button-whatsapp:visited { background:#25d366; border-color:#25d366; color:#fff; }
 .button-whatsapp:hover, .button-whatsapp:focus-visible { background:#1da851; border-color:#1da851; color:#fff; }
+
+/* Readability pass: improve small copy contrast and weight across public pages. */
+.topline, .main-nav, .eyebrow, .section-label, .hero-trust, .hero-note, .trust-grid div,
+.collect-item span, .service-card p, .service-card a, .business-points,
+.why-list div, .step p, .process-intro > p, .environment p,
+.contact-details small, .form-header span, .feature-caption span,
+.image-note span, .intro-stamp span, .site-footer, .site-footer a,
+.service-panel p, .service-panel a, .pickup-form small,
+.enquiry-attachment, .enquiry-attachment small { font-weight:700; }
+.hero .hero-trust, .hero .hero-note, .hero .hero-content p { color:#254936; }
+.topline, .site-footer { color:#fff; }
+.main-nav { color:#263f31; }
+.service-card p, .intro-stamp span, .form-header span, .contact-details small { color:#41564a; }
+.process-intro > p, .step p, .green-panel p, .green-panel ul, .environment p { color:#fff; }
+.pickup-form input::placeholder, .pickup-form textarea::placeholder { color:#526358; opacity:1; font-weight:600; }
+@media(max-width:800px){.hero .hero-trust,.hero .hero-note { color:#254936; }}
