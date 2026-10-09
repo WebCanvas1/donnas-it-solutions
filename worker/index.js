@@ -50,13 +50,35 @@ export default { async fetch(request, env) {
     }
     if (path === '/api/logout' && request.method === 'POST') return json({ ok: true }, 200, { 'Set-Cookie': cookie('', 0) });
     if (path === '/api/enquiries' && request.method === 'POST') {
-      const data = await request.json();
-      if (data.website) return json({ ok: true });
-      if (!['name','email','phone','address','items'].every(k => typeof data[k] === 'string' && data[k].trim()) || JSON.stringify(data).length > 16000) return json({ error: 'Please complete the required fields.' }, 400);
+      const form = await request.formData();
+      if (form.get('website')) return json({ ok: true });
+      const data = {};
+      for (const field of ['name','email','phone','address','items','organisation','type','quantity','date','message']) {
+        const value = form.get(field);
+        if (typeof value !== 'string' || value.length > 3000) return json({ error: 'Invalid enquiry details.' }, 400);
+        data[field] = value.trim();
+      }
+      if (!['name','email','phone','address','items'].every(k => data[k]) || !/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(data.email)) return json({ error: 'Please complete the required fields.' }, 400);
+      const attachment = form.get('attachment');
+      let emailAttachment;
+      if (attachment instanceof File && attachment.size) {
+        const allowed = ['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','image/jpeg','image/png','image/webp'];
+        const ext = attachment.name.split('.').pop()?.toLowerCase();
+        const validExt = ['pdf','doc','docx','jpg','jpeg','png','webp'].includes(ext);
+        if (!allowed.includes(attachment.type) || !validExt || attachment.size > 3 * 1024 * 1024) return json({ error: 'Attach a PDF, Word document or image up to 3 MB.' }, 400);
+        const bytes = new Uint8Array(await attachment.arrayBuffer());
+        const b64 = Array.from({length:Math.ceil(bytes.length/8192)},(_,i)=>String.fromCharCode(...bytes.subarray(i*8192,(i+1)*8192))).map(chunk=>btoa(chunk)).join('');
+        emailAttachment = { filename: attachment.name.replace(/[^a-zA-Z0-9._ -]/g,'_').slice(0,120), content: b64 };
+      }
+      if (!env.RESEND_API_KEY || !env.ENQUIRY_FROM_EMAIL) return json({ error: 'Email delivery is not configured yet. Please call us to arrange your pickup.' }, 503);
       const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
       if (await env.SITE_CONTENT.get('enquiry-rate:' + ip)) return json({ error: 'Please wait a minute before submitting another enquiry.' }, 429);
       const id = new Date().toISOString() + ':' + crypto.randomUUID();
-      await env.SITE_CONTENT.put('enquiry:' + id, JSON.stringify({ ...data, id, createdAt: new Date().toISOString(), status: 'New' }));
+      const lines = Object.entries(data).map(([k,v]) => k + ': ' + v).join('\\n');
+      const payload = { from: env.ENQUIRY_FROM_EMAIL, to: ['info@donnasitsolutions.com.au'], reply_to: data.email, subject: 'New free pickup enquiry - ' + data.name.slice(0,80), text: 'New website pickup enquiry\\n\\n' + lines, ...(emailAttachment ? { attachments: [emailAttachment] } : {}) };
+      const sent = await fetch('https://api.resend.com/emails', { method:'POST', headers:{Authorization:'Bearer ' + env.RESEND_API_KEY,'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      if (!sent.ok) return json({ error: 'We could not send your enquiry by email. Please try again or call us.' }, 502);
+      await env.SITE_CONTENT.put('enquiry:' + id, JSON.stringify({ ...data, attachmentName: emailAttachment?.filename || '', id, createdAt: new Date().toISOString(), status: 'Emailed' }));
       await env.SITE_CONTENT.put('enquiry-rate:' + ip, '1', { expirationTtl: 60 });
       return json({ ok: true });
     }
