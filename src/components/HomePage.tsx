@@ -142,7 +142,6 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
         </div>
         <div className="collect-reference-visual">
           <div className="collect-reference-poster"><img loading="lazy" decoding="async" src={text("HomePage.image.51", "/assets/images/client-ewaste-4.jpg")} alt={text("HomePage.alt.49", "Donna\u2019s IT Solutions e-waste recycling poster showing computers, monitors, printers and accessories")} /></div>
-          <div className="collect-free-badge"><strong>{text("HomePage.text.44", "FREE")}</strong><span>{text("HomePage.text.45", "Pickup Service")}</span></div>
           <div className="collect-recycling-badge"><strong>{text("HomePage.text.46", "100%")}</strong><span>{text("HomePage.text.47", "of collected e-waste is properly recycled — nothing goes to landfill")}</span></div>
         </div>
       </div>
