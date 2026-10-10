@@ -1,12 +1,12 @@
 import defaults from './text-defaults.json';
 import type { LucideIcon } from 'lucide-react';
 import { Computer } from 'lucide-react';
-export interface SiteContent { videos?: { url: string; title: string }[]; reviews?: { name: string; quote: string; rating: number }[]; googleReviewsUrl?: string;  texts: Record<string, string>; settings: { phone: string; email: string; whatsapp: string }; services: unknown[]; collectionItems: { name: string }[]; processSteps: string[][]; extraSections: { title: string; text: string; image: string }[]; }
+export interface SiteContent { videos?: { url: string; title: string }[]; reviews?: { name: string; quote: string; rating: number }[]; googleReviewsUrl?: string;  texts: Record<string, string>; settings: { phone: string; email: string; whatsapp: string }; services: unknown[]; collectionItems: { name: string; image?: string }[]; processSteps: string[][]; extraSections: { title: string; text: string; image: string }[]; }
 export const defaultTexts: Record<string, string> = { ...defaults, 'Settings.logo': '/assets/images/image.png' };
 let current: Partial<SiteContent> = {};
 export function applyContent(content: Partial<SiteContent>) { current = content; }
 export function text(key: string, fallback: string) { return current.texts?.[key] ?? fallback; }
-export function getCollectionItems(fallback: { name: string; icon: LucideIcon }[]) { return current.collectionItems?.map((item, i) => ({ ...item, icon: fallback[i]?.icon || Computer })) ?? fallback; }
+export function getCollectionItems(fallback: { name: string; icon: LucideIcon }[]) { return current.collectionItems?.map((item, i) => ({ ...item, icon: fallback.find((original) => original.name === item.name)?.icon || Computer })) ?? fallback; }
 export function getProcessSteps(fallback: string[][]) { return current.processSteps ?? fallback; }
 
 export function getVideos() { return current.videos ?? [{ url: 'https://youtu.be/1DvInYwMpjw', title: 'Donna’s IT Solutions video 1' }, { url: 'https://youtu.be/PXlHqLo8Xxk', title: 'Donna’s IT Solutions video 2' }]; }
