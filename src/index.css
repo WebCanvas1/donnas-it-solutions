@@ -514,3 +514,6 @@ img { max-width: 100%; }
 .collect-reference-photo img { width:100%; height:100%; object-fit:contain; display:block; }
 .collect-reference-card:has(.collect-reference-photo) { padding:12px; gap:10px; }
 @media(max-width:480px){.collect-reference-photo{height:74px;}}
+
+.collect-reference-photo .photo-fallback-icon{display:none;color:var(--green)}
+.collect-reference-photo.photo-failed .photo-fallback-icon{display:block}
