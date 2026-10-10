@@ -19,8 +19,19 @@ export const defaultCollectionPhotos: Record<string, string> = {
 export const defaultTexts: Record<string, string> = { ...defaults, 'Settings.logo': '/assets/images/image.png' };
 let current: Partial<SiteContent> = {};
 export function applyContent(content: Partial<SiteContent>) { current = content; }
-export function text(key: string, fallback: string) { return current.texts?.[key] ?? fallback.map((item) => ({ ...item, image: defaultCollectionPhotos[item.name] })); }
-export function getCollectionItems(fallback: { name: string; icon: LucideIcon }[]) { return current.collectionItems?.map((item, i) => ({ ...item, image: item.image === undefined ? defaultCollectionPhotos[item.name] : item.image, icon: fallback.find((original) => original.name === item.name)?.icon || Computer })) ?? fallback; }
+export function text(key: string, fallback: string) { return current.texts?.[key] ?? fallback; }
+export function getCollectionItems(fallback: { name: string; icon: LucideIcon }[]) {
+  const items = current.collectionItems ?? fallback;
+  return items.map((item) => {
+    // Migrate the broken Circuit Boards image from the earlier release,
+    // without overriding any photo the client has uploaded themselves.
+    const oldCircuitPhoto = 'photo-1697071328078-9ec9dc58661a';
+    const image = item.name === 'Circuit Boards' && (!item.image || item.image.includes(oldCircuitPhoto))
+      ? defaultCollectionPhotos['Circuit Boards']
+      : (item.image === undefined ? defaultCollectionPhotos[item.name] : item.image);
+    return { ...item, image, icon: fallback.find((original) => original.name === item.name)?.icon || Computer };
+  });
+}
 export function getProcessSteps(fallback: string[][]) { return current.processSteps ?? fallback; }
 
 export function getVideos() { return current.videos ?? [{ url: 'https://youtu.be/1DvInYwMpjw', title: 'Donna’s IT Solutions video 1' }, { url: 'https://youtu.be/PXlHqLo8Xxk', title: 'Donna’s IT Solutions video 2' }]; }
