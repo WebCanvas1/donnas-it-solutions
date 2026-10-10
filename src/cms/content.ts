@@ -14,7 +14,7 @@ export const defaultCollectionPhotos: Record<string, string> = {
   'Cameras': 'https://images.unsplash.com/photo-1680712409129-0d0bd0fe729e?w=480&q=80&auto=format',
   'Headsets & Audio': 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=480&q=80&auto=format',
   'Batteries & UPS': 'https://images.unsplash.com/photo-1788025487924-fdacced2fce6?w=480&q=80&auto=format',
-  'Circuit Boards': 'https://images.unsplash.com/photo-1697071328078-9ec9dc58661a?w=480&q=80&auto=format',
+  'Circuit Boards': 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=480&q=80&auto=format',
 };
 export const defaultTexts: Record<string, string> = { ...defaults, 'Settings.logo': '/assets/images/image.png' };
 let current: Partial<SiteContent> = {};
