@@ -3,6 +3,7 @@ import { Header, Footer } from '@/components/Layout';
 import { HomePage } from '@/components/HomePage';
 import { ServicePage } from '@/components/ServicePage';
 import { getServiceBySlug } from '@/data/services';
+import { getLegalPage } from '@/cms/content';
 
 function parsePath(): string {
   const hash = window.location.hash.replace(/^#/, '');
@@ -14,6 +15,18 @@ function navigate(path: string) {
   const anchor = path.split('#')[1];
   if (anchor) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth' }));
   else window.scrollTo(0, 0);
+}
+
+function LegalPage({ kind }: { kind: 'privacyPolicy' | 'termsConditions' }) {
+  const title = kind === 'privacyPolicy' ? 'Privacy Policy' : 'Terms & Conditions';
+  const body = getLegalPage(kind).trim();
+  return <main className="legal-page"><div className="container legal-page-inner">
+    <a className="legal-back" href="#/">← Back to home</a>
+    <h1>{title}</h1>
+    {body ? <div className="legal-copy">{body.split(/\n\s*\n/).map((paragraph, i) =>
+      <p key={i}>{paragraph}</p>
+    )}</div> : <p className="legal-empty">This document has not been published yet. Please contact us for further information.</p>}
+  </div></main>;
 }
 
 export default function App() {
@@ -35,7 +48,9 @@ export default function App() {
   const service = serviceMatch ? getServiceBySlug(serviceMatch[1]) : undefined;
 
   let content;
-  if (service) {
+  if (path === '/privacy-policy' || path === '/terms-and-conditions') {
+    content = <LegalPage kind={path === '/privacy-policy' ? 'privacyPolicy' : 'termsConditions'} />;
+  } else if (service) {
     content = <ServicePage service={service} onNavigate={navigate} />;
   } else {
     content = <HomePage onNavigate={navigate} />;
