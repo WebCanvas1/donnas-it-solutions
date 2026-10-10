@@ -126,7 +126,13 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
             {getCollectionItems(collectItems).filter(item => !/\b(printers?|scanners?)\b/i.test(item.name)).map(({ name, icon: Icon, image }) => (
               <div className="collect-reference-card" key={name}>
                 <div className={image ? "collect-reference-photo" : "collect-reference-icon"}>
-                  {image ? <img src={image} alt={name} loading="lazy" decoding="async" /> : <Icon size={24} strokeWidth={1.8} />}
+                  {image ? <>
+                    <img src={image} alt={name} loading="lazy" decoding="async" onError={(event) => {
+                      event.currentTarget.style.display = 'none';
+                      event.currentTarget.parentElement?.classList.add('photo-failed');
+                    }} />
+                    <Icon className="photo-fallback-icon" size={24} strokeWidth={1.8} />
+                  </> : <Icon size={24} strokeWidth={1.8} />}
                 </div>
                 <span>{name}</span>
               </div>
