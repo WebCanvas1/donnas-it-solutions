@@ -1,7 +1,7 @@
 import defaults from './text-defaults.json';
 import type { LucideIcon } from 'lucide-react';
 import { Computer } from 'lucide-react';
-export interface SiteContent { videos?: { url: string; title: string }[]; reviews?: { name: string; quote: string; rating: number }[]; googleReviewsUrl?: string;  texts: Record<string, string>; settings: { phone: string; email: string; whatsapp: string }; services: unknown[]; collectionItems: { name: string; image?: string }[]; processSteps: string[][]; extraSections: { title: string; text: string; image: string }[]; }
+export interface SiteContent { legalPages?: { privacyPolicy: string; termsConditions: string }; videos?: { url: string; title: string }[]; reviews?: { name: string; quote: string; rating: number }[]; googleReviewsUrl?: string;  texts: Record<string, string>; settings: { phone: string; email: string; whatsapp: string }; services: unknown[]; collectionItems: { name: string; image?: string }[]; processSteps: string[][]; extraSections: { title: string; text: string; image: string }[]; }
 // Curated free-to-use Unsplash photos. Clients can replace each image in admin.
 export const defaultCollectionPhotos: Record<string, string> = {
   'Laptops': 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=480&q=80&auto=format',
@@ -39,3 +39,5 @@ export function getReviews() { return (current.reviews ?? []).filter(r => r.rati
 export function getGoogleReviewsUrl() { return current.googleReviewsUrl || 'https://share.google/RB5ApmKPJn3uebPDQ'; }
 export function youtubeId(url: string): string | null { try { const u = new URL(url); const host = u.hostname.toLowerCase(); let id = ''; if (host === 'youtu.be' || host === 'www.youtu.be') id = u.pathname.slice(1).split('/')[0]; else if (['youtube.com','www.youtube.com','m.youtube.com','youtube-nocookie.com','www.youtube-nocookie.com'].includes(host)) id = u.pathname === '/watch' ? u.searchParams.get('v') || '' : u.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/)?.[1] || ''; return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null; } catch { return null; } }
 export function getExtraSections() { return current.extraSections ?? []; }
+
+export function getLegalPage(page: 'privacyPolicy' | 'termsConditions'): string { return current.legalPages?.[page] ?? ''; }
