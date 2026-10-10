@@ -78,7 +78,7 @@ export function Footer({ onNavigate }: { onNavigate: (path: string) => void }) {
         <h4>{text("Layout.text.15", "Contact")}</h4>
         <a href={`tel:${PHONE_TEL}`}>{PHONE}</a>
         <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-        <span>{text("Layout.text.16", "Auburn Area / Sydney, NSW")}</span>
+        <span>{"Sydney, NSW"}</span>
       </div>
       <div>
         <h4>{text("Layout.text.17", "Start a conversation")}</h4>
