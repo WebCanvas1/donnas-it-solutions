@@ -89,7 +89,7 @@ export function Footer({ onNavigate }: { onNavigate: (path: string) => void }) {
     <div className="container footer-bottom">
       <span>{text("Layout.text.20", "© 2026 Donna’s IT Solution")}</span>
       <span>{text("Layout.text.21", "Serving Sydney and surrounding areas")}</span>
-      <div><a href="/#home" onClick={(e) => handleNavClick(e, '/')}>{text("Layout.text.22", "Privacy Policy")}</a><a href="/#home" onClick={(e) => handleNavClick(e, '/')}>{text("Layout.text.23", "Terms & Conditions")}</a></div>
+      <div><a href="#/privacy-policy" onClick={(e) => handleNavClick(e, '/privacy-policy')}>{text("Layout.text.22", "Privacy Policy")}</a><a href="#/terms-and-conditions" onClick={(e) => handleNavClick(e, '/terms-and-conditions')}>{text("Layout.text.23", "Terms & Conditions")}</a></div>
     </div>
   </footer>;
 }
