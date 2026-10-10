@@ -123,8 +123,13 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
           <h2>{text("HomePage.text.40", "We Recycle All IT &")}<br />{text("HomePage.text.41", "Electronic Equipment")}</h2>
           <p className="collect-reference-intro">{text("HomePage.text.42", "From a single old laptop to an entire office of outdated equipment, we accept all types of IT technology for recycling. Don't see your item listed? Just ask — chances are we can take it.")}</p>
           <div className="collect-reference-cards">
-            {getCollectionItems(collectItems).filter(item => !/\b(printers?|scanners?)\b/i.test(item.name)).map(({ name, icon: Icon }) => (
-              <div className="collect-reference-card" key={name}><div className="collect-reference-icon"><Icon size={24} strokeWidth={1.8} /></div><span>{name}</span></div>
+            {getCollectionItems(collectItems).filter(item => !/\b(printers?|scanners?)\b/i.test(item.name)).map(({ name, icon: Icon, image }) => (
+              <div className="collect-reference-card" key={name}>
+                <div className={image ? "collect-reference-photo" : "collect-reference-icon"}>
+                  {image ? <img src={image} alt={name} loading="lazy" decoding="async" /> : <Icon size={24} strokeWidth={1.8} />}
+                </div>
+                <span>{name}</span>
+              </div>
             ))}
           </div>
           <div className="collect-reference-note"><><strong>Can’t find your equipment listed?</strong><span> We accept a wide range of electronic and IT equipment. Get in touch with our team to confirm your items and discuss collection options.</span></></div>
