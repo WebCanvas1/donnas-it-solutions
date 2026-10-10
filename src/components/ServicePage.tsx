@@ -46,7 +46,7 @@ export function ServicePage({ service }: { service: ServiceDetail; onNavigate: (
           <div className="contact-details">
             <a href={`tel:${PHONE_TEL}`}><Phone size={19} /><span><small>{text("ServicePage.text.6", "Call us")}</small>{PHONE}</span></a>
             <a href={`mailto:${EMAIL}`}><Mail size={19} /><span><small>{text("ServicePage.text.7", "Email us")}</small>{EMAIL}</span></a>
-            <div><MapPin size={19} /><span><small>{text("ServicePage.text.8", "Service area")}</small>{text("ServicePage.text.9", "Auburn Area / Sydney, NSW")}</span></div>
+            <div><MapPin size={19} /><span><small>{text("ServicePage.text.8", "Service area")}</small>{text("ServicePage.text.9", "Sydney, NSW")}</span></div>
           </div>
           <div className="hero-actions cta-actions">
             <a className="button button-gold" href={whatsappLink} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} />{text("ServicePage.text.10", " WhatsApp us")}</a>
