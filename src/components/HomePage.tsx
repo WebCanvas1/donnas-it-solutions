@@ -47,7 +47,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
         </div>
 
       </div>
-      <div className="hero-note"><span>{text("HomePage.text.10", "01")}</span><span>{text("HomePage.text.11", "Electronic waste")}<br />{text("HomePage.text.12", "handled with care")}</span></div>
+
     </section>
 
     {getVideos().some(v => youtubeId(v.url)) && <section className="section" id="videos"><div className="container"><div className="eyebrow">WATCH OUR WORK</div><h2>See Donna’s IT Solutions in action</h2><div className="donna-video-grid">{getVideos().map((video, i) => { const id = youtubeId(video.url); return id ? <article className="donna-video" key={i}><div className="donna-video-frame"><iframe src={`https://www.youtube-nocookie.com/embed/${id}`} title={video.title || `Video ${i+1}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /></div></article> : null; })}</div></div></section>}
