@@ -528,3 +528,20 @@ img { max-width: 100%; }
 .legal-copy p:last-child{margin-bottom:0}
 .legal-empty{line-height:1.8;font-size:16px}
 @media(max-width:480px){.legal-page{padding:40px 0 65px}.legal-copy p{font-size:15px}}
+
+/* High-contrast service tiles: preserve photography but ensure every caption is readable. */
+.service-panel .service-panel-overlay,
+.service-panel:hover .service-panel-overlay {
+  background:linear-gradient(180deg,rgba(5,18,11,.26) 0%,rgba(5,18,11,.56) 35%,rgba(5,18,11,.94) 100%);
+}
+.service-panel .service-panel-content { color:#fff; text-shadow:0 2px 5px rgba(0,0,0,.85); }
+.service-panel h3 { color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.85); }
+.service-panel p { color:#fff; opacity:1; font-weight:600; text-shadow:0 2px 5px rgba(0,0,0,.95); }
+.service-panel .service-eyebrow { color:#ffe052; font-weight:800; text-shadow:0 2px 5px #07180e; }
+.service-panel .service-top { color:#fff; text-shadow:0 2px 5px #07180e; }
+.service-panel .service-cta { color:#143c24; text-shadow:none; }
+@media(max-width:800px){
+ .service-panel .service-panel-overlay,.service-panel:hover .service-panel-overlay {
+  background:linear-gradient(180deg,rgba(5,18,11,.28) 0%,rgba(5,18,11,.63) 40%,rgba(5,18,11,.96) 100%);
+ }
+}
