@@ -47,6 +47,21 @@ export default function App() {
   const serviceMatch = path.match(/^\/services\/(.+)$/);
   const service = serviceMatch ? getServiceBySlug(serviceMatch[1]) : undefined;
 
+  useEffect(() => {
+    const title = service?.seoTitle || (path === '/privacy-policy' ? 'Privacy Policy | Donna’s IT Solution' : path === '/terms-and-conditions' ? 'Terms & Conditions | Donna’s IT Solution' : 'E-Waste Recycling Sydney | Free E-Waste Pickup | Donna’s IT Solution');
+    const description = service?.metaDescription || 'Donna’s IT Solution provides e-waste collection and recycling for businesses, schools and organisations across Sydney. Enquire about an electronic waste pickup.';
+    document.title = title;
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    if (meta) meta.content = description;
+    const ogTitle = document.querySelector<HTMLMetaElement>('meta[property="og:title"]');
+    if (ogTitle) ogTitle.content = title;
+    const ogDescription = document.querySelector<HTMLMetaElement>('meta[property="og:description"]');
+    if (ogDescription) ogDescription.content = description;
+    // Hash-routed pages share one server URL; canonicalize to the crawlable homepage.
+    const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (canonical) canonical.href = 'https://donnasitsolutions.com.au/';
+  }, [path, service]);
+
   let content;
   if (path === '/privacy-policy' || path === '/terms-and-conditions') {
     content = <LegalPage kind={path === '/privacy-policy' ? 'privacyPolicy' : 'termsConditions'} />;
