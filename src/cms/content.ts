@@ -10,8 +10,8 @@ export const defaultCollectionPhotos: Record<string, string> = {
   'Cables & Wires': 'https://images.unsplash.com/photo-1640108176177-55d9418bc54e?w=480&q=80&auto=format',
   'Hard Drives': 'https://images.unsplash.com/photo-1601737487795-dab272f52420?w=480&q=80&auto=format',
   'Servers & Racks': 'https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=480&q=80&auto=format',
-  'Tablets': 'https://images.unsplash.com/photo-1646494735075-db74d6df917d?w=480&q=80&auto=format',
-  'Cameras': 'https://images.unsplash.com/photo-1680712409129-0d0bd0fe729e?w=480&q=80&auto=format',
+  'Tablets': 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=480&q=80&auto=format',
+  'Cameras': 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=480&q=80&auto=format',
   'Headsets & Audio': 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=480&q=80&auto=format',
   'Batteries & UPS': 'https://images.unsplash.com/photo-1788025487924-fdacced2fce6?w=480&q=80&auto=format',
   'Circuit Boards': 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=480&q=80&auto=format',
@@ -26,9 +26,13 @@ export function getCollectionItems(fallback: { name: string; icon: LucideIcon }[
     // Migrate the broken Circuit Boards image from the earlier release,
     // without overriding any photo the client has uploaded themselves.
     const oldCircuitPhoto = 'photo-1697071328078-9ec9dc58661a';
-    const image = item.name === 'Circuit Boards' && (!item.image || item.image.includes(oldCircuitPhoto))
-      ? defaultCollectionPhotos['Circuit Boards']
-      : (item.image === undefined ? defaultCollectionPhotos[item.name] : item.image);
+    const oldPhotoIds: Record<string, string> = {
+      'Tablets': 'photo-1646494735075-db74d6df917d',
+      'Cameras': 'photo-1680712409129-0d0bd0fe729e'
+    };
+    const shouldRefresh = (item.name === 'Circuit Boards' && (!item.image || item.image.includes(oldCircuitPhoto)))
+      || (oldPhotoIds[item.name] && (!item.image || item.image.includes(oldPhotoIds[item.name])));
+    const image = shouldRefresh ? defaultCollectionPhotos[item.name] : (item.image === undefined ? defaultCollectionPhotos[item.name] : item.image);
     return { ...item, image, icon: fallback.find((original) => original.name === item.name)?.icon || Computer };
   });
 }
