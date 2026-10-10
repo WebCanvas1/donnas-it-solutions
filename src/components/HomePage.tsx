@@ -82,7 +82,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
                 <div className="service-top"><span>{number}</span><Icon size={22} /></div>
                 <div className="service-eyebrow">{eyebrow}</div>
                 <h3>{title}</h3>
-                <p>{shortText}</p>
+                <p style={{ color: '#ffffff', opacity: 1, fontWeight: 650, fontSize: '15px', lineHeight: 1.6, textShadow: '0 2px 6px rgba(0,0,0,.95)' }}>{shortText}</p>
                 <a className="service-cta" href={`/services/${slug}`} onClick={(e) => handleNavClick(e, `/services/${slug}`)}>{text("HomePage.text.30", "Learn more ")}<ArrowRight size={15} /></a>
               </div>
             </article>
