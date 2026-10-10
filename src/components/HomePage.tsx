@@ -45,10 +45,12 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
           <a className="button button-gold" href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{"Book Free Pickup"}<ArrowRight size={18} /></a>
           <a className="button button-whatsapp" href={whatsappLink} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} />{text("HomePage.text.6", " WhatsApp us")}</a>
         </div>
-        <div className="hero-trust"><span>{text("HomePage.text.7", "Convenient collection")}</span><span>{text("HomePage.text.8", "Responsible recycling")}</span><span>{text("HomePage.text.9", "Secure data handling")}</span></div>
+
       </div>
       <div className="hero-note"><span>{text("HomePage.text.10", "01")}</span><span>{text("HomePage.text.11", "Electronic waste")}<br />{text("HomePage.text.12", "handled with care")}</span></div>
     </section>
+
+    {getVideos().some(v => youtubeId(v.url)) && <section className="section" id="videos"><div className="container"><div className="eyebrow">WATCH OUR WORK</div><h2>See Donna’s IT Solutions in action</h2><div className="donna-video-grid">{getVideos().map((video, i) => { const id = youtubeId(video.url); return id ? <article className="donna-video" key={i}><div className="donna-video-frame"><iframe src={`https://www.youtube-nocookie.com/embed/${id}`} title={video.title || `Video ${i+1}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /></div></article> : null; })}</div></div></section>}
 
     <section className="enquiry section" id="contact">
       <div className="container enquiry-grid">
@@ -59,7 +61,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
           <div className="contact-details">
             <a href={`tel:${PHONE_TEL}`}><Phone size={19} /><span><small>{text("HomePage.text.22", "Call us")}</small>{PHONE}</span></a>
             <a href={`mailto:${EMAIL}`}><Mail size={19} /><span><small>{text("HomePage.text.23", "Email us")}</small>{EMAIL}</span></a>
-            <div><MapPin size={19} /><span><small>{text("HomePage.text.24", "Service area")}</small>{text("HomePage.text.25", "Auburn Area / Sydney, NSW")}</span></div>
+            <div><MapPin size={19} /><span><small>{text("HomePage.text.24", "Service area")}</small>{"Sydney, NSW"}</span></div>
           </div>
         </div>
         <PickupForm submitted={submitted} onSubmit={handleSubmit} onReset={() => setSubmitted(false)} />
@@ -125,7 +127,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
               <div className="collect-reference-card" key={name}><div className="collect-reference-icon"><Icon size={24} strokeWidth={1.8} /></div><span>{name}</span></div>
             ))}
           </div>
-          <div className="collect-reference-note">{text("HomePage.text.43", "Don't see your item? We accept almost all electronic equipment. Contact us to confirm — we're happy to help!")}</div>
+          <div className="collect-reference-note"><><strong>Can’t find your equipment listed?</strong><span> We accept a wide range of electronic and IT equipment. Get in touch with our team to confirm your items and discuss collection options.</span></></div>
         </div>
         <div className="collect-reference-visual">
           <div className="collect-reference-poster"><img loading="lazy" decoding="async" src={text("HomePage.image.51", "/assets/images/client-ewaste-4.jpg")} alt={text("HomePage.alt.49", "Donna\u2019s IT Solutions e-waste recycling poster showing computers, monitors, printers and accessories")} /></div>
@@ -134,7 +136,6 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
         </div>
       </div>
     </section>
-    {getVideos().some(v => youtubeId(v.url)) && <section className="section" id="videos"><div className="container"><div className="eyebrow">WATCH OUR WORK</div><h2>See Donna’s IT Solutions in action</h2><div className="donna-video-grid">{getVideos().map((video, i) => { const id = youtubeId(video.url); return id ? <article className="donna-video" key={i}><div className="donna-video-frame"><iframe src={`https://www.youtube-nocookie.com/embed/${id}`} title={video.title || `Video ${i+1}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /></div></article> : null; })}</div></div></section>}
     <section className="section donna-reviews" id="reviews"><div className="container"><div className="eyebrow">CUSTOMER FEEDBACK</div><h2>What our customers say</h2><div className="donna-review-grid">{getReviews().map((review,i)=><blockquote className="donna-review" key={i}><div aria-label="5 out of 5 stars" className="donna-review-stars">★★★★★</div><p>“{review.quote}”</p><footer>— {review.name}</footer></blockquote>)}</div><a className="button button-gold" href={getGoogleReviewsUrl()} target="_blank" rel="noopener noreferrer">Read our Google reviews <ArrowRight size={17}/></a></div></section>
     {getExtraSections().map((section, i) => <section className="section" key={i}><div className="container free-pickup-layout"><div className="free-pickup-copy"><h2>{section.title}</h2><p style={{ whiteSpace: 'pre-line' }}>{section.text}</p></div>{section.image && <img className="free-pickup-truck" src={section.image} alt={section.title} loading="lazy" />}</div></section>)}
   </main>;
