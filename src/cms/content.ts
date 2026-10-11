@@ -9,7 +9,6 @@ export const defaultCollectionPhotos: Record<string, string> = {
   'Mobile Phones': 'https://images.unsplash.com/photo-1665576847080-04dc28fde1bb?w=480&q=80&auto=format',
   'Cables & Wires': 'https://images.unsplash.com/photo-1640108176177-55d9418bc54e?w=480&q=80&auto=format',
   'Hard Drives': 'https://images.unsplash.com/photo-1601737487795-dab272f52420?w=480&q=80&auto=format',
-  'Servers & Racks': 'https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=480&q=80&auto=format',
   'Tablets': 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=480&q=80&auto=format',
   'Cameras': 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=480&q=80&auto=format',
   'Headsets & Audio': 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=480&q=80&auto=format',
