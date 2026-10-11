@@ -1,5 +1,5 @@
 import {
-  Building2, Cable, Computer, Database, HardDrive, Laptop, Monitor, Router, School, Server, ShieldCheck, Smartphone, type LucideIcon,
+  Building2, Cable, Computer, Database, HardDrive, Laptop, Monitor, Router, School, ShieldCheck, Smartphone, type LucideIcon,
 } from 'lucide-react';
 
 export interface CollectibleItem {
@@ -105,7 +105,6 @@ export let services: ServiceDetail[] = [
     collectItems: [
       { name: 'Computers & PCs', icon: Computer },
       { name: 'Monitors', icon: Monitor },
-      { name: 'Servers & racks', icon: Server },
       { name: 'Networking equipment', icon: Router },
       { name: 'Cables', icon: Cable },
       { name: 'Other electronic waste', icon: HardDrive },
@@ -122,21 +121,19 @@ export let services: ServiceDetail[] = [
     number: '04',
     eyebrow: 'IT ASSET DISPOSAL',
     title: 'Secure ITAD',
-    shortText: 'Servers, networking equipment and redundant business hardware.',
+    shortText: 'Networking equipment and redundant business hardware.',
     icon: Database,
     heroImage: 'https://images.pexels.com/photos/17489151/pexels-photo-17489151.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800',
     seoTitle: 'Secure IT Asset Disposal Sydney | Donna\u2019s IT Solution',
-    metaDescription: 'Secure IT asset disposal (ITAD) in Sydney. Servers, networking equipment and redundant business hardware collected and handled with care.',
+    metaDescription: 'Secure IT asset disposal (ITAD) in Sydney. Networking equipment and redundant business hardware collected and handled with care.',
     aboutTitle: 'About our secure IT asset disposal',
     aboutText: [
-      'IT asset disposal involves the careful removal and handling of business hardware that may have contained sensitive data or been part of critical infrastructure. Donna\u2019s IT Solution provides a collection service for servers, networking equipment and redundant business hardware across Sydney.',
+      'IT asset disposal involves the careful removal and handling of business hardware that may have contained sensitive data or been part of critical infrastructure. Donna\u2019s IT Solution provides a collection service for networking equipment and redundant business hardware across Sydney.',
       'We understand that disposing of IT assets requires careful handling. We discuss your requirements in advance so the collection is planned and managed appropriately.',
       'Collected IT assets are directed to responsible recycling pathways, keeping redundant hardware out of landfill.',
     ],
     collectItems: [
-      { name: 'Servers', icon: Server },
       { name: 'Networking equipment', icon: Router },
-      { name: 'Rack-mounted hardware', icon: Database },
       { name: 'Cables', icon: Cable },
       { name: 'Storage devices', icon: HardDrive },
       { name: 'Other IT hardware', icon: Computer },
@@ -146,7 +143,7 @@ export let services: ServiceDetail[] = [
       { src: '/assets/images/client-ewaste-4.jpg', alt: 'Donna’s IT Solutions free e-waste collection artwork with collection truck, computer equipment and electronics', fit: 'contain' },
       { src: '/assets/images/client-ewaste-5.jpg', alt: 'Donna’s IT Solutions recycling and disposal services brochure with secure data handling information', fit: 'contain' },
     ],
-    whoFor: ['Businesses decommissioning servers', 'Data centre operators', 'Companies with networking infrastructure', 'Organisations upgrading IT systems'],
+    whoFor: ['Businesses replacing IT hardware', 'Data centre operators', 'Companies with networking infrastructure', 'Organisations upgrading IT systems'],
   },
   {
     slug: 'secure-data-destruction',
@@ -169,7 +166,6 @@ export let services: ServiceDetail[] = [
       { name: 'Laptops', icon: Laptop },
       { name: 'Desktop computers', icon: Computer },
       { name: 'Mobile devices', icon: Smartphone },
-      { name: 'Servers', icon: Server },
       { name: 'Other storage devices', icon: ShieldCheck },
     ],
     galleryImages: [
