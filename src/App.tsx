@@ -6,13 +6,14 @@ import { getServiceBySlug } from '@/data/services';
 import { getLegalPage } from '@/cms/content';
 
 function parsePath(): string {
-  const hash = window.location.hash.replace(/^#/, '');
-  return hash || '/';
+  return window.location.pathname || '/';
 }
 
 function navigate(path: string) {
-  window.location.hash = path;
-  const anchor = path.split('#')[1];
+  const [pathname, anchor] = path.split('#');
+  const target = pathname || '/';
+  window.history.pushState({}, '', target + (anchor ? '#' + anchor : ''));
+  window.dispatchEvent(new PopStateEvent('popstate'));
   if (anchor) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth' }));
   else window.scrollTo(0, 0);
 }
@@ -21,7 +22,7 @@ function LegalPage({ kind }: { kind: 'privacyPolicy' | 'termsConditions' }) {
   const title = kind === 'privacyPolicy' ? 'Privacy Policy' : 'Terms & Conditions';
   const body = getLegalPage(kind).trim();
   return <main className="legal-page"><div className="container legal-page-inner">
-    <a className="legal-back" href="#/">← Back to home</a>
+    <a className="legal-back" href="/">← Back to home</a>
     <h1>{title}</h1>
     {body ? <div className="legal-copy">{body.split(/\n\s*\n/).map((paragraph, i) =>
       <p key={i}>{paragraph}</p>
@@ -33,13 +34,19 @@ export default function App() {
   const [path, setPath] = useState(parsePath());
 
   useEffect(() => {
-    function onHashChange() { setPath(parsePath()); }
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+    function onLocationChange() { setPath(parsePath()); }
+    // Preserve old bookmarked hash routes without leaving duplicate URLs.
+    const legacy = window.location.hash.match(/^#(\/services\/[a-z0-9-]+|\/privacy-policy|\/terms-and-conditions)$/);
+    if (legacy) {
+      window.history.replaceState({}, '', legacy[1]);
+      setPath(parsePath());
+    }
+    window.addEventListener('popstate', onLocationChange);
+    return () => window.removeEventListener('popstate', onLocationChange);
   }, []);
 
   useEffect(() => {
-    const anchor = path.split('#')[1];
+    const anchor = window.location.hash.slice(1);
     if (anchor) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView());
     else window.scrollTo(0, 0);
   }, [path]);
@@ -57,9 +64,10 @@ export default function App() {
     if (ogTitle) ogTitle.content = title;
     const ogDescription = document.querySelector<HTMLMetaElement>('meta[property="og:description"]');
     if (ogDescription) ogDescription.content = description;
-    // Hash-routed pages share one server URL; canonicalize to the crawlable homepage.
+    const ogUrl = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
+    if (ogUrl) ogUrl.content = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' ? path : '/');
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (canonical) canonical.href = 'https://donnasitsolutions.com.au/';
+    if (canonical) canonical.href = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' ? path : '/');
   }, [path, service]);
 
   let content;
