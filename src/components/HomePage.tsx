@@ -3,7 +3,7 @@ import { FormEvent, useState, type CSSProperties } from 'react';
 import {
   ArrowRight, Battery, Cable, Camera, Earth, Headphones,
   HardDrive, Laptop, Mail, MapPin, Monitor, Phone, Recycle,
-  Server, ShieldCheck, Smartphone, Tablet,
+  ShieldCheck, Smartphone, Tablet,
 } from 'lucide-react';
 import { PickupForm } from './PickupForm';
 import { PHONE, PHONE_TEL, EMAIL, whatsappLink } from '@/cms/contact';
@@ -15,7 +15,7 @@ const defaultHeroImage = 'https://images.pexels.com/photos/8353774/pexels-photo-
 
 const collectItems = [
   { name: 'Laptops', icon: Laptop }, { name: 'Desktops & Monitors', icon: Monitor }, { name: 'Mobile Phones', icon: Smartphone },
-  { name: 'Cables & Wires', icon: Cable }, { name: 'Hard Drives', icon: HardDrive }, { name: 'Servers & Racks', icon: Server },
+  { name: 'Cables & Wires', icon: Cable }, { name: 'Hard Drives', icon: HardDrive },
  { name: 'Tablets', icon: Tablet }, { name: 'Cameras', icon: Camera },
   { name: 'Headsets & Audio', icon: Headphones }, { name: 'Batteries & UPS', icon: Battery },
 ];
@@ -123,7 +123,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
           <h2>{text("HomePage.text.40", "We Recycle All IT &")}<br />{text("HomePage.text.41", "Electronic Equipment")}</h2>
           <p className="collect-reference-intro">{text("HomePage.text.42", "From a single old laptop to an entire office of outdated equipment, we accept all types of IT technology for recycling. Don't see your item listed? Just ask — chances are we can take it.")}</p>
           <div className="collect-reference-cards">
-            {getCollectionItems(collectItems).filter(item => !/\b(printers?|scanners?)\b|^circuit boards?\.?$/i.test(item.name.trim())).map(({ name, icon: Icon, image }) => (
+            {getCollectionItems(collectItems).filter(item => !/\b(printers?|scanners?|servers?)\b|\bracks?\b|^circuit boards?\.?$/i.test(item.name.trim())).map(({ name, icon: Icon, image }) => (
               <div className="collect-reference-card" key={name}>
                 <div className={image ? "collect-reference-photo" : "collect-reference-icon"}>
                   {image ? <>
