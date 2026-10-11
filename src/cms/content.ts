@@ -22,19 +22,12 @@ export function applyContent(content: Partial<SiteContent>) { current = content;
 export function text(key: string, fallback: string) { return current.texts?.[key] ?? fallback; }
 export function getCollectionItems(fallback: { name: string; icon: LucideIcon }[]) {
   const items = current.collectionItems ?? fallback;
-  return items.map((item) => {
-    // Migrate the broken Circuit Boards image from the earlier release,
-    // without overriding any photo the client has uploaded themselves.
-    const oldCircuitPhoto = 'photo-1697071328078-9ec9dc58661a';
-    const oldPhotoIds: Record<string, string> = {
-      'Tablets': 'photo-1646494735075-db74d6df917d',
-      'Cameras': 'photo-1680712409129-0d0bd0fe729e'
-    };
-    const shouldRefresh = (item.name === 'Circuit Boards' && (!item.image || item.image.includes(oldCircuitPhoto)))
-      || (oldPhotoIds[item.name] && (!item.image || item.image.includes(oldPhotoIds[item.name])));
-    const image = shouldRefresh ? defaultCollectionPhotos[item.name] : (item.image === undefined ? defaultCollectionPhotos[item.name] : item.image);
-    return { ...item, image, icon: fallback.find((original) => original.name === item.name)?.icon || Computer };
-  });
+  return items.map((item) => ({
+    ...item,
+    // An empty image is an intentional removal in admin. Never restore stock photos.
+    image: item.image ?? (current.collectionItems ? '' : (defaultCollectionPhotos[item.name] || '')),
+    icon: fallback.find((original) => original.name === item.name)?.icon || Computer,
+  }));
 }
 export function getProcessSteps(fallback: string[][]) { return current.processSteps ?? fallback; }
 
