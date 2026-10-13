@@ -110,10 +110,20 @@ export default { async fetch(request, env) {
       outbound.set('_replyto', data.email);
       for (const [field, value] of Object.entries(data)) outbound.set(field, value);
       if (attachment instanceof File && attachment.size) outbound.set('attachment', attachment, emailAttachment.filename);
-      const sent = await fetch('https://formsubmit.co/ajax/info@donnasitsolutions.com.au', { method: 'POST', headers: { Accept: 'application/json' }, body: outbound });
-      if (!sent.ok) return json({ error: 'We could not send your enquiry by email. Please try again or call us.' }, 502);
+      const sent = await fetch('https://formsubmit.co/ajax/info@donnasitsolutions.com.au', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          Referer: 'https://donnasitsolutions.com.au/',
+          Origin: 'https://donnasitsolutions.com.au',
+        },
+        body: outbound,
+      });
       const delivery = await sent.json().catch(() => null);
-      if (!delivery || delivery.success === false || delivery.success === 'false') return json({ error: 'Email service did not confirm delivery. Please try again or call us.' }, 502);
+      if (!sent.ok || !delivery || delivery.success !== true && delivery.success !== 'true') {
+        console.error('FormSubmit enquiry delivery failed', { status: sent.status, reason: typeof delivery?.message === 'string' ? delivery.message.slice(0, 200) : 'No valid success response' });
+        return json({ error: 'We could not send your enquiry by email. Please try again or call us.' }, 502);
+      }
       await env.SITE_CONTENT.put('enquiry:' + id, JSON.stringify({ ...data, attachmentName: emailAttachment?.filename || '', id, createdAt: new Date().toISOString(), status: 'Emailed' }));
       await env.SITE_CONTENT.put('enquiry-rate:' + ip, '1', { expirationTtl: 60 });
       return json({ ok: true });
