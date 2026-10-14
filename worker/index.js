@@ -16,7 +16,7 @@ async function seoPage(request, env, path) {
   const response = await env.ASSETS.fetch(new Request(new URL('/', request.url), request));
   if (!response.ok) return response;
   let html = await response.text();
-  const title = service?.title || (path === '/privacy-policy' ? 'Privacy Policy | Donna’s IT Solutions' : 'Terms & Conditions | Donna’s IT Solutions');
+  const title = service?.title || (path === '/privacy-policy' ? 'Privacy Policy | Donna’s IT Solutions' : path === '/partners' ? 'E-Waste Referral Partners Sydney | Donna’s IT Solutions' : 'Terms & Conditions | Donna’s IT Solutions');
   const description = service?.description || 'Donna’s IT Solutions provides responsible e-waste collection across Sydney.';
   html = html.replace(/<title>[^<]*<\/title>/, '<title>' + escapeSeo(title) + '</title>')
     .replace(/(<meta name="description" content=")[^"]*(")/, '$1' + escapeSeo(description) + '$2')
@@ -58,7 +58,7 @@ function validContent(c) {
 }
 export default { async fetch(request, env) {
   const url = new URL(request.url), path = url.pathname;
-  if (request.method === 'GET' && (path.startsWith('/services/') || path === '/privacy-policy' || path === '/terms-and-conditions')) return seoPage(request, env, path);
+  if (request.method === 'GET' && (path.startsWith('/services/') || path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners')) return seoPage(request, env, path);
   if (!path.startsWith('/api/') && !path.startsWith('/media/')) return env.ASSETS.fetch(request);
   if (!env.SITE_CONTENT) return json({ error: 'Storage is not configured. Add the SITE_CONTENT KV binding in Cloudflare.' }, 503);
   try {
