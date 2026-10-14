@@ -91,6 +91,17 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
       </div>
     </section>
 
+    <section className="section donna-about" id="about" aria-labelledby="about-heading">
+      <div className="container donna-about-inner">
+        <div className="eyebrow">ABOUT DONNA’S IT SOLUTIONS</div>
+        <h2 id="about-heading">Practical e-waste collection for Sydney businesses</h2>
+        <p>Donna’s IT Solutions helps businesses, schools and organisations across Sydney arrange collection of unwanted computers, electronics and workplace IT equipment. We aim to make the process straightforward, from the first enquiry through to coordinating the pickup.</p>
+        <p>Whether you are clearing out an office, updating equipment or organising a larger collection, tell us what you have and where it is located. We will discuss the items, quantities and suitable collection arrangements with you.</p>
+        <p>For equipment that may contain confidential information, please ask us about available data-handling and destruction options before collection.</p>
+        <a className="button button-gold" href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Discuss a collection <ArrowRight size={17}/></a>
+      </div>
+    </section>
+
     <section className="simple-process section" id="how-it-works">
       <div className="container">
         <div className="simple-process-heading"><div className="eyebrow">{text("HomePage.text.31", "HOW IT WORKS")}</div><h2>{text("HomePage.text.32", "SIMPLE PROCESS.")}<br /><span>{text("HomePage.text.33", "NO HASSLE.")}</span></h2></div>
