@@ -11,8 +11,8 @@ export function PartnerPage() {
   try{const r=await fetch('/api/enquiries',{method:'POST',body:data});const j=await r.json();if(!r.ok)throw Error(j.error||'Unable to send enquiry');setDone(true);}
   catch(err){setError((err as Error).message);}finally{setBusy(false);}
  }
- return <main className="legal-page partner-page"><div className="container legal-page-inner">
- <a className="legal-back" href="/">← Back to home</a><div className="eyebrow">PARTNER WITH US</div>
+ return <main className="partner-page"><div className="container partner-container">
+ <a className="partner-back" href="/">← Back to home</a><div className="eyebrow">PARTNER WITH US</div>
  <h1>Refer an e-waste collection opportunity</h1>
  <p className="partner-intro">Donna’s IT Solutions welcomes enquiries from Sydney IT providers, office relocation teams, facilities managers and other businesses looking for help with unwanted computers and IT equipment.</p>
  <div className="partner-benefits"><article><h2>Who we work with</h2><p>Managed IT providers, commercial removalists, fit-out companies, schools and facilities teams.</p></article><article><h2>How referrals work</h2><p>Tell us about your business and the equipment involved. We will discuss collection suitability and next steps directly.</p></article><article><h2>Clear arrangements</h2><p>Submitting this form does not guarantee collection or create an exclusive partnership. Any fees or referral arrangements must be agreed separately.</p></article></div>
