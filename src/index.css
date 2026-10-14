@@ -545,3 +545,11 @@ img { max-width: 100%; }
   background:linear-gradient(180deg,rgba(5,18,11,.28) 0%,rgba(5,18,11,.63) 40%,rgba(5,18,11,.96) 100%);
  }
 }
+
+/* About section */
+.donna-about{background:#f4f8f5}
+.donna-about-inner{max-width:900px}
+.donna-about h2{max-width:760px;font:800 clamp(28px,3.5vw,44px)/1.18 'Manrope',sans-serif;color:var(--deep);margin:14px 0 24px}
+.donna-about p{font-size:clamp(15px,1.5vw,17px);line-height:1.85;color:#42524b;margin:0 0 17px}
+.donna-about .button{margin-top:16px}
+.legal-copy p{white-space:pre-line}
