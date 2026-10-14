@@ -553,3 +553,22 @@ img { max-width: 100%; }
 .donna-about p{font-size:clamp(15px,1.5vw,17px);line-height:1.85;color:#42524b;margin:0 0 17px}
 .donna-about .button{margin-top:16px}
 .legal-copy p{white-space:pre-line}
+
+/* Business referral partnership landing page */
+.partner-intro{font-size:18px;line-height:1.8;color:#45564c;max-width:790px;margin:0 0 28px}
+.partner-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:30px 0}
+.partner-benefits article,.partner-form-panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px}
+.partner-benefits h2,.partner-form-panel h2{font:800 21px/1.3 'Manrope',sans-serif;color:var(--deep);margin:0 0 12px}
+.partner-benefits p{line-height:1.7;color:#526258;margin:0}
+.partner-form{display:grid;gap:17px}
+.partner-form-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.partner-form label{display:grid;gap:7px;font-weight:650;color:var(--deep)}
+.partner-form input,.partner-form select,.partner-form textarea{width:100%;padding:12px 14px;border:1px solid #ccd7cf;border-radius:8px;background:#fff;color:#24352b;font:inherit;box-sizing:border-box}
+.partner-form input:focus,.partner-form select:focus,.partner-form textarea:focus{outline:2px solid var(--green);outline-offset:1px}
+.partner-form .partner-honeypot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.partner-form .button{justify-self:start}
+.partner-privacy{font-size:13px;color:#536259;margin:0}
+.partner-privacy a,.partner-contact a{color:var(--green);text-decoration:underline}
+.partner-contact{margin-top:24px;line-height:1.7}
+.partner-error{color:#a32424}
+@media(max-width:700px){.partner-benefits,.partner-form-row{grid-template-columns:1fr}.partner-benefits article,.partner-form-panel{padding:20px}.partner-intro{font-size:16px}}
