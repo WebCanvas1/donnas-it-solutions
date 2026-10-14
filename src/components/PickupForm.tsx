@@ -9,7 +9,16 @@ export function PickupForm({ submitted, onSubmit, onReset }: { submitted: boolea
     event.preventDefault(); const form = event.currentTarget;
     setPending(true); setError('');
     try {
-      const response = await fetch('/api/enquiries', { method: 'POST', body: new FormData(form) });
+      const payload = new FormData(form);
+      const query = new URLSearchParams(window.location.search);
+      const allowed = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ref'];
+      for (const key of allowed) {
+        const value = query.get(key);
+        if (value) payload.set(key, value.slice(0, 150));
+      }
+      payload.set('landing_page', window.location.pathname);
+      payload.set('referrer_host', (() => { try { return document.referrer ? new URL(document.referrer).hostname : ''; } catch { return ''; } })());
+      const response = await fetch('/api/enquiries', { method: 'POST', body: payload });
       const result = await response.json(); if (!response.ok) throw new Error(result.error || 'Unable to submit enquiry');
       onSubmit(event);
     } catch (e) { setError((e as Error).message); } finally { setPending(false); }
