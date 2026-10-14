@@ -88,6 +88,10 @@ export default { async fetch(request, env) {
         if (typeof value !== 'string' || value.length > 3000) return json({ error: 'Invalid enquiry details.' }, 400);
         data[field] = value.trim();
       }
+      for (const field of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ref','landing_page','referrer_host','lead_type']) {
+        const value = form.get(field);
+        data[field] = typeof value === 'string' ? value.slice(0, 150).trim() : '';
+      }
       if (!['name','email','phone','address','items'].every(k => data[k]) || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) return json({ error: 'Please complete the required fields.' }, 400);
       const attachment = form.get('attachment');
       let emailAttachment;
@@ -108,7 +112,7 @@ export default { async fetch(request, env) {
       }
       const id = new Date().toISOString() + ':' + crypto.randomUUID();
       const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
-      const fieldLabels = { name: 'Full name', email: 'Email', phone: 'Phone', address: 'Pickup address / suburb', items: 'Items to collect', organisation: 'Business / organisation', type: 'Customer type', quantity: 'Approximate quantity', date: 'Preferred pickup date', message: 'Additional information' };
+      const fieldLabels = { lead_type: 'Enquiry type', utm_source: 'Marketing source', utm_medium: 'Marketing medium', utm_campaign: 'Campaign', utm_content: 'Campaign content', utm_term: 'Search term', ref: 'Referral code', landing_page: 'Landing page', referrer_host: 'Referring website', name: 'Full name', email: 'Email', phone: 'Phone', address: 'Pickup address / suburb', items: 'Items to collect', organisation: 'Business / organisation', type: 'Customer type', quantity: 'Approximate quantity', date: 'Preferred pickup date', message: 'Additional information' };
       const rows = Object.entries(fieldLabels).map(([key, label]) => '<tr><th style="text-align:left;padding:9px;border-bottom:1px solid #ddd;vertical-align:top">' + escapeHtml(label) + '</th><td style="padding:9px;border-bottom:1px solid #ddd;white-space:pre-wrap">' + escapeHtml(data[key]) + '</td></tr>').join('');
       const payload = {
         from: 'Donna\'s IT Solutions <enquiries@donnasitsolutions.com.au>',
