@@ -597,3 +597,8 @@ img { max-width: 100%; }
 .partner-page .partner-contact{font-size:14px;line-height:1.7;color:#53645a;margin:22px 0 0}
 .partner-page .partner-error{font-size:14px;color:#ae2929}
 @media(max-width:760px){.partner-page{padding:32px 16px 65px}.partner-page .partner-benefits,.partner-page .partner-form-row{grid-template-columns:1fr}.partner-page .partner-benefits{gap:12px}.partner-page .partner-benefits article{padding:22px}.partner-page .partner-form-panel{padding:22px}.partner-page .partner-intro{font-size:15px}}
+
+/* Social profile links */
+.site-footer .footer-socials{display:flex;flex-direction:row;align-items:center;gap:12px;margin-top:16px}
+.site-footer .footer-socials a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid rgba(255,255,255,.25);border-radius:50%;color:inherit;transition:background .2s,border-color .2s}
+.site-footer .footer-socials a:hover,.site-footer .footer-socials a:focus-visible{background:rgba(255,255,255,.14);border-color:currentColor}
