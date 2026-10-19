@@ -18,7 +18,7 @@ export const defaultCollectionPhotos: Record<string, string> = {
 export const defaultTexts: Record<string, string> = { ...defaults, 'Settings.logo': '/assets/images/image.png' };
 let current: Partial<SiteContent> = {};
 export function applyContent(content: Partial<SiteContent>) { current = content; }
-export function text(key: string, fallback: string) { return current.texts?.[key] ?? fallback; }
+export function text(key: string, fallback: string) { const value = current.texts?.[key] ?? fallback; return key === 'HomePage.text.1' ? value.replace(/sydn(?:y|ey)/gi, 'Sydney').replace(/\bEQUIPMENTS\b/gi, 'EQUIPMENT') : value; }
 export function getCollectionItems(fallback: { name: string; icon: LucideIcon }[]) {
   const items = current.collectionItems ?? fallback;
   return items.map((item) => ({
