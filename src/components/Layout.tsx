@@ -1,7 +1,7 @@
 import { text } from '@/cms/content';
 import { useState } from 'react';
 import {
-  ArrowRight, ChevronDown, Menu, Phone, X,
+  ArrowRight, ChevronDown, Menu, Phone, X, Facebook, Instagram, Youtube,
 } from 'lucide-react';
 import { PHONE, PHONE_TEL, EMAIL } from '@/cms/contact';
 import { BrandMark } from './shared';
@@ -81,6 +81,11 @@ export function Footer({ onNavigate }: { onNavigate: (path: string) => void }) {
         <a href={`tel:${PHONE_TEL}`}>{PHONE}</a>
         <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
         <span>{"Sydney, NSW"}</span>
+        <div className="footer-socials" aria-label="Social media">
+          <a href="https://www.facebook.com/profile.php?id=100086501537923" target="_blank" rel="noopener noreferrer" aria-label="Donna's IT Solutions on Facebook" title="Facebook"><Facebook size={20}/></a>
+          <a href="https://www.instagram.com/donnasitsolutions/" target="_blank" rel="noopener noreferrer" aria-label="Donna's IT Solutions on Instagram" title="Instagram"><Instagram size={20}/></a>
+          <a href="https://www.youtube.com/@EWasteRecyclingsydney" target="_blank" rel="noopener noreferrer" aria-label="Donna's IT Solutions on YouTube" title="YouTube"><Youtube size={20}/></a>
+        </div>
       </div>
       <div>
         <h4>{text("Layout.text.17", "Start a conversation")}</h4>
