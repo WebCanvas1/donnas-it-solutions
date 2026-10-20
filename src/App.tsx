@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Header, Footer } from '@/components/Layout';
 import { HomePage } from '@/components/HomePage';
 import { PartnerPage } from '@/components/PartnerPage';
+import { FAQPage, AcceptedItemsPage, ContactPage, ServiceAreasPage } from '@/components/ResourcePages';
 import { ServicePage } from '@/components/ServicePage';
 import { getServiceBySlug } from '@/data/services';
 import { getLegalPage } from '@/cms/content';
@@ -76,6 +77,14 @@ export default function App() {
     content = <LegalPage kind={path === '/privacy-policy' ? 'privacyPolicy' : 'termsConditions'} />;
   } else if (path === '/partners') {
     content = <PartnerPage />;
+  } else if (path === '/faq') {
+    content = <FAQPage />;
+  } else if (path === '/what-we-accept') {
+    content = <AcceptedItemsPage />;
+  } else if (path === '/contact') {
+    content = <ContactPage />;
+  } else if (path === '/service-areas') {
+    content = <ServiceAreasPage />;
   } else if (service) {
     content = <ServicePage service={service} onNavigate={navigate} />;
   } else {
