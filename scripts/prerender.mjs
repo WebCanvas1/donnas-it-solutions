@@ -28,6 +28,7 @@ try {
   globalThis.window = { location: { pathname: '/', hash: '', search: '' } };
   const { default: App } = await server.ssrLoadModule('/src/App.tsx');
   const { services } = await server.ssrLoadModule('/src/data/services.ts');
+  const { faqs } = await server.ssrLoadModule('/src/components/ResourcePages.tsx');
   const React = await import('react');
   const template = await readFile('dist/index.html','utf8');
   for (const route of routes) {
@@ -43,6 +44,10 @@ try {
     html = html.replace(/(<meta property="og:title" content=")[^"]*(" \/>)/, '$1' + escapeAttr(title) + '$2');
     html = html.replace(/(<meta property="og:description" content=")[^"]*(" \/>)/, '$1' + escapeAttr(description) + '$2');
     html = html.replace(/(<meta property="og:url" content=")[^"]*(" \/>)/, '$1' + url + '$2');
+    if (route === '/faq') {
+      const faqSchema = JSON.stringify({ '@context':'https://schema.org', '@type':'FAQPage', mainEntity: faqs.map(([name,text])=>({ '@type':'Question', name, acceptedAnswer: { '@type':'Answer', text } })) });
+      html = html.replace('</head>', '<script type="application/ld+json">' + faqSchema + '</script></head>');
+    }
     if (service) {
       const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Service', name: service.title, description: service.metaDescription, serviceType: service.title, areaServed: { '@type': 'Place', name: 'Sydney, NSW' }, provider: { '@id': base + '/#business' }, url });
       html = html.replace('</head>', '<script type="application/ld+json">' + schema + '</script></head>');
