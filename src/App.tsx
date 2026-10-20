@@ -59,17 +59,25 @@ export default function App() {
   useEffect(() => {
     const title = service?.seoTitle || (path === '/privacy-policy' ? 'Privacy Policy | Donna’s IT Solutions' : path === '/terms-and-conditions' ? 'Terms & Conditions | Donna’s IT Solutions' : path === '/partners' ? 'E-Waste Referral Partners Sydney | Donna’s IT Solutions' : 'E-Waste Collection & Computer Recycling Sydney | Donna’s IT Solutions');
     const description = service?.metaDescription || (path === '/privacy-policy' ? 'How Donna’s IT Solutions collects, uses and protects personal information submitted through website enquiries in Sydney.' : path === '/terms-and-conditions' ? 'Terms and conditions for e-waste collection, computer recycling and data handling enquiries with Donna’s IT Solutions.' : path === '/partners' ? 'Partner with Donna’s IT Solutions for Sydney e-waste collection referrals. Enquire about business IT equipment pickup opportunities.' : 'Donna’s IT Solutions provides e-waste collection and recycling for businesses, schools and organisations across Sydney. Enquire about an electronic waste pickup.');
-    document.title = title;
+    const pageMeta: Record<string, [string,string]> = {
+      '/faq': ['E-Waste Collection FAQs Sydney | Donna’s IT Solutions', 'Answers to common questions about business e-waste collection in Sydney, including accepted equipment, pickup arrangements and data handling.'],
+      '/what-we-accept': ['What E-Waste Can We Collect? | Donna’s IT Solutions', 'See examples of computers, monitors, cables and workplace IT equipment you can enquire about for e-waste collection in Sydney.'],
+      '/contact': ['Contact & Book E-Waste Pickup | Donna’s IT Solutions', 'Contact Donna’s IT Solutions for business and school e-waste collection enquiries across Sydney. Tell us your items, suburb and preferred date.'],
+      '/service-areas': ['Sydney E-Waste Collection Areas | Donna’s IT Solutions', 'Explore Sydney areas where you can enquire about business and school e-waste collection. Contact our team to confirm local pickup availability.'],
+    };
+    const resolvedTitle = pageMeta[path]?.[0] || title;
+    const resolvedDescription = pageMeta[path]?.[1] || description;
+    document.title = resolvedTitle;
     const meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    if (meta) meta.content = description;
+    if (meta) meta.content = resolvedDescription;
     const ogTitle = document.querySelector<HTMLMetaElement>('meta[property="og:title"]');
-    if (ogTitle) ogTitle.content = title;
+    if (ogTitle) ogTitle.content = resolvedTitle;
     const ogDescription = document.querySelector<HTMLMetaElement>('meta[property="og:description"]');
-    if (ogDescription) ogDescription.content = description;
+    if (ogDescription) ogDescription.content = resolvedDescription;
     const ogUrl = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
-    if (ogUrl) ogUrl.content = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners' ? path : '/');
+    if (ogUrl) ogUrl.content = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners' || !!pageMeta[path] ? path : '/');
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (canonical) canonical.href = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners' ? path : '/');
+    if (canonical) canonical.href = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners' || !!pageMeta[path] ? path : '/');
   }, [path, service]);
 
   let content;
