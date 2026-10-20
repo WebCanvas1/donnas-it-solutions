@@ -69,6 +69,10 @@ export function Footer({ onNavigate }: { onNavigate: (path: string) => void }) {
         <a href="/#about" onClick={(e) => handleNavClick(e, '/#about')}>About us</a>
         <a href="/#contact" onClick={(e) => handleNavClick(e, '/#contact')}>{text("Layout.text.13", "Contact")}</a>
         <a href="/partners" onClick={(e) => handleNavClick(e, '/partners')}>Referral partners</a>
+        <a href="/faq" onClick={(e) => handleNavClick(e, '/faq')}>FAQs</a>
+        <a href="/what-we-accept" onClick={(e) => handleNavClick(e, '/what-we-accept')}>What we accept</a>
+        <a href="/service-areas" onClick={(e) => handleNavClick(e, '/service-areas')}>Service areas</a>
+        <a href="/contact" onClick={(e) => handleNavClick(e, '/contact')}>Book a pickup</a>
       </div>
       <div>
         <h4>{text("Layout.text.14", "Services")}</h4>
