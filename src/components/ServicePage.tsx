@@ -42,7 +42,7 @@ export function ServicePage({ service }: { service: ServiceDetail; onNavigate: (
         <div className="enquiry-copy">
           <div className="eyebrow">{text("ServicePage.text.3", "GET STARTED")}</div>
           <h2>{text("ServicePage.text.4", "Have items ready for collection?")}</h2>
-          <p>{text("ServicePage.text.5", "Get in touch with Donna’s IT Solution and arrange your collection today.")}</p>
+          <p>{text("ServicePage.text.5", "Get in touch with Donna’s IT Solutions and arrange your collection today.")}</p>
           <div className="contact-details">
             <a href={`tel:${PHONE_TEL}`}><Phone size={19} /><span><small>{text("ServicePage.text.6", "Call us")}</small>{PHONE}</span></a>
             <a href={`mailto:${EMAIL}`}><Mail size={19} /><span><small>{text("ServicePage.text.7", "Email us")}</small>{EMAIL}</span></a>
