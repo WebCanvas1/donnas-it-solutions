@@ -3,7 +3,7 @@ import { PickupForm } from './PickupForm';
 import { EMAIL, PHONE, PHONE_TEL, whatsappLink } from '@/cms/contact';
 import { services } from '@/data/services';
 
-const faqs = [
+export const faqs = [
   ['What kinds of electronic waste can I enquire about?', 'We regularly receive enquiries about computers, laptops, monitors, cables, networking hardware and other workplace electronics. Please send an item list so we can confirm collection suitability.'],
   ['Do you collect from businesses and schools?', 'Yes. Our services are designed for offices, schools and organisations in Sydney and surrounding areas. Collection arrangements depend on the equipment and location.'],
   ['How do I arrange a collection?', 'Send a pickup enquiry with the equipment, approximate quantity and suburb. Our team will discuss the next steps with you.'],
