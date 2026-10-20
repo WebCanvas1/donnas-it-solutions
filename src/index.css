@@ -619,3 +619,19 @@ img { max-width: 100%; }
 .resource-contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:35px;align-items:start;margin-top:32px}
 @media(max-width:800px){.resource-page{padding:38px 0 65px}.resource-item-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.resource-contact-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.resource-item-grid{grid-template-columns:1fr}}
+
+/* Guided enquiry assistant and sticky mobile contact */
+.help-widget{position:fixed;right:22px;bottom:22px;z-index:1100;display:flex;flex-direction:column;align-items:flex-end;gap:12px;font-family:inherit}
+.help-toggle{border:0;border-radius:100px;background:#247846;color:#fff;display:flex;align-items:center;gap:9px;padding:13px 19px;box-shadow:0 8px 25px rgba(0,0,0,.24);cursor:pointer;font:700 14px inherit}
+.help-panel{width:min(360px,calc(100vw - 32px));max-height:min(610px,calc(100dvh - 120px));overflow:auto;background:#fff;border:1px solid #d8e5dc;border-radius:16px;box-shadow:0 14px 48px rgba(0,0,0,.2);padding:20px;color:#243d2c}
+.help-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.help-panel-head button{border:0;background:transparent;cursor:pointer}
+.help-panel p{font-size:14px;line-height:1.55;color:#516457;margin:12px 0}
+.help-questions{display:grid;gap:7px}
+.help-questions button{text-align:left;border:1px solid #d9e7de;border-radius:8px;padding:10px 12px;background:#f7faf8;color:#244832;cursor:pointer;font-size:13px}
+.help-panel .help-answer{padding:12px;border-radius:8px;background:#eef6ef;color:#204a2b}
+.help-panel .button{display:block;text-align:center;margin:16px 0 10px}
+.help-whatsapp{display:block;text-align:center;font-size:14px;color:#217245;text-decoration:underline;margin:10px 0}
+.help-panel small{display:block;font-size:11px;line-height:1.5;color:#607269}
+.mobile-contact-bar{display:none}
+@media(max-width:700px){.mobile-contact-bar{display:grid;grid-template-columns:1fr 1fr;position:fixed;bottom:0;left:0;right:0;z-index:1050;background:#fff;box-shadow:0 -3px 18px rgba(0,0,0,.13);padding:8px max(12px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));gap:10px}.mobile-contact-bar a{display:flex;justify-content:center;align-items:center;gap:7px;background:#216b40;color:#fff;text-decoration:none;border-radius:9px;min-height:44px;font-size:14px;font-weight:700}.mobile-contact-bar a:last-child{background:#128c48}.help-widget{bottom:80px;right:12px}.help-toggle{padding:12px 15px}.help-panel{max-height:calc(100dvh - 165px)}.site-footer{padding-bottom:72px}}
