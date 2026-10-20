@@ -25,7 +25,7 @@ export function PickupForm({ submitted, onSubmit, onReset }: { submitted: boolea
   }
   return <form className="pickup-form" onSubmit={submit}>{
     submitted
-      ? <div className="form-success"><div className="success-icon"><Check size={24} /></div><h3>{text("PickupForm.text.1", "Thanks for getting in touch.")}</h3><p>{text("PickupForm.text.2", "Your pickup enquiry is ready to be followed up. Donna’s IT Solution will be in contact using the details you provided.")}</p><button className="text-link" type="button" onClick={onReset}>{text("PickupForm.text.3", "Send another enquiry ")}<ArrowRight size={17} /></button></div>
+      ? <div className="form-success"><div className="success-icon"><Check size={24} /></div><h3>{text("PickupForm.text.1", "Thanks for getting in touch.")}</h3><p>{text("PickupForm.text.2", "Your pickup enquiry is ready to be followed up. Donna’s IT Solutions will be in contact using the details you provided.")}</p><button className="text-link" type="button" onClick={onReset}>{text("PickupForm.text.3", "Send another enquiry ")}<ArrowRight size={17} /></button></div>
       : <>
         <div className="form-header"><h3>{text("PickupForm.text.4", "Request a pickup")}</h3><span>{text("PickupForm.text.5", "All fields marked * are required.")}</span></div>
         <div className="form-row"><label>{text("PickupForm.text.6", "Full name *")}<input required name="name" placeholder={text("PickupForm.placeholder.28", "Your name")} /></label><label>{text("PickupForm.text.7", "Business / organisation")}<input name="organisation" placeholder={text("PickupForm.placeholder.29", "Optional")} /></label></div>
