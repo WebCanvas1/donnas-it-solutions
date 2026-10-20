@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Header, Footer } from '@/components/Layout';
 import { HomePage } from '@/components/HomePage';
 import { PartnerPage } from '@/components/PartnerPage';
+import { EnquiryAssistant } from '@/components/EnquiryAssistant';
 import { FAQPage, AcceptedItemsPage, ContactPage, ServiceAreasPage } from '@/components/ResourcePages';
 import { ServicePage } from '@/components/ServicePage';
 import { getServiceBySlug } from '@/data/services';
@@ -103,6 +104,7 @@ export default function App() {
     <Header onNavigate={navigate} />
     {content}
     <Footer onNavigate={navigate} />
+    <EnquiryAssistant />
   </div>;
 }
 
