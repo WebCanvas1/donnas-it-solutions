@@ -34,7 +34,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
 
   return <main>
     <section className="hero" id="home">
-      <div className="hero-image" style={{ backgroundImage: `url(${text("HomePage.heroImage", defaultHeroImage)})` }} />
+      <img className="hero-image" src={text("HomePage.heroImage", defaultHeroImage)} alt="" fetchPriority="high" loading="eager" decoding="async" />
 
       <div className="hero-overlay" />
       <div className="container hero-content">
