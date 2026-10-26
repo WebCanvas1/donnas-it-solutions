@@ -8,7 +8,7 @@ import { configureContact } from './cms/contact';
 
 async function start() {
   try {
-    const response = await fetch('/api/content');
+    const response = await fetch('/api/content', { signal: AbortSignal.timeout(2500) });
     if (response.ok) {
       const content = await response.json(); applyContent(content);
       if (Array.isArray(content.services)) replaceServices(content.services as typeof defaultServices);
