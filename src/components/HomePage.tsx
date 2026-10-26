@@ -11,7 +11,7 @@ import { WhatsAppIcon } from './shared';
 import { getCollectionItems, getProcessSteps, getExtraSections, getVideos, getReviews, getGoogleReviewsUrl, youtubeId } from '@/cms/content';
 import { services } from '@/data/services';
 
-const defaultHeroImage = 'https://images.pexels.com/photos/8353774/pexels-photo-8353774.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
+const defaultHeroImage = 'https://images.pexels.com/photos/8353774/pexels-photo-8353774.jpeg?auto=compress&cs=tinysrgb&h=800&w=1100';
 
 const collectItems = [
   { name: 'Laptops', icon: Laptop }, { name: 'Desktops & Monitors', icon: Monitor }, { name: 'Mobile Phones', icon: Smartphone },
@@ -34,7 +34,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
 
   return <main>
     <section className="hero" id="home">
-      <img className="hero-image" src={text("HomePage.heroImage", defaultHeroImage)} alt="" fetchPriority="high" loading="eager" decoding="async" />
+      <img className="hero-image" src={text("HomePage.heroImage", defaultHeroImage)} alt="" fetchPriority="high" loading="eager" decoding="async" width={1100} height={800} />
 
       <div className="hero-overlay" />
       <div className="container hero-content">
