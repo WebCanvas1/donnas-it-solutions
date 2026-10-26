@@ -39,8 +39,8 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
       <div className="hero-overlay" />
       <div className="container hero-content">
         <div className="eyebrow eyebrow-light"><span className="eyebrow-dot" />{text("HomePage.text.1", " E-WASTE RECYCLING SYDNEY")}</div>
-        <h1>{text("HomePage.text.2", "E-waste collection")}<br /><em>{text("HomePage.text.3", "for businesses & schools.")}</em></h1>
-        <p>{text("HomePage.text.4", "Responsible electronic waste collection and recycling for businesses, schools and organisations across Sydney.")}</p>
+        <h1>{text("HomePage.text.2", "E-waste recycling & collection")}<br /><em>{text("HomePage.text.3", "for businesses & schools.")}</em></h1>
+        <p>{text("HomePage.text.4", "Donna’s IT Solutions provides e-waste recycling, e-waste collection and electronic waste recycling for businesses, schools and organisations across Sydney. Enquire about responsible collection of unwanted computers, laptops, monitors and office electronics.")}</p>
         <div className="hero-actions">
           <a className="button button-gold" href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>{"Book Free Pickup"}<ArrowRight size={18} /></a>
           <a className="button button-whatsapp" href={whatsappLink} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} />{text("HomePage.text.6", " WhatsApp us")}</a>
