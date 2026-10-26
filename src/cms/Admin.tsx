@@ -1,3 +1,22 @@
+
+// Compress photographs before sending them to KV; retain GIF animation and small files.
+async function prepareImageUpload(file: File): Promise<File> {
+  if (file.type === 'image/gif' || !file.type.startsWith('image/')) return file;
+  const bitmap = await createImageBitmap(file);
+  try {
+    const maxEdge = 1400;
+    const scale = Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+    canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return file;
+    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/webp', 0.78));
+    if (!blob || blob.size >= file.size) return file;
+    return new File([blob], file.name.replace(/\.[^.]+$/, '') + '.webp', { type: 'image/webp' });
+  } finally { bitmap.close(); }
+}
 import { useEffect, useState } from 'react';
 import { defaultServices } from '@/data/services';
 import { defaultTexts, defaultCollectionPhotos, type SiteContent } from './content';
@@ -56,7 +75,7 @@ function Editor({ value, onChange, label }: { value: unknown; onChange: (v: unkn
   }
   if(label==='fit') return <label className="admin-field"><span>How this photo appears</span><select value={String(value||'contain')} onChange={e=>onChange(e.target.value)}><option value="contain">Show the whole image (best for posters)</option><option value="cover">Fill the photo tile (best for photos)</option></select></label>;
   const str=String(value??'');const image=/hero image|heroImage|^src$|^image$|image\\.|logo/i.test(label);
-  return <div className="admin-field"><label><span>{niceLabel(label)}</span>{!image&&<textarea rows={str.length<90?2:4} value={str} onChange={e=>onChange(e.target.value)} />}</label>{image&&<div className="admin-photo-field">{str?<img className="admin-image-preview" src={str} alt="Selected image" />:<p>No image selected</p>}<label className="admin-upload-button">{busy?'Uploading…':'Upload / replace image'}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" disabled={busy} onChange={async e=>{const file=e.target.files?.[0];if(!file)return;setBusy(true);setError('');try{const form=new FormData();form.append('file',file);const result=await api('/api/upload',{method:'POST',body:form});onChange(result.url);notifyToast('success','Image uploaded','Click Save changes to publish this image on your website.');}catch(e){setError((e as Error).message);notifyToast('error','Image upload failed',(e as Error).message);}finally{setBusy(false);}}} /></label><small>Choose a photo from your computer. Maximum 5 MB.</small>{str&&<button type="button" onClick={()=>{if(confirm('Remove this photo? The original icon will be shown until a new photo is uploaded.'))onChange('');}}>Remove photo</button>}{error&&<small role="alert">{error}</small>}</div>}</div>;
+  return <div className="admin-field"><label><span>{niceLabel(label)}</span>{!image&&<textarea rows={str.length<90?2:4} value={str} onChange={e=>onChange(e.target.value)} />}</label>{image&&<div className="admin-photo-field">{str?<img className="admin-image-preview" src={str} alt="Selected image" />:<p>No image selected</p>}<label className="admin-upload-button">{busy?'Uploading…':'Upload / replace image'}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" disabled={busy} onChange={async e=>{const file=e.target.files?.[0];if(!file)return;setBusy(true);setError('');try{const form=new FormData();form.append('file',await prepareImageUpload(file));const result=await api('/api/upload',{method:'POST',body:form});onChange(result.url);notifyToast('success','Image uploaded','Click Save changes to publish this image on your website.');}catch(e){setError((e as Error).message);notifyToast('error','Image upload failed',(e as Error).message);}finally{setBusy(false);}}} /></label><small>Choose a photo from your computer. Maximum 5 MB.</small>{str&&<button type="button" onClick={()=>{if(confirm('Remove this photo? The original icon will be shown until a new photo is uploaded.'))onChange('');}}>Remove photo</button>}{error&&<small role="alert">{error}</small>}</div>}</div>;
 }
 const menuNames: Record<string,string> = { HomePage:'Homepage', 'Additional sections':'Add homepage sections', Services:'Services & photos', 'Collection items':'What we collect', Videos:'YouTube videos', Reviews:'Google reviews', 'Process steps':'How it works', Settings:'Contact details & logo', Layout:'Header & footer', ServicePage:'Service page headings', PickupForm:'Booking form wording', Media:'Uploaded photos', Enquiries:'Pickup enquiries' };
 function homepageGroup(key: string) {
