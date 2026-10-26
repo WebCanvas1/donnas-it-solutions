@@ -2,7 +2,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import Admin from './cms/Admin';
 import { applyContent } from './cms/content';
 import { replaceServices, defaultServices } from './data/services';
 import { configureContact } from './cms/contact';
@@ -17,6 +16,12 @@ async function start() {
     }
   } catch { /* Keep default content available when storage is unavailable. */ }
   const admin = window.location.pathname === '/admin' || window.location.hash.startsWith('#/admin');
-  createRoot(document.getElementById('root')!).render(<StrictMode>{admin ? <Admin /> : <App />}</StrictMode>);
+  const root = createRoot(document.getElementById('root')!);
+  if (admin) {
+    const { default: Admin } = await import('./cms/Admin');
+    root.render(<StrictMode><Admin /></StrictMode>);
+  } else {
+    root.render(<StrictMode><App /></StrictMode>);
+  }
 }
 void start();
