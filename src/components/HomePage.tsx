@@ -28,6 +28,7 @@ const processSteps = [
 
 export function HomePage({ onNavigate }: { onNavigate: (path: string) => void }) {
   const [submitted, setSubmitted] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
   function handleSubmit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setSubmitted(true); }
 
   function handleNavClick(e: React.MouseEvent, path: string) { e.preventDefault(); onNavigate(path); }
@@ -50,7 +51,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
 
     </section>
 
-    {getVideos().some(v => youtubeId(v.url)) && <section className="section" id="videos"><div className="container"><div className="eyebrow">WATCH OUR WORK</div><h2>See Donna’s IT Solutions in action</h2><div className="donna-video-grid">{getVideos().map((video, i) => { const id = youtubeId(video.url); return id ? <article className="donna-video" key={i}><div className="donna-video-frame"><iframe src={`https://www.youtube-nocookie.com/embed/${id}`} title={video.title || `Video ${i+1}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /></div></article> : null; })}</div></div></section>}
+    {getVideos().some(v => youtubeId(v.url)) && <section className="section" id="videos"><div className="container"><div className="eyebrow">WATCH OUR WORK</div><h2>See Donna’s IT Solutions in action</h2><div className="donna-video-grid">{getVideos().map((video, i) => { const id = youtubeId(video.url); return id ? <article className="donna-video" key={i}><div className="donna-video-frame">{activeVideo === id ? <iframe src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`} title={video.title || `Video ${i+1}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /> : <button type="button" className="donna-video-preview" aria-label={`Play ${video.title || `video ${i+1}`}`} onClick={() => setActiveVideo(id)}><img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" width="480" height="360" /><span className="donna-video-play" aria-hidden="true">▶</span></button>}</div></article> : null; })}</div></div></section>}
 
     <section className="enquiry section" id="contact">
       <div className="container enquiry-grid">
