@@ -58,7 +58,7 @@ export default function App() {
   const service = serviceMatch ? getServiceBySlug(serviceMatch[1]) : undefined;
 
   useEffect(() => {
-    const title = service?.seoTitle || (path === '/privacy-policy' ? 'Privacy Policy | Donna’s IT Solutions' : path === '/terms-and-conditions' ? 'Terms & Conditions | Donna’s IT Solutions' : path === '/partners' ? 'E-Waste Referral Partners Sydney | Donna’s IT Solutions' : 'E-Waste Collection & Recycling Sydney | Donna’s IT Solutions');
+    const title = service?.seoTitle || (path === '/privacy-policy' ? 'Privacy Policy | Donna’s IT Solutions' : path === '/terms-and-conditions' ? 'Terms & Conditions | Donna’s IT Solutions' : path === '/partners' ? 'E-Waste Referral Partners Sydney | Donna’s IT Solutions' : 'E-Waste Recycling & Collection Sydney | Donna’s IT Solutions');
     const description = service?.metaDescription || (path === '/privacy-policy' ? 'How Donna’s IT Solutions collects, uses and protects personal information submitted through website enquiries in Sydney.' : path === '/terms-and-conditions' ? 'Terms and conditions for e-waste collection, computer recycling and data handling enquiries with Donna’s IT Solutions.' : path === '/partners' ? 'Partner with Donna’s IT Solutions for Sydney e-waste collection referrals. Enquire about business IT equipment pickup opportunities.' : 'Donna’s IT Solutions provides e-waste collection and recycling for businesses, schools and organisations across Sydney. Enquire about an electronic waste pickup.');
     const pageMeta: Record<string, [string,string]> = {
       '/faq': ['E-Waste Collection FAQs Sydney | Donna’s IT Solutions', 'Answers to common questions about business e-waste collection in Sydney, including accepted equipment, pickup arrangements and data handling.'],
@@ -79,6 +79,14 @@ export default function App() {
     if (ogUrl) ogUrl.content = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners' || !!pageMeta[path] ? path : '/');
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (canonical) canonical.href = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners' || !!pageMeta[path] ? path : '/');
+    if (!window.location.pathname.startsWith('/admin')) {
+      const analytics = window as Window & { gtag?: (...args: unknown[]) => void };
+      analytics.gtag?.('event', 'page_view', {
+        page_title: resolvedTitle,
+        page_location: window.location.href,
+        page_path: path,
+      });
+    }
   }, [path, service]);
 
   let content;
