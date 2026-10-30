@@ -46,7 +46,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
 
   return <main>
     <section className="hero" id="home">
-      <img className="hero-image" src={getHeroImage(text("HomePage.heroImage", defaultHeroImage))} onError={(event) => { const img = event.currentTarget; if (img.src !== defaultHeroImage) img.src = defaultHeroImage; }} alt="Donna’s IT Solutions electronic waste collection and recycling" fetchPriority="high" loading="eager" decoding="async" width={1100} height={800} />
+      <img className="hero-image" src={defaultHeroImage} onError={(event) => { const img = event.currentTarget; if (img.src !== defaultHeroImage) img.src = defaultHeroImage; }} alt="Donna’s IT Solutions electronic waste collection and recycling" fetchPriority="high" loading="eager" decoding="async" width={1100} height={800} />
 
       <div className="hero-overlay" />
       <div className="container hero-content">
