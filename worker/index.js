@@ -57,6 +57,10 @@ function validContent(c) {
 }
 export default { async fetch(request, env) {
   const url = new URL(request.url), path = url.pathname;
+  if (path.startsWith('/services/') && path.endsWith('/')) {
+    url.pathname = path.replace(/\/+$/, '');
+    return Response.redirect(url.toString(), 308);
+  }
   if (request.method === 'GET' && (path.startsWith('/services/') || path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners')) return seoPage(request, env, path);
   if (!path.startsWith('/api/') && !path.startsWith('/media/')) return env.ASSETS.fetch(request);
   if (!env.SITE_CONTENT) return json({ error: 'Storage is not configured. Add the SITE_CONTENT KV binding in Cloudflare.' }, 503);
