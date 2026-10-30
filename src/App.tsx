@@ -5,7 +5,6 @@ import { PartnerPage } from '@/components/PartnerPage';
 import { EnquiryAssistant } from '@/components/EnquiryAssistant';
 import { FAQPage, AcceptedItemsPage, ContactPage, ServiceAreasPage } from '@/components/ResourcePages';
 import { ServicePage } from '@/components/ServicePage';
-import { BlogPage } from '@/components/BlogPage';
 import { getServiceBySlug } from '@/data/services';
 import { getLegalPage } from '@/cms/content';
 
@@ -59,14 +58,13 @@ export default function App() {
   const service = serviceMatch ? getServiceBySlug(serviceMatch[1]) : undefined;
 
   useEffect(() => {
-    const title = service?.seoTitle || (path === '/privacy-policy' ? 'Privacy Policy | Donna’s IT Solutions' : path === '/terms-and-conditions' ? 'Terms & Conditions | Donna’s IT Solutions' : path === '/partners' ? 'E-Waste Referral Partners Sydney | Donna’s IT Solutions' : "E-Waste Recycling Sydney – Donna's IT Solutions");
-    const description = service?.metaDescription || (path === '/privacy-policy' ? 'How Donna’s IT Solutions collects, uses and protects personal information submitted through website enquiries in Sydney.' : path === '/terms-and-conditions' ? 'Terms and conditions for e-waste collection, computer recycling and data handling enquiries with Donna’s IT Solutions.' : path === '/partners' ? 'Partner with Donna’s IT Solutions for Sydney e-waste collection referrals. Enquire about business IT equipment pickup opportunities.' : "E-waste recycling and electronic waste disposal across Sydney. Business collection enquiries, IT equipment handling and responsible recycling. Book a pickup.");
+    const title = service?.seoTitle || (path === '/privacy-policy' ? 'Privacy Policy | Donna’s IT Solutions' : path === '/terms-and-conditions' ? 'Terms & Conditions | Donna’s IT Solutions' : path === '/partners' ? 'E-Waste Referral Partners Sydney | Donna’s IT Solutions' : 'E-Waste Recycling & Collection Sydney | Donna’s IT Solutions');
+    const description = service?.metaDescription || (path === '/privacy-policy' ? 'How Donna’s IT Solutions collects, uses and protects personal information submitted through website enquiries in Sydney.' : path === '/terms-and-conditions' ? 'Terms and conditions for e-waste collection, computer recycling and data handling enquiries with Donna’s IT Solutions.' : path === '/partners' ? 'Partner with Donna’s IT Solutions for Sydney e-waste collection referrals. Enquire about business IT equipment pickup opportunities.' : 'Donna’s IT Solutions provides e-waste collection and recycling for businesses, schools and organisations across Sydney. Enquire about an electronic waste pickup.');
     const pageMeta: Record<string, [string,string]> = {
-      '/faq': ["E-Waste Recycling FAQs Sydney | Donna's IT Solutions","Answers to common questions about e-waste recycling, IT equipment recycling, data handling and pickups in Sydney. Find out how our service works."],
-      '/what-we-accept': ["Electronic Recycling Sydney | What We Accept","See what we collect for electronic recycling in Sydney: computers, laptops, monitors, phones, hard drives, cables and more. Check accepted items."],
-      '/service-areas': ["E-Waste Collection Sydney | Areas We Service","E-waste collection across Sydney and surrounding NSW areas. Check service areas and enquire about a convenient business electronics pickup."],
-      '/blog': ['E-Waste Recycling Tips & Guides Sydney | Donna’s IT Solutions', 'Practical information about e-waste collection, computer recycling and responsible IT equipment disposal for Sydney businesses and schools.'],
-      '/contact': ["Book E-Waste Disposal Sydney | Pickup Enquiries","Book e-waste disposal in Sydney. Enquire about pickup of business electronics, laptops and IT equipment. Contact Donna's IT Solutions today."],
+      '/faq': ['E-Waste Collection FAQs Sydney | Donna’s IT Solutions', 'Answers to common questions about business e-waste collection in Sydney, including accepted equipment, pickup arrangements and data handling.'],
+      '/what-we-accept': ['What E-Waste Can We Collect? | Donna’s IT Solutions', 'See examples of computers, monitors, cables and workplace IT equipment you can enquire about for e-waste collection in Sydney.'],
+      '/contact': ['Contact & Book E-Waste Pickup | Donna’s IT Solutions', 'Contact Donna’s IT Solutions for business and school e-waste collection enquiries across Sydney. Tell us your items, suburb and preferred date.'],
+      '/service-areas': ['Sydney E-Waste Collection Areas | Donna’s IT Solutions', 'Explore Sydney areas where you can enquire about business and school e-waste collection. Contact our team to confirm local pickup availability.'],
     };
     const resolvedTitle = pageMeta[path]?.[0] || title;
     const resolvedDescription = pageMeta[path]?.[1] || description;
@@ -100,8 +98,6 @@ export default function App() {
     content = <FAQPage />;
   } else if (path === '/what-we-accept') {
     content = <AcceptedItemsPage />;
-  } else if (path === '/blog') {
-    content = <BlogPage />;
   } else if (path === '/contact') {
     content = <ContactPage />;
   } else if (path === '/service-areas') {
