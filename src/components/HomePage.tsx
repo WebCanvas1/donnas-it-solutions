@@ -11,6 +11,17 @@ import { WhatsAppIcon } from './shared';
 import { getCollectionItems, getProcessSteps, getExtraSections, getVideos, getReviews, getGoogleReviewsUrl, youtubeId } from '@/cms/content';
 import { services } from '@/data/services';
 
+const collectionAltText: Record<string, string> = {
+  'Laptops': 'Old laptops accepted for e-waste recycling in Sydney',
+  'Desktops & Monitors': 'Desktop computers and monitors for e-waste recycling',
+  'Mobile Phones': 'Old mobile phones accepted for recycling',
+  'Cables & Wires': 'Cables and wires accepted for e-waste recycling',
+  'Hard Drives': 'Hard drives for secure handling and recycling enquiries',
+  'Tablets': 'Tablets accepted for e-waste recycling',
+  'Cameras': 'Digital cameras accepted for electronic waste recycling',
+  'Headsets & Audio': 'Headsets and audio equipment for e-waste recycling',
+  'Batteries & UPS': 'Batteries and UPS units requiring recycling suitability confirmation',
+};
 const defaultHeroImage = 'https://images.pexels.com/photos/8353774/pexels-photo-8353774.jpeg?auto=compress&cs=tinysrgb&h=800&w=1100';
 
 // The hero must be a photograph, not a YouTube preview or video URL.
@@ -46,7 +57,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
 
   return <main>
     <section className="hero" id="home">
-      <img className="hero-image" src={defaultHeroImage} onError={(event) => { const img = event.currentTarget; if (img.src !== defaultHeroImage) img.src = defaultHeroImage; }} alt="Donna’s IT Solutions electronic waste collection and recycling" fetchPriority="high" loading="eager" decoding="async" width={1100} height={800} />
+      <img className="hero-image" src={defaultHeroImage} onError={(event) => { const img = event.currentTarget; if (img.src !== defaultHeroImage) img.src = defaultHeroImage; }} alt="E-waste recycling and IT equipment collection for businesses and schools in Sydney" fetchPriority="high" loading="eager" decoding="async" width={1100} height={800} />
 
       <div className="hero-overlay" />
       <div className="container hero-content">
@@ -62,7 +73,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
 
     </section>
 
-    {getVideos().some(v => youtubeId(v.url)) && <section className="section" id="videos"><div className="container"><div className="eyebrow">WATCH OUR WORK</div><h2>See Donna’s IT Solutions in action</h2><div className="donna-video-grid">{getVideos().map((video, i) => { const id = youtubeId(video.url); return id ? <article className="donna-video" key={i}><div className="donna-video-frame">{activeVideo === id ? <iframe src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`} title={video.title || `Video ${i+1}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /> : <button type="button" className="donna-video-preview" aria-label={`Play ${video.title || `video ${i+1}`}`} onClick={() => setActiveVideo(id)}><img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" width="480" height="360" /><span className="donna-video-play" aria-hidden="true">▶</span></button>}</div></article> : null; })}</div></div></section>}
+    {getVideos().some(v => youtubeId(v.url)) && <section className="section" id="videos"><div className="container"><div className="eyebrow">WATCH OUR WORK</div><h2>See Donna’s IT Solutions in action</h2><div className="donna-video-grid">{getVideos().map((video, i) => { const id = youtubeId(video.url); return id ? <article className="donna-video" key={i}><div className="donna-video-frame">{activeVideo === id ? <iframe src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`} title={video.title || `Video ${i+1}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /> : <button type="button" className="donna-video-preview" aria-label={`Play ${video.title || `video ${i+1}`}`} onClick={() => setActiveVideo(id)}><img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt={i === 0 ? "Video: Donna’s IT Solutions e-waste collection in action" : i === 1 ? "Video: Donna’s IT Solutions team collecting and recycling IT equipment" : `Video: ${video.title}`} loading="lazy" decoding="async" width="480" height="360" /><span className="donna-video-play" aria-hidden="true">▶</span></button>}</div></article> : null; })}</div></div></section>}
 
     <section className="enquiry section" id="contact">
       <div className="container enquiry-grid">
@@ -150,7 +161,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
               <div className="collect-reference-card" key={name}>
                 <div className={image ? "collect-reference-photo" : "collect-reference-icon"}>
                   {image ? <>
-                    <img src={image} alt={name} loading="lazy" decoding="async" onError={(event) => {
+                    <img src={image} alt={collectionAltText[name] || name} loading="lazy" decoding="async" onError={(event) => {
                       event.currentTarget.style.display = 'none';
                       event.currentTarget.parentElement?.classList.add('photo-failed');
                     }} />
