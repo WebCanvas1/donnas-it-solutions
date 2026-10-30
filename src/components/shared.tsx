@@ -5,7 +5,7 @@ export function WhatsAppIcon({ size = 18 }: { size?: number }) {
 }
 
 export function BrandMark() {
-  return <img className="brand-logo" src={text("Settings.logo", "/assets/images/image.png")} alt="Donna’s IT Solution" />;
+  return <img className="brand-logo" src={text("Settings.logo", "/assets/images/image.png")} alt="Donna’s IT Solutions logo" />;
 }
 
 
