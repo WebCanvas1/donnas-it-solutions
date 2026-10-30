@@ -15,6 +15,14 @@
   },
   "main": "worker/index.js",
   "keep_vars": true,
+  "previews": {
+    "kv_namespaces": [
+      {
+        "binding": "SITE_CONTENT",
+        "id": "5ac7adaf01f34332b72c421d3469869f"
+      }
+    ]
+  },
   "kv_namespaces": [
     {
       "binding": "SITE_CONTENT",
