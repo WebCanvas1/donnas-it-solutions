@@ -24,17 +24,6 @@ const collectionAltText: Record<string, string> = {
 };
 const defaultHeroImage = 'https://images.pexels.com/photos/8353774/pexels-photo-8353774.jpeg?auto=compress&cs=tinysrgb&h=800&w=1100';
 
-// The hero must be a photograph, not a YouTube preview or video URL.
-// Keep valid images uploaded via the CMS, but fall back safely for invalid media.
-function getHeroImage(value: string): string {
-  const candidate = value.trim();
-  if (!candidate) return defaultHeroImage;
-  if (/^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be|youtube-nocookie\.com|i\.ytimg\.com|img\.youtube\.com)(?:\/|$)/i.test(candidate)) return defaultHeroImage;
-  if (/\/(?:hqdefault|mqdefault|sddefault|maxresdefault)\.(?:jpg|webp)(?:\?|$)/i.test(candidate)) return defaultHeroImage;
-  if (/^data:video\//i.test(candidate)) return defaultHeroImage;
-  return candidate;
-}
-
 const collectItems = [
   { name: 'Laptops', icon: Laptop }, { name: 'Desktops & Monitors', icon: Monitor }, { name: 'Mobile Phones', icon: Smartphone },
   { name: 'Cables & Wires', icon: Cable }, { name: 'Hard Drives', icon: HardDrive },
@@ -57,7 +46,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
 
   return <main>
     <section className="hero" id="home">
-      <img className="hero-image" src={defaultHeroImage} onError={(event) => { const img = event.currentTarget; if (img.src !== defaultHeroImage) img.src = defaultHeroImage; }} alt="E-waste recycling and IT equipment collection for businesses and schools in Sydney" fetchPriority="high" loading="eager" decoding="async" width={1100} height={800} />
+      <img className="hero-image" src={text("HomePage.heroImage", defaultHeroImage)} alt="E-waste recycling and IT equipment collection for businesses and schools in Sydney" fetchPriority="high" loading="eager" decoding="async" width={1100} height={800} />
 
       <div className="hero-overlay" />
       <div className="container hero-content">
