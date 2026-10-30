@@ -5,6 +5,7 @@ import { PartnerPage } from '@/components/PartnerPage';
 import { EnquiryAssistant } from '@/components/EnquiryAssistant';
 import { FAQPage, AcceptedItemsPage, ContactPage, ServiceAreasPage } from '@/components/ResourcePages';
 import { ServicePage } from '@/components/ServicePage';
+import { BlogPage } from '@/components/BlogPage';
 import { getServiceBySlug } from '@/data/services';
 import { getLegalPage } from '@/cms/content';
 
@@ -64,6 +65,7 @@ export default function App() {
       '/faq': ["E-Waste Recycling FAQs Sydney | Donna's IT Solutions","Answers to common questions about e-waste recycling, IT equipment recycling, data handling and pickups in Sydney. Find out how our service works."],
       '/what-we-accept': ["Electronic Recycling Sydney | What We Accept","See what we collect for electronic recycling in Sydney: computers, laptops, monitors, phones, hard drives, cables and more. Check accepted items."],
       '/service-areas': ["E-Waste Collection Sydney | Areas We Service","E-waste collection across Sydney and surrounding NSW areas. Check service areas and enquire about a convenient business electronics pickup."],
+      '/blog': ['E-Waste Recycling Tips & Guides Sydney | Donna’s IT Solutions', 'Practical information about e-waste collection, computer recycling and responsible IT equipment disposal for Sydney businesses and schools.'],
       '/contact': ["Book E-Waste Disposal Sydney | Pickup Enquiries","Book e-waste disposal in Sydney. Enquire about pickup of business electronics, laptops and IT equipment. Contact Donna's IT Solutions today."],
     };
     const resolvedTitle = pageMeta[path]?.[0] || title;
@@ -98,6 +100,8 @@ export default function App() {
     content = <FAQPage />;
   } else if (path === '/what-we-accept') {
     content = <AcceptedItemsPage />;
+  } else if (path === '/blog') {
+    content = <BlogPage />;
   } else if (path === '/contact') {
     content = <ContactPage />;
   } else if (path === '/service-areas') {
