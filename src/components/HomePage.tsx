@@ -11,7 +11,14 @@ import { WhatsAppIcon } from './shared';
 import { getCollectionItems, getProcessSteps, getExtraSections, getVideos, getReviews, getGoogleReviewsUrl, youtubeId } from '@/cms/content';
 import { services } from '@/data/services';
 
-const defaultHeroImage = 'https://images.pexels.com/photos/8353774/pexels-photo-8353774.jpeg?auto=compress&cs=tinysrgb&h=800&w=1100';
+const defaultHeroImage = '/assets/images/free-pickup-truck.jpg';
+
+// A video preview accidentally saved as a CMS hero image must never cover the homepage.
+function safeHeroImage(value: string): string {
+  const url = value.trim();
+  if (!url || /(?:youtube(?:-nocookie)?\\.com|youtu\\.be|ytimg\\.com|img\\.youtube\\.com|\\/(?:hqdefault|mqdefault|sddefault|maxresdefault)\\.(?:jpg|webp))/i.test(url) || /^data:video\\//i.test(url)) return defaultHeroImage;
+  return url;
+}
 
 const collectItems = [
   { name: 'Laptops', icon: Laptop }, { name: 'Desktops & Monitors', icon: Monitor }, { name: 'Mobile Phones', icon: Smartphone },
@@ -35,7 +42,7 @@ export function HomePage({ onNavigate }: { onNavigate: (path: string) => void })
 
   return <main>
     <section className="hero" id="home">
-      <img className="hero-image" src={text("HomePage.heroImage", defaultHeroImage)} alt="" fetchPriority="high" loading="eager" decoding="async" width={1100} height={800} />
+      <img className="hero-image" src={safeHeroImage(text("HomePage.heroImage", defaultHeroImage))} onError={(event) => { const image = event.currentTarget; if (!image.src.endsWith(defaultHeroImage)) image.src = defaultHeroImage; }} alt="Donna’s IT Solutions e-waste collection truck" fetchPriority="high" loading="eager" decoding="async" width={1100} height={800} />
 
       <div className="hero-overlay" />
       <div className="container hero-content">
