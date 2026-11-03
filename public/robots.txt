@@ -4,3 +4,4 @@ Disallow: /admin
 Disallow: /api/
 
 Sitemap: https://donnasitsolutions.com.au/sitemap.xml
+Sitemap: https://donnasitsolutions.com.au/sitemap-blog.xml
