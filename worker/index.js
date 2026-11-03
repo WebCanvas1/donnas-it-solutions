@@ -56,6 +56,10 @@ async function blogSeoPage(request,env,path) {
  html=html.replace('</head>','<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,'\\u003c')+'</script></head>');
  const article='<article><h1>'+escapeSeo(post.title)+'</h1><p>'+escapeSeo(post.excerpt)+'</p>'+post.body.split(/\n\s*\n/).map(p=>p.startsWith('## ')?'<h2>'+escapeSeo(p.slice(3))+'</h2>':'<p>'+escapeSeo(p)+'</p>').join('')+'</article>';
  html=html.replace('<div id="root"></div>','<div id="root">'+article+'</div>');
+ } else {
+ const posts=await allBlogPosts(env);
+ const list='<main><h1>E-waste recycling insights</h1>'+posts.map(p=>'<article><h2><a href="/blog/'+p.slug+'">'+escapeSeo(p.title)+'</a></h2><p>'+escapeSeo(p.excerpt)+'</p></article>').join('')+'</main>';
+ html=html.replace('<div id="root"></div>','<div id="root">'+list+'</div>');
  }
  return new Response(html,{status:200,headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'public,max-age=120'}});
 }
