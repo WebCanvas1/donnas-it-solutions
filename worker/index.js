@@ -201,7 +201,7 @@ export default { async fetch(request, env) {
       const existing=await env.SITE_CONTENT.get('blog:'+p.slug,'json');
       const now=new Date().toISOString();
       const clean={slug:p.slug,title:p.title.trim(),excerpt:p.excerpt.trim(),body:p.body.trim(),image:p.image,imageAlt:p.imageAlt.slice(0,200),seoTitle:p.seoTitle.trim(),metaDescription:p.metaDescription.trim(),published:p.published,publishedAt:p.published?(existing?.publishedAt||now):'',updatedAt:now};
-      await env.SITE_CONTENT.put('blog:'+p.slug,JSON.stringify(clean));return json({ok:true});
+      await env.SITE_CONTENT.put('blog:'+p.slug,JSON.stringify(clean));return json({ok:true,post:clean});
     }
     if(path.startsWith('/api/admin/blog/')&&request.method==='DELETE'){
       const slug=path.slice('/api/admin/blog/'.length);if(!blogSlug(slug))return json({error:'Invalid slug'},400);
