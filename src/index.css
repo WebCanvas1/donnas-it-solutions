@@ -640,6 +640,7 @@ img { max-width: 100%; }
 @media (max-width:800px) { .hero .hero-image { width:100%; height:230px; object-fit:cover; object-position:center; } }
 
 /* Lightweight YouTube preview: only create the player after a user clicks. */
+.donna-video-frame { position:relative; }
 .donna-video-preview { position:absolute; inset:0; width:100%; height:100%; padding:0; border:0; cursor:pointer; overflow:hidden; background:#151515; }
 .donna-video-preview img { display:block; width:100%; height:100%; object-fit:cover; }
 .donna-video-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:grid; place-items:center; width:70px; height:48px; border-radius:14px; color:white; background:#e62117; font-size:25px; line-height:1; padding-left:4px; box-shadow:0 3px 14px #0006; }

@@ -43,7 +43,7 @@ async function blogSeoPage(request,env,path) {
  if(!response.ok)return response;
  let html=await response.text();
  const canonical='https://donnasitsolutions.com.au'+(slug?'/blog/'+slug:'/blog');
- const title=post?(post.seoTitle||post.title):"E-Waste Recycling Blog Sydney | Donna's IT Solutions";
+ const title=post?(post.seoTitle||post.title)+' | Donna’s IT Solutions':"E-Waste Recycling Blog Sydney | Donna's IT Solutions";
  const description=post?(post.metaDescription||post.excerpt):'Practical articles on Sydney e-waste recycling, computer disposal and responsible IT equipment recycling.';
  html=html.replace(/<title>[^<]*<\/title>/,'<title>'+escapeSeo(title)+'</title>')
  .replace(/(<meta name="description" content=")[^"]*(")/,'$1'+escapeSeo(description)+'$2')
@@ -55,11 +55,11 @@ async function blogSeoPage(request,env,path) {
  const schema={'@context':'https://schema.org','@type':'BlogPosting',headline:post.title,description,mainEntityOfPage:canonical,datePublished:post.publishedAt,dateModified:post.updatedAt||post.publishedAt,author:{'@type':'Organization',name:"Donna's IT Solutions"},publisher:{'@type':'Organization',name:"Donna's IT Solutions"},...(post.image?{image:post.image}:{})};
  html=html.replace('</head>','<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,'\\u003c')+'</script></head>');
  const article='<article><h1>'+escapeSeo(post.title)+'</h1><p>'+escapeSeo(post.excerpt)+'</p>'+post.body.split(/\n\s*\n/).map(p=>p.startsWith('## ')?'<h2>'+escapeSeo(p.slice(3))+'</h2>':'<p>'+escapeSeo(p)+'</p>').join('')+'</article>';
- html=html.replace('<div id="root"></div>','<div id="root">'+article+'</div>');
+ html=html.replace(/<div id="root">[\s\S]*<\/div>\s*(?=<\/body>)/,'<div id="root"><main>'+article+'</main></div>');
  } else {
  const posts=await allBlogPosts(env);
  const list='<main><h1>E-waste recycling insights</h1>'+posts.map(p=>'<article><h2><a href="/blog/'+p.slug+'">'+escapeSeo(p.title)+'</a></h2><p>'+escapeSeo(p.excerpt)+'</p></article>').join('')+'</main>';
- html=html.replace('<div id="root"></div>','<div id="root">'+list+'</div>');
+ html=html.replace(/<div id="root">[\s\S]*<\/div>\s*(?=<\/body>)/,'<div id="root">'+list+'</div>');
  }
  return new Response(html,{status:200,headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'public,max-age=120'}});
 }

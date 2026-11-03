@@ -80,7 +80,7 @@ export default function App() {
     const ogUrl = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
     if (ogUrl) ogUrl.content = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners' || !!pageMeta[path] || path.startsWith('/blog/') ? path : '/');
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (canonical) canonical.href = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners' || !!pageMeta[path] ? path : '/');
+    if (canonical) canonical.href = 'https://donnasitsolutions.com.au' + (service ? '/services/' + service.slug : path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners' || !!pageMeta[path] || path.startsWith('/blog/') ? path : '/');
     if (!window.location.pathname.startsWith('/admin')) {
       const analytics = window as Window & { gtag?: (...args: unknown[]) => void };
       analytics.gtag?.('event', 'page_view', {
