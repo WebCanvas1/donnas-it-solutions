@@ -659,3 +659,12 @@ img { max-width: 100%; }
 .admin-blog .admin-entry{margin:18px 0;padding:20px}
 .admin-blog .admin-field{display:block;margin:12px 0}
 .admin-blog .admin-field input:not([type="checkbox"]),.admin-blog .admin-field textarea{width:100%;max-width:100%}
+/* Keep direct contact actions available on desktop as well as mobile. */
+@media(min-width:701px){
+ .mobile-contact-bar{display:flex;position:fixed;left:22px;bottom:22px;z-index:1050;gap:10px}
+ .mobile-contact-bar a{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:12px 20px;border-radius:100px;background:#216b40;color:#fff;text-decoration:none;font-size:14px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+ .mobile-contact-bar a:last-child{background:#128c48}
+ .mobile-contact-bar a:hover{background:#15552e}
+ .mobile-contact-bar a:focus-visible{outline:3px solid #ffdf19;outline-offset:3px}
+ .site-footer{padding-bottom:85px}
+}
