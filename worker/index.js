@@ -27,6 +27,43 @@ async function seoPage(request, env, path) {
   if (service) html = html.replace('</head>', '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'Service', name: service.heading, description: service.description, areaServed: 'Sydney, NSW', provider: { '@id': 'https://donnasitsolutions.com.au/#business' }, url: canonical }).replace(/</g, '\\u003c') + '</script></head>');
   return new Response(html, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=300' } });
 }
+
+const blogSlug = slug => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
+const safeBlog = p => ({slug:p.slug,title:p.title,excerpt:p.excerpt,body:p.body,image:p.image,imageAlt:p.imageAlt,seoTitle:p.seoTitle,metaDescription:p.metaDescription,published:p.published,publishedAt:p.publishedAt,updatedAt:p.updatedAt});
+async function allBlogPosts(env, includeDrafts=false) {
+ const list=await env.SITE_CONTENT.list({prefix:'blog:',limit:1000});
+ const posts=(await Promise.all(list.keys.map(k=>env.SITE_CONTENT.get(k.name,'json')))).filter(p=>p&& (includeDrafts||p.published));
+ return posts.sort((a,b)=>(b.publishedAt||b.updatedAt||'').localeCompare(a.publishedAt||a.updatedAt||''));
+}
+async function blogSeoPage(request,env,path) {
+ const slug=path.startsWith('/blog/')?path.slice(6).replace(/\/$/,''):null;
+ const post=slug?await env.SITE_CONTENT.get('blog:'+slug,'json'):null;
+ if(slug&&(!post||!post.published))return new Response('Article not found',{status:404,headers:{'Content-Type':'text/plain'}});
+ const response=await env.ASSETS.fetch(new Request(new URL('/',request.url),request));
+ if(!response.ok)return response;
+ let html=await response.text();
+ const canonical='https://donnasitsolutions.com.au'+(slug?'/blog/'+slug:'/blog');
+ const title=post?(post.seoTitle||post.title)+' | Donna’s IT Solutions':"E-Waste Recycling Blog Sydney | Donna's IT Solutions";
+ const description=post?(post.metaDescription||post.excerpt):'Practical articles on Sydney e-waste recycling, computer disposal and responsible IT equipment recycling.';
+ html=html.replace(/<title>[^<]*<\/title>/,'<title>'+escapeSeo(title)+'</title>')
+ .replace(/(<meta name="description" content=")[^"]*(")/,'$1'+escapeSeo(description)+'$2')
+ .replace(/(<meta property="og:title" content=")[^"]*(")/,'$1'+escapeSeo(title)+'$2')
+ .replace(/(<meta property="og:description" content=")[^"]*(")/,'$1'+escapeSeo(description)+'$2')
+ .replace(/(<meta property="og:url" content=")[^"]*(")/,'$1'+canonical+'$2')
+ .replace(/(<link rel="canonical" href=")[^"]*(")/,'$1'+canonical+'$2');
+ if(post){
+ const schema={'@context':'https://schema.org','@type':'BlogPosting',headline:post.title,description,mainEntityOfPage:canonical,datePublished:post.publishedAt,dateModified:post.updatedAt||post.publishedAt,author:{'@type':'Organization',name:"Donna's IT Solutions"},publisher:{'@type':'Organization',name:"Donna's IT Solutions"},...(post.image?{image:post.image}:{})};
+ html=html.replace('</head>','<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,'\\u003c')+'</script></head>');
+ const article='<article><h1>'+escapeSeo(post.title)+'</h1><p>'+escapeSeo(post.excerpt)+'</p>'+post.body.split(/\n\s*\n/).map(p=>p.startsWith('## ')?'<h2>'+escapeSeo(p.slice(3))+'</h2>':'<p>'+escapeSeo(p)+'</p>').join('')+'</article>';
+ html=html.replace(/<div id="root">[\s\S]*<\/div>\s*(?=<\/body>)/,'<div id="root"><main>'+article+'</main></div>');
+ } else {
+ const posts=await allBlogPosts(env);
+ const list='<main><h1>E-waste recycling insights</h1>'+posts.map(p=>'<article><h2><a href="/blog/'+p.slug+'">'+escapeSeo(p.title)+'</a></h2><p>'+escapeSeo(p.excerpt)+'</p></article>').join('')+'</main>';
+ html=html.replace(/<div id="root">[\s\S]*<\/div>\s*(?=<\/body>)/,'<div id="root">'+list+'</div>');
+ }
+ return new Response(html,{status:200,headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'public,max-age=120'}});
+}
+
 const json = (data, status = 200, headers = {}) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...headers } });
 const cookie = (value, age = 28800) => `admin_session=${value}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${age}`;
 async function key(secret) { return crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']); }
@@ -58,6 +95,16 @@ function validContent(c) {
 }
 export default { async fetch(request, env) {
   const url = new URL(request.url), path = url.pathname;
+  if(request.method==='GET' && (path==='/blog'||path==='/blog/'||path.startsWith('/blog/'))) {
+    if(!env.SITE_CONTENT)return new Response('Blog storage unavailable',{status:503});
+    return blogSeoPage(request,env,path);
+  }
+  if(request.method==='GET'&&path==='/sitemap-blog.xml'){
+    if(!env.SITE_CONTENT)return new Response('Storage unavailable',{status:503});
+    const posts=await allBlogPosts(env);
+    const urls=['https://donnasitsolutions.com.au/blog',...posts.map(p=>'https://donnasitsolutions.com.au/blog/'+p.slug)];
+    return new Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls.map(u=>'<url><loc>'+u+'</loc></url>').join('')+'</urlset>',{headers:{'Content-Type':'application/xml; charset=utf-8'}});
+  }
   if (request.method === 'GET' && (path.startsWith('/services/') || path === '/privacy-policy' || path === '/terms-and-conditions' || path === '/partners')) return seoPage(request, env, path);
   if (!path.startsWith('/api/') && !path.startsWith('/media/')) return env.ASSETS.fetch(request);
   if (!env.SITE_CONTENT) return json({ error: 'Storage is not configured. Add the SITE_CONTENT KV binding in Cloudflare.' }, 503);
@@ -66,6 +113,7 @@ export default { async fetch(request, env) {
       const result = await env.SITE_CONTENT.getWithMetadata('media:' + path.slice(7), 'arrayBuffer');
       return result.value ? new Response(result.value, { headers: { 'Content-Type': result.metadata?.type || 'application/octet-stream', 'Cache-Control': 'public, max-age=31536000, immutable', 'X-Content-Type-Options': 'nosniff' } }) : new Response('Not found', { status: 404 });
     }
+    if(path==='/api/blog'&&request.method==='GET')return json({posts:(await allBlogPosts(env)).map(safeBlog)});
     if (path === '/api/content' && request.method === 'GET') return json(await env.SITE_CONTENT.get('site_content', 'json') || {});
     if (request.method !== 'GET' && request.headers.get('Origin') !== url.origin) return json({ error: 'Invalid request origin' }, 403);
     if (path === '/api/login' && request.method === 'POST') {
@@ -145,6 +193,20 @@ export default { async fetch(request, env) {
     }
     if (!await authorized(request, env)) return json({ error: 'Please sign in' }, 401);
     if (path === '/api/session') return json({ ok: true });
+    if(path==='/api/admin/blog'&&request.method==='GET')return json({posts:(await allBlogPosts(env,true)).map(safeBlog)});
+    if(path==='/api/admin/blog'&&request.method==='PUT'){
+      const raw=await request.text();if(raw.length>120000)return json({error:'Article too long'},413);
+      const p=JSON.parse(raw);
+      if(!p||!blogSlug(p.slug)||!p.title||typeof p.title!=='string'||p.title.length>160||typeof p.body!=='string'||p.body.length>100000||!p.body.trim()||typeof p.excerpt!=='string'||p.excerpt.length>500||typeof p.image!=='string'||(p.image&&!(/^https:\/\//.test(p.image)||/^\/media\/[a-f0-9-]{36}$/.test(p.image)))||!['imageAlt','seoTitle','metaDescription'].every(k=>typeof p[k]==='string')||p.metaDescription.length>300||p.seoTitle.length>180||typeof p.published!=='boolean')return json({error:'Please check the article fields, slug, image URL and content.'},400);
+      const existing=await env.SITE_CONTENT.get('blog:'+p.slug,'json');
+      const now=new Date().toISOString();
+      const clean={slug:p.slug,title:p.title.trim(),excerpt:p.excerpt.trim(),body:p.body.trim(),image:p.image,imageAlt:p.imageAlt.slice(0,200),seoTitle:p.seoTitle.trim(),metaDescription:p.metaDescription.trim(),published:p.published,publishedAt:p.published?(existing?.publishedAt||now):'',updatedAt:now};
+      await env.SITE_CONTENT.put('blog:'+p.slug,JSON.stringify(clean));return json({ok:true,post:clean});
+    }
+    if(path.startsWith('/api/admin/blog/')&&request.method==='DELETE'){
+      const slug=path.slice('/api/admin/blog/'.length);if(!blogSlug(slug))return json({error:'Invalid slug'},400);
+      await env.SITE_CONTENT.delete('blog:'+slug);return json({ok:true});
+    }
     if (path === '/api/content' && request.method === 'PUT') {
       const raw = await request.text(); if (raw.length > 1000000) return json({ error: 'Content is too large' }, 413);
       const content = JSON.parse(raw); if (!validContent(content)) return json({ error: 'Check service slugs, required fields and gallery images. Use HTTPS or local image URLs.' }, 400);

@@ -43,6 +43,7 @@ export function Header({ onNavigate }: { onNavigate: (path: string) => void }) {
           </div>
         </div>
         <a href="/#what-we-collect" onClick={(e) => handleNavClick(e, '/#what-we-collect')}>{text("Layout.text.4", "What We Collect")}</a>
+        <a href="/blog" onClick={(e) => handleNavClick(e, '/blog')}>Blog</a>
         <a href="/#about" onClick={(e) => handleNavClick(e, '/#about')}>{text("Layout.text.5", "About")}</a>
         <a href="/#contact" onClick={(e) => handleNavClick(e, '/#contact')}>{text("Layout.text.6", "Contact")}</a>
         <a className="nav-phone" href={`tel:${PHONE_TEL}`}><Phone size={16} /> {PHONE}</a>
@@ -69,6 +70,7 @@ export function Footer({ onNavigate }: { onNavigate: (path: string) => void }) {
         <a href="/#about" onClick={(e) => handleNavClick(e, '/#about')}>About us</a>
         <a href="/#contact" onClick={(e) => handleNavClick(e, '/#contact')}>{text("Layout.text.13", "Contact")}</a>
         <a href="/partners" onClick={(e) => handleNavClick(e, '/partners')}>Referral partners</a>
+        <a href="/blog" onClick={(e) => handleNavClick(e, '/blog')}>Blog</a>
         <a href="/faq" onClick={(e) => handleNavClick(e, '/faq')}>FAQs</a>
         <a href="/what-we-accept" onClick={(e) => handleNavClick(e, '/what-we-accept')}>What we accept</a>
         <a href="/service-areas" onClick={(e) => handleNavClick(e, '/service-areas')}>Service areas</a>
